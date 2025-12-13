@@ -19,7 +19,8 @@ export default function Home() {
               About Me
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              Web技術、低レイヤープログラミング、3Dモデリング、動画編集などのスキルを持っています。
+              Web技術、低レイヤープログラミング、3Dモデリング、動画編集などのスキルを日々学習しています。
+              また、IoT分野に興味を持っており、研究室ではIoTのセキュリティに関するテーマに取り組んでいます。
               現在は大学院への進学を目指して勉強中です。
             </p>
           </section>
