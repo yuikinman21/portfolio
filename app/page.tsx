@@ -164,8 +164,8 @@ export default function Home() {
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、3Dモデリングまで幅広く挑戦中のエンジニア見習い。<br/>
-            将来的にはIoTとセキュリティ分野での研究開発に携わりたいと考えています。<br />
-            現在は、大学院進学に向けて勉強中です。
+            将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
+            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、大学院進学に向けて勉強中です。
           </p>
         </AnimatedBentoCard>
 
@@ -180,7 +180,6 @@ export default function Home() {
             <ModelViewer />
           </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent pointer-events-none z-10" />
           <div className="absolute bottom-6 right-6 z-20">
              <span className="text-xs font-mono text-slate-500 bg-slate-800/50 px-2 py-1 rounded border border-slate-700">
                Drag to rotate
