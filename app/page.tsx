@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import dynamic from 'next/dynamic';
+import { useState, useEffect, useRef } from 'react';
+// アニメーション用ライブラリ
+import { motion, useInView } from 'framer-motion';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
@@ -13,40 +16,122 @@ const ModelViewer = dynamic(() => import('./components/ModelViewer'), {
   )
 });
 
+// --- サイバー風テキストコンポーネント ---
+const CYBER_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
+
+function ScrambleText({ text, className }: { text: string; className?: string }) {
+  const [displayText, setDisplayText] = useState(text);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startScramble = () => {
+    let iteration = 0;
+    clearInterval(intervalRef.current as NodeJS.Timeout);
+
+    intervalRef.current = setInterval(() => {
+      setDisplayText((prev) =>
+        text
+          .split("")
+          .map((char, index) => {
+            if (index < iteration) {
+              return text[index];
+            }
+            return CYBER_CHARS[Math.floor(Math.random() * CYBER_CHARS.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= text.length) {
+        clearInterval(intervalRef.current as NodeJS.Timeout);
+      }
+
+      iteration += 1 / 3;
+    }, 30);
+  };
+
+  // 初回表示時にも実行
+  useEffect(() => {
+    startScramble();
+    return () => clearInterval(intervalRef.current as NodeJS.Timeout);
+  }, []);
+
+  return (
+    <span 
+      className={className} 
+      onMouseEnter={startScramble} // ホバーでも発動
+    >
+      {displayText}
+    </span>
+  );
+}
+
+// --- アニメーション付きBentoカード ---
+function AnimatedBentoCard({ children, className, delay = 0, ...props }: any) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
+      className={`bento-card ${className}`}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Home() {
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
       
       {/* --- Header Area --- */}
-      <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4 animate-in fade-in slide-in-from-top-4 duration-700">
+      <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4">
         <div className="space-y-3">
-          <div className="flex items-center gap-3">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-3"
+          >
             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <p className="font-mono text-slate-500 text-xs tracking-widest font-bold uppercase">
               Available for Research & Dev
             </p>
-          </div>
+          </motion.div>
+          
           <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9]">
-            YUIKI<span className="text-slate-300">.DEV</span>
+            {/* ここにスクランブルエフェクトを適用 */}
+            <ScrambleText text="YUIKI" />
+            <span className="text-slate-300">.DEV</span>
           </h1>
-          <p className="text-slate-500 font-medium max-w-lg text-lg">
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-slate-500 font-medium max-w-lg text-lg"
+          >
             情報工学とクリエイティブの交差点。<br/>
             <span className="text-indigo-600">論理（Code）</span>と<span className="text-purple-600">感性（Art）</span>で未来を実装する。
-          </p>
+          </motion.p>
         </div>
         
-        <div className="flex gap-3">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="flex gap-3"
+        >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" />
           <SocialButton href="mailto:contact@example.com" label="Contact" />
-        </div>
+        </motion.div>
       </header>
 
-      {/* --- Bento Grid Layout --- */}
+      {/* --- Bento Grid Layout (アニメーション適用) --- */}
       <main className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         
         {/* 1. Profile Image Card */}
-        <div className="bento-card md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[350px] flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-50 to-white group relative overflow-hidden">
-          {/* 背景装飾 */}
+        <AnimatedBentoCard delay={0.1} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[350px] flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-50 to-white group relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
           
           <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2">
@@ -64,10 +149,10 @@ export default function Home() {
               Osaka Metro Univ. Student
             </p>
           </div>
-        </div>
+        </AnimatedBentoCard>
 
         {/* 2. About Me */}
-        <div className="bento-card md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4">
+        <AnimatedBentoCard delay={0.2} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4">
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
             Engineering logic, <br/>
@@ -78,16 +163,15 @@ export default function Home() {
             「仕組み」を理解し、「体験」として再構築することをテーマに活動する情報系エンジニア（Class of 2029）。
             現在は大学院進学を見据え、研究と個人開発の両輪でスキルを磨いています。
           </p>
-        </div>
+        </AnimatedBentoCard>
 
         {/* 3. 3D Showcase */}
-        <div className="bento-card md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
+        <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
           <div className="absolute top-6 left-6 z-20 pointer-events-none">
             <Label text="02. 3D WORKS" color="white" />
             <p className="text-slate-400 text-xs mt-1">Interactive 3D Demo with React Three Fiber</p>
           </div>
           
-          {/* 3D Viewer */}
           <div className="absolute inset-0 z-10">
             <ModelViewer />
           </div>
@@ -98,10 +182,10 @@ export default function Home() {
                Drag to rotate
              </span>
           </div>
-        </div>
+        </AnimatedBentoCard>
 
         {/* 4. Certifications */}
-        <div className="bento-card md:col-span-3 lg:col-span-1 p-6 space-y-6">
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6">
           <Label text="03. STATUS" color="green" />
           <div className="space-y-3">
             <CertItem 
@@ -123,10 +207,10 @@ export default function Home() {
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded">📐 3D Web</span>
             </div>
           </div>
-        </div>
+        </AnimatedBentoCard>
 
         {/* 5. Tech Stack */}
-        <div className="bento-card md:col-span-6 lg:col-span-1 p-6">
+        <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6">
           <Label text="04. SKILLS" color="blue" />
           <div className="mt-4 space-y-4">
             <div>
@@ -146,15 +230,10 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </AnimatedBentoCard>
 
         {/* 6. GitHub Link */}
-        <a 
-          href="https://github.com/yuikinman21" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="bento-card md:col-span-3 lg:col-span-2 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors"
-        >
+        <AnimatedBentoCard delay={0.6} href="https://github.com/yuikinman21" className="md:col-span-3 lg:col-span-2 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer" as="a" target="_blank" rel="noopener noreferrer">
           <div>
             <Label text="05. REPOSITORY" color="orange" />
             <h3 className="text-2xl font-bold text-slate-800 mt-2 group-hover:text-indigo-600 transition-colors">
@@ -167,15 +246,10 @@ export default function Home() {
           <div className="w-14 h-14 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 transition-all duration-300 shadow-sm">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           </div>
-        </a>
+        </AnimatedBentoCard>
 
         {/* 7. New Project Card (白鷺祭用語集) */}
-        <a 
-          href="https://shirasagi-sai.vercel.app/" // ★ここに実際のHPのURLを入れてください（例: https://shirasagisai-glossary.com）
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="bento-card md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors"
-        >
+        <AnimatedBentoCard delay={0.7} href="#" className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer" as="a" target="_blank" rel="noopener noreferrer">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label text="06. PROJECT" color="pink" />
@@ -190,9 +264,8 @@ export default function Home() {
                 白鷺祭用語集
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                白鷺祭の委員のための用語まとめサイト。<br/>
-                白鷺祭に関する用語や重要情報を一元管理し、委員間の情報共有と理解促進を図ります。<br/>
-                現在、共同開発中。(リンクはサンプルページです)
+                学園祭をより楽しむためのWeb用語集サイト。<br/>
+                来場者が迷わないための検索機能と、親しみやすいUIを設計中。
               </p>
             </div>
           </div>
@@ -206,7 +279,7 @@ export default function Home() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
             </div>
           </div>
-        </a>
+        </AnimatedBentoCard>
 
       </main>
 
