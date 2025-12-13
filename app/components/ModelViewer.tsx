@@ -5,10 +5,10 @@ import { OrbitControls, useGLTF, Environment, Float, Center } from '@react-three
 import { Suspense, useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// 瞳のデータ構造を定義（メッシュ本体と、その初期角度）
+// 瞳のデータ構造
 type PupilData = {
   mesh: THREE.Mesh;
-  baseRotation: THREE.Euler; // 初期角度を保存する場所
+  baseQuaternion: THREE.Quaternion; // 角度(Euler)ではなく、姿勢(Quaternion)で保存
 };
 
 function SceneContent() {
@@ -21,18 +21,17 @@ function SceneContent() {
     pupilsRef.current = [];
 
     scene.traverse((child) => {
+      // 名前に "Hitomi_Blue" を含むメッシュを探す
       if ((child as THREE.Mesh).isMesh && child.name.includes('Hitomi_Blue')) {
         const mesh = child as THREE.Mesh;
-
-        // ⚠️重要：現在の回転角度（初期位置）をクローンして保存しておく
-        const initialRotation = mesh.rotation.clone();
+        
+        // ★重要：初期の「姿勢（クォータニオン）」を保存しておく
+        const initialQuaternion = mesh.quaternion.clone();
 
         pupilsRef.current.push({
           mesh: mesh,
-          baseRotation: initialRotation
+          baseQuaternion: initialQuaternion
         });
-
-        console.log(`✅ 瞳を登録 (初期角度保存済み): ${mesh.name}`);
       }
     });
   }, [scene]);
@@ -40,31 +39,41 @@ function SceneContent() {
   useFrame((state) => {
     if (pupilsRef.current.length === 0) return;
 
-    const mouseX = state.mouse.x;
-    const mouseY = state.mouse.y;
-    const intensity = 0.2; // 少し強めにしてもOK
+    const mouseX = state.mouse.x; // -1 (左) ~ 1 (右)
+    const mouseY = state.mouse.y; // -1 (下) ~ 1 (上)
+    
+    // 動きの大きさ（お好みで調整してください）
+    const intensity = 0.2;
 
-    // 登録された全ての瞳をループ
-    pupilsRef.current.forEach(({ mesh, baseRotation }) => {
-      // マウスによる「追加の」回転量
-      const offsetX = -mouseY * intensity;
-      const offsetY = mouseX * intensity;
+    // ■カメラの向きに合わせて回転軸を作る
+    // これにより、モデルが横を向いていても、カメラから見て「上下左右」に正しく動きます
+    const camera = state.camera;
+    
+    // カメラの「右方向」と「上方向」のベクトルを取得
+    const camRight = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
+    const camUp = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
 
-      // 【修正ポイント】
-      // 「初期角度(baseRotation)」 に 「マウスの動き」 を足した場所を目指す
-      const targetRotationX = baseRotation.x + offsetX;
-      const targetRotationY = baseRotation.y + offsetY;
-      // Z軸（首をかしげる動き）は初期角度のままにする
-      const targetRotationZ = baseRotation.z;
+    // ■マウスの動きに応じた回転を作る
+    // 縦の動き(Y) -> カメラの右軸(camRight)を中心に回転
+    const rotationX = new THREE.Quaternion().setFromAxisAngle(camRight, mouseY * intensity);
+    // 横の動き(X) -> カメラの上軸(camUp)を中心に回転
+    const rotationY = new THREE.Quaternion().setFromAxisAngle(camUp, mouseX * intensity);
 
-      // 滑らかに移動 (Lerp)
-      mesh.rotation.x = THREE.MathUtils.lerp(mesh.rotation.x, targetRotationX, 0.1);
-      mesh.rotation.y = THREE.MathUtils.lerp(mesh.rotation.y, targetRotationY, 0.1);
-      mesh.rotation.z = THREE.MathUtils.lerp(mesh.rotation.z, targetRotationZ, 0.1);
+    // 回転を合成する (横回転 × 縦回転)
+    const targetRotation = rotationY.multiply(rotationX);
+
+    pupilsRef.current.forEach(({ mesh, baseQuaternion }) => {
+      // ★重要： 「マウス回転」 × 「初期姿勢」 の順番で適用
+      // これで「元の向きを保ったまま、カメラから見た方向にグリッと動く」ようになります
+      const finalQuaternion = targetRotation.clone().multiply(baseQuaternion);
+
+      // 滑らかに動かす (Slerp)
+      mesh.quaternion.slerp(finalQuaternion, 0.1);
     });
   });
 
-  return <primitive object={scene} scale={2.0}/>;
+  // モデルのサイズ調整（scaleはお好みで）
+  return <primitive object={scene} scale={1.5} />;
 }
 
 export default function ModelViewer() {
@@ -75,11 +84,13 @@ export default function ModelViewer() {
           <Environment preset="city" />
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
+          
           <Float speed={2} rotationIntensity={1} floatIntensity={1}>
             <Center>
               <SceneContent />
             </Center>
           </Float>
+          
           <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
         </Suspense>
       </Canvas>
