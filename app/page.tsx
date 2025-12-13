@@ -107,8 +107,7 @@ export default function Home() {
           
           <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9]">
             {/* ここにスクランブルエフェクトを適用 */}
-            <ScrambleText text="YUIKI" />
-            <span className="text-slate-300">.DEV</span>
+            <ScrambleText text="Yuikinman21" />
           </h1>
           
           <motion.p 
@@ -129,7 +128,7 @@ export default function Home() {
           className="flex gap-3"
         >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" />
-          <SocialButton href="mailto:contact@example.com" label="Contact" />
+          <SocialButton href="mailto:sw23263n@st.omu.ac.jp" label="Contact" />
         </motion.div>
       </header>
 
@@ -161,12 +160,11 @@ export default function Home() {
         <AnimatedBentoCard delay={0.2} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4">
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
-            Engineering logic, <br/>
-            Crafting the unseen.
+            エンジニア見習いの<span className="text-indigo-600">Yuikinman21</span>です
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、3Dモデリングまで幅広く挑戦中のエンジニア見習い。<br/>
-            将来的にはIoTとセキュリティ分野での研究開発に携わり、技術で未来を形作ることを目指しています。<br />
+            将来的にはIoTとセキュリティ分野での研究開発に携わりたいと考えています。<br />
             現在は、大学院進学に向けて勉強中です。
           </p>
         </AnimatedBentoCard>
@@ -246,7 +244,7 @@ export default function Home() {
               Check my GitHub
             </h3>
             <p className="text-slate-500 text-sm mt-1">
-              ソースコードや開発ログはこちら
+              ソースコードや開発ログはこちらから
             </p>
           </div>
           <div className="w-14 h-14 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 transition-all duration-300 shadow-sm">
@@ -270,8 +268,9 @@ export default function Home() {
                 白鷺祭用語集
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                学園祭をより楽しむためのWeb用語集サイト。<br/>
-                来場者が迷わないための検索機能と、親しみやすいUIを設計中。
+                実行委員向けの用語まとめサイト<br/>
+                白鷺祭の準備や運営を円滑にするためのリソースを提供。<br />
+                現在、実行委員OBのメンバーと共同開発中です。
               </p>
             </div>
           </div>
