@@ -2,15 +2,15 @@
 
 import Image from "next/image";
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, MouseEvent } from 'react';
 // アニメーション用ライブラリ
-import { motion } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
   ssr: false,
   loading: () => (
-    <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50">
+    <div className="w-full h-full flex items-center justify-center text-slate-300 bg-slate-900">
       <div className="animate-spin h-6 w-6 border-2 border-indigo-500 rounded-full border-t-transparent"></div>
     </div>
   )
@@ -48,7 +48,6 @@ function ScrambleText({ text, className }: { text: string; className?: string })
     }, 30);
   };
 
-  // 初回表示時にも実行
   useEffect(() => {
     startScramble();
     return () => {
@@ -57,19 +56,26 @@ function ScrambleText({ text, className }: { text: string; className?: string })
   }, []);
 
   return (
-    <span 
-      className={className} 
-      onMouseEnter={startScramble} // ホバーでも発動
-    >
+    <span className={className} onMouseEnter={startScramble}>
       {displayText}
     </span>
   );
 }
 
-// --- アニメーション付きBentoカード（修正版） ---
-// hrefがある場合は<a>タグ、ない場合は<div>タグとしてレンダリングします
+// --- スポットライト付きBentoカード ---
+// マウス位置に合わせて光るエフェクトを追加
 function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: any) {
   const Component = href ? motion.a : motion.div;
+  
+  // マウス座標の管理
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
 
   return (
     <Component
@@ -77,11 +83,50 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
-      className={`bento-card ${className}`}
+      className={`bento-card group relative overflow-hidden ${className}`}
       href={href}
+      onMouseMove={handleMouseMove}
       {...props}
     >
-      {children}
+      {/* スポットライトエフェクト (背景) */}
+      <motion.div
+        className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+        style={{
+          background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(99, 102, 241, 0.1),
+              transparent 80%
+            )
+          `,
+        }}
+      />
+      {/* コンテンツ */}
+      <div className="relative h-full">
+        {children}
+      </div>
+      
+      {/* ボーダーを光らせるエフェクト */}
+      <motion.div
+         className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-300"
+         style={{
+           border: "1px solid rgba(99, 102, 241, 0.2)",
+           maskImage: useMotionTemplate`
+             radial-gradient(
+               300px circle at ${mouseX}px ${mouseY}px,
+               black,
+               transparent
+             )
+           `,
+           WebkitMaskImage: useMotionTemplate`
+             radial-gradient(
+               300px circle at ${mouseX}px ${mouseY}px,
+               black,
+               transparent
+             )
+           `,
+         }}
+      />
     </Component>
   );
 }
@@ -106,7 +151,6 @@ export default function Home() {
           </motion.div>
           
           <h1 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-[0.9]">
-            {/* ここにスクランブルエフェクトを適用 */}
             <ScrambleText text="Yuikinman21" />
           </h1>
           
@@ -132,7 +176,7 @@ export default function Home() {
         </motion.div>
       </header>
 
-      {/* --- Bento Grid Layout (アニメーション適用) --- */}
+      {/* --- Bento Grid Layout --- */}
       <main className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         
         {/* 1. Profile Image Card */}
@@ -151,7 +195,7 @@ export default function Home() {
           <div className="mt-8 text-center space-y-1 relative z-10">
             <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
             <p className="text-slate-500 font-mono text-sm bg-slate-100 px-3 py-1 rounded-full inline-block">
-              Osaka Metro Univ. Student
+              Osaka Metroporitan Univ. Student B3
             </p>
           </div>
         </AnimatedBentoCard>
@@ -160,7 +204,7 @@ export default function Home() {
         <AnimatedBentoCard delay={0.2} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4">
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
-            エンジニア見習いの<span className="text-indigo-600">Yuikinman21</span>です
+            色々挑戦中の<span className="text-indigo-600">エンジニア見習い</span>です
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、3Dモデリングまで幅広く挑戦中のエンジニア見習い。<br/>
@@ -169,7 +213,7 @@ export default function Home() {
           </p>
         </AnimatedBentoCard>
 
-        {/* 3. 3D Showcase */}
+        {/* 3. 3D Showcase (02. 3D WORKS) */}
         <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
           <div className="absolute top-6 left-6 z-20 pointer-events-none">
             <Label text="02. 3D WORKS" color="white" />
@@ -181,9 +225,9 @@ export default function Home() {
           </div>
 
           <div className="absolute bottom-6 right-6 z-20">
-             <span className="text-xs font-mono text-slate-500 bg-slate-800/50 px-2 py-1 rounded border border-slate-700">
+             {/* <span className="text-xs font-mono text-slate-500 bg-slate-800/50 px-2 py-1 rounded border border-slate-700">
                Drag to rotate
-             </span>
+             </span> */}
           </div>
         </AnimatedBentoCard>
 
@@ -217,17 +261,24 @@ export default function Home() {
           <Label text="04. SKILLS" color="blue" />
           <div className="mt-4 space-y-4">
             <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Dev</p>
+              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Languages & Frameworks</p>
               <div className="flex flex-wrap gap-1.5">
-                {["TypeScript", "Next.js", "React", "Node.js", "Python", "C++", "Java"].map(tech => (
+                {[
+                  "C", "C++", "Java", "Python", "Processing",
+                  "JavaScript", "TypeScript", "Node.js", "Next.js",
+                  "HTML5", "CSS3", "GAS"
+                ].map(tech => (
                   <TechTag key={tech} color="bg-blue-50 text-blue-700 border-blue-100">{tech}</TechTag>
                 ))}
               </div>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Creative</p>
+              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Tools & Creative</p>
               <div className="flex flex-wrap gap-1.5">
-                {["Blender", "AviUtl", "Figma", "VSCode"].map(tool => (
+                {[
+                  "Blender", "AviUtl", "VSCode",
+                  "Git", "GitHub", "Vercel"
+                ].map(tool => (
                   <TechTag key={tool} color="bg-purple-50 text-purple-700 border-purple-100">{tool}</TechTag>
                 ))}
               </div>
@@ -269,7 +320,7 @@ export default function Home() {
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 実行委員向けの用語まとめサイト<br/>
                 白鷺祭の準備や運営を円滑にするためのリソースを提供。<br />
-                現在、実行委員OBのメンバーと共同開発中です。
+                現在、実行委員OBのメンバーと共同開発中です。(リンク先はサンプルです)
               </p>
             </div>
           </div>
