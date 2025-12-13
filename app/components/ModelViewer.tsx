@@ -42,7 +42,7 @@ function SceneContent() {
 
     const mouseX = state.mouse.x;
     const mouseY = state.mouse.y;
-    const intensity = 0.5; // 少し強めにしてもOK
+    const intensity = 0.2; // 少し強めにしてもOK
 
     // 登録された全ての瞳をループ
     pupilsRef.current.forEach(({ mesh, baseRotation }) => {

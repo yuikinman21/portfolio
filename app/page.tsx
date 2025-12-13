@@ -180,7 +180,6 @@ export default function Home() {
             <ModelViewer />
           </div>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent pointer-events-none z-10" />
           <div className="absolute bottom-6 right-6 z-20">
              <span className="text-xs font-mono text-slate-500 bg-slate-800/50 px-2 py-1 rounded border border-slate-700">
                Drag to rotate
