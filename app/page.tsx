@@ -4,7 +4,7 @@ import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef } from 'react';
 // アニメーション用ライブラリ
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
@@ -25,7 +25,7 @@ function ScrambleText({ text, className }: { text: string; className?: string })
 
   const startScramble = () => {
     let iteration = 0;
-    clearInterval(intervalRef.current as NodeJS.Timeout);
+    if (intervalRef.current) clearInterval(intervalRef.current);
 
     intervalRef.current = setInterval(() => {
       setDisplayText((prev) =>
@@ -41,7 +41,7 @@ function ScrambleText({ text, className }: { text: string; className?: string })
       );
 
       if (iteration >= text.length) {
-        clearInterval(intervalRef.current as NodeJS.Timeout);
+        if (intervalRef.current) clearInterval(intervalRef.current);
       }
 
       iteration += 1 / 3;
@@ -51,7 +51,9 @@ function ScrambleText({ text, className }: { text: string; className?: string })
   // 初回表示時にも実行
   useEffect(() => {
     startScramble();
-    return () => clearInterval(intervalRef.current as NodeJS.Timeout);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, []);
 
   return (
@@ -64,19 +66,23 @@ function ScrambleText({ text, className }: { text: string; className?: string })
   );
 }
 
-// --- アニメーション付きBentoカード ---
-function AnimatedBentoCard({ children, className, delay = 0, ...props }: any) {
+// --- アニメーション付きBentoカード（修正版） ---
+// hrefがある場合は<a>タグ、ない場合は<div>タグとしてレンダリングします
+function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: any) {
+  const Component = href ? motion.a : motion.div;
+
   return (
-    <motion.div
+    <Component
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
       className={`bento-card ${className}`}
+      href={href}
       {...props}
     >
       {children}
-    </motion.div>
+    </Component>
   );
 }
 
@@ -111,8 +117,8 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-slate-500 font-medium max-w-lg text-lg"
           >
-            情報工学とクリエイティブの交差点。<br/>
-            <span className="text-indigo-600">論理（Code）</span>と<span className="text-purple-600">感性（Art）</span>で未来を実装する。
+            IoTに興味があるエンジニア見習い<br/>
+            <span className="text-indigo-600">ネットワーク</span>と<span className="text-purple-600">セキュリティ</span>を研究しながら、3Dモデル作成やWeb開発に挑戦中。
           </motion.p>
         </div>
         
@@ -144,7 +150,7 @@ export default function Home() {
             />
           </div>
           <div className="mt-8 text-center space-y-1 relative z-10">
-            <h2 className="text-3xl font-bold text-slate-800">YUIKI</h2>
+            <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
             <p className="text-slate-500 font-mono text-sm bg-slate-100 px-3 py-1 rounded-full inline-block">
               Osaka Metro Univ. Student
             </p>
@@ -159,9 +165,9 @@ export default function Home() {
             Crafting the unseen.
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
-            Web技術から低レイヤー、そして3D表現まで。
-            「仕組み」を理解し、「体験」として再構築することをテーマに活動する情報系エンジニア（Class of 2029）。
-            現在は大学院進学を見据え、研究と個人開発の両輪でスキルを磨いています。
+            フロントエンドからバックエンド、3Dモデリングまで幅広く挑戦中のエンジニア見習い。<br/>
+            将来的にはIoTとセキュリティ分野での研究開発に携わり、技術で未来を形作ることを目指しています。<br />
+            現在は、大学院進学に向けて勉強中です。
           </p>
         </AnimatedBentoCard>
 
@@ -233,7 +239,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 6. GitHub Link */}
-        <AnimatedBentoCard delay={0.6} href="https://github.com/yuikinman21" className="md:col-span-3 lg:col-span-2 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer" as="a" target="_blank" rel="noopener noreferrer">
+        <AnimatedBentoCard delay={0.6} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
           <div>
             <Label text="05. REPOSITORY" color="orange" />
             <h3 className="text-2xl font-bold text-slate-800 mt-2 group-hover:text-indigo-600 transition-colors">
@@ -249,7 +255,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 7. New Project Card (白鷺祭用語集) */}
-        <AnimatedBentoCard delay={0.7} href="#" className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer" as="a" target="_blank" rel="noopener noreferrer">
+        <AnimatedBentoCard delay={0.7} href="https://shirasagi-sai.vercel.app/" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label text="06. PROJECT" color="pink" />
