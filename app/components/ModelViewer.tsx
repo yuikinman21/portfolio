@@ -64,7 +64,7 @@ function SceneContent() {
     });
   });
 
-  return <primitive object={scene} scale={1.5}/>;
+  return <primitive object={scene} scale={2.0}/>;
 }
 
 export default function ModelViewer() {
