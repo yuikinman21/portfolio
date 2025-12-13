@@ -164,8 +164,8 @@ export default function Home() {
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、3Dモデリングまで幅広く挑戦中のエンジニア見習い。<br/>
-            将来的にはIoTとセキュリティ分野での研究開発に携わりたいと考えています。<br />
-            現在は、大学院進学に向けて勉強中です。
+            将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
+            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、大学院進学に向けて勉強中です。
           </p>
         </AnimatedBentoCard>
 
