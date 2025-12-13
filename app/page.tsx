@@ -171,7 +171,7 @@ export default function Home() {
 
         {/* 7. New Project Card (白鷺祭用語集) */}
         <a 
-          href="#" // ★ここに実際のHPのURLを入れてください（例: https://shirasagisai-glossary.com）
+          href="https://shirasagi-sai.vercel.app/" // ★ここに実際のHPのURLを入れてください（例: https://shirasagisai-glossary.com）
           target="_blank" 
           rel="noopener noreferrer" 
           className="bento-card md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors"
@@ -190,8 +190,9 @@ export default function Home() {
                 白鷺祭用語集
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                学園祭をより楽しむためのWeb用語集サイト。<br/>
-                来場者が迷わないための検索機能と、親しみやすいUIを設計中。
+                白鷺祭の委員のための用語まとめサイト。<br/>
+                白鷺祭に関する用語や重要情報を一元管理し、委員間の情報共有と理解促進を図ります。<br/>
+                現在、共同開発中。(リンクはサンプルページです)
               </p>
             </div>
           </div>
