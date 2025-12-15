@@ -183,13 +183,14 @@ export default function Home() {
         <AnimatedBentoCard delay={0.1} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[350px] flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-50 to-white group relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
           
-          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2">
+          {/* ↓↓↓ className末尾に "mx-auto" を追加しました ↓↓↓ */}
+          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto">
             <Image
               src="/サーキュラー8bit.jpg"
               alt="YUIKI Profile Icon"
               fill
               className="object-cover"
-              style={{objectPosition: '45% 50%'}}
+              // style={{objectPosition: '45% 50%'}}
               priority
             />
           </div>
@@ -218,7 +219,8 @@ export default function Home() {
             </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
-            フロントエンドからバックエンド、3Dモデリング、そして動画編集まで幅広く挑戦中の大学生。<br/>
+            フロントエンドからバックエンド、3Dモデリング、そして動画編集まで幅広く挑戦中。<br/>
+            新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
             現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、大学院進学に向けて勉強中です。
           </p>
@@ -288,7 +290,7 @@ export default function Home() {
               <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Tools & Creative</p>
               <div className="flex flex-wrap gap-1.5">
                 {[
-                  "Blender", "AviUtl", "VSCode",
+                  "Blender","GIMP","DaVinci Resolve", "AviUtl", "VSCode",
                   "Git", "GitHub", "Vercel"
                 ].map(tool => (
                   <TechTag key={tool} color="bg-purple-50 text-purple-700 border-purple-100">{tool}</TechTag>
