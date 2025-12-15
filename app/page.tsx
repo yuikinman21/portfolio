@@ -183,13 +183,14 @@ export default function Home() {
         <AnimatedBentoCard delay={0.1} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[350px] flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-50 to-white group relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
           
-          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2">
+          {/* ↓↓↓ className末尾に "mx-auto" を追加しました ↓↓↓ */}
+          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto">
             <Image
               src="/サーキュラー8bit.jpg"
               alt="YUIKI Profile Icon"
               fill
               className="object-cover"
-              style={{ objectPosition: '25% 50%' }}
+              // style={{objectPosition: '45% 50%'}}
               priority
             />
           </div>
