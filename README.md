@@ -3,6 +3,8 @@
 **IoT、ネットワーク、セキュリティ**を学ぶ大学生 **YUIKI MAKINO (Yuikinman21)** の個人ポートフォリオサイトです。
 Next.js (App Router) と React Three Fiber を活用し、インタラクティブな3D要素やモダンなUIアニメーションを取り入れています。
 
+![Portfolio Preview](./public/screen.png)
+
 ## ✨ 特徴 (Features)
 
 * **Bento Grid Layout**: 情報をカード形式で整理し、視認性を高めたモダンなグリッドレイアウトを採用。
