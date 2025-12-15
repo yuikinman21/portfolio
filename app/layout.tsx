@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* Hydrationエラーを抑制する設定を追加済み */}
+      {/* 修正ポイント: suppressHydrationWarning={true} を追加 */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}

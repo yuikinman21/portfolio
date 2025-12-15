@@ -55,7 +55,7 @@ function SceneContent() {
 
     // ■マウスの動きに応じた回転を作る
     // 縦の動き(Y) -> カメラの右軸(camRight)を中心に回転
-    const rotationX = new THREE.Quaternion().setFromAxisAngle(camRight, mouseY * intensity);
+    const rotationX = new THREE.Quaternion().setFromAxisAngle(camRight, -mouseY * intensity);
     // 横の動き(X) -> カメラの上軸(camUp)を中心に回転
     const rotationY = new THREE.Quaternion().setFromAxisAngle(camUp, mouseX * intensity);
 
