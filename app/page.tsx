@@ -160,7 +160,7 @@ export default function Home() {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-slate-500 font-medium max-w-lg text-lg"
           >
-            IoTに興味があるエンジニア見習い<br/>
+            IoTに興味がある大学生<br/>
             <span className="text-indigo-600">ネットワーク</span>と<span className="text-purple-600">セキュリティ</span>を研究しながら、3Dモデル作成やWeb開発に挑戦中。
           </motion.p>
         </div>
@@ -195,7 +195,7 @@ export default function Home() {
           <div className="mt-8 text-center space-y-1 relative z-10">
             <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
             <p className="text-slate-500 font-mono text-sm bg-slate-100 px-3 py-1 rounded-full inline-block">
-              Osaka Metroporitan Univ. Student B3
+              Osaka Metropolitan Univ. Student B3
             </p>
           </div>
         </AnimatedBentoCard>
@@ -204,10 +204,20 @@ export default function Home() {
         <AnimatedBentoCard delay={0.2} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4">
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
-            色々挑戦中の<span className="text-indigo-600">エンジニア見習い</span>です
+            様々なことに挑戦中の<span className="text-indigo-600">大学生</span>です！
+            <html lang="en">
+            <head>
+              <meta charSet="UTF-8" />
+              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+              <title>Document</title>
+            </head>
+            <body>
+              
+            </body>
+            </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
-            フロントエンドからバックエンド、3Dモデリングまで幅広く挑戦中のエンジニア見習い。<br/>
+            フロントエンドからバックエンド、3Dモデリング、そして動画編集まで幅広く挑戦中の大学生。<br/>
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
             現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、大学院進学に向けて勉強中です。
           </p>
@@ -216,7 +226,7 @@ export default function Home() {
         {/* 3. 3D Showcase (02. 3D WORKS) */}
         <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
           <div className="absolute top-6 left-6 z-20 pointer-events-none">
-            <Label text="02. 3D WORKS" color="white" />
+            <Label text="02. 3D WORKS" color="indigo" />
             <p className="text-slate-400 text-xs mt-1">Interactive 3D Demo with React Three Fiber</p>
           </div>
           
@@ -265,7 +275,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "C", "C++", "Java", "Python", "Processing",
-                  "JavaScript", "TypeScript", "Node.js", "Next.js",
+                  "JavaScript", "TypeScript", "Next.js", "Tailwind CSS",
                   "HTML5", "CSS3", "GAS"
                 ].map(tech => (
                   <TechTag key={tech} color="bg-blue-50 text-blue-700 border-blue-100">{tech}</TechTag>
