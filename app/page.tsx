@@ -189,6 +189,7 @@ export default function Home() {
               alt="YUIKI Profile Icon"
               fill
               className="object-cover"
+              style={{objectPosition: '45% 50%'}}
               priority
             />
           </div>
