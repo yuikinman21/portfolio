@@ -172,7 +172,7 @@ export default function Home() {
           className="flex gap-3"
         >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" />
-          <SocialButton href="mailto:sw23263n@st.omu.ac.jp" label="Contact" />
+          <SocialButton href="mailto:yuikinman21@gmail.com" label="Contact" />
         </motion.div>
       </header>
 
