@@ -341,7 +341,7 @@ export default function Home() {
 
           <div className="mt-6 flex items-center justify-between border-t border-pink-100/50 pt-4">
             <div className="flex gap-2">
-               <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">React</span>
+               <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Next.js</span>
                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Vercel</span>
             </div>
             <div className="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-400 group-hover:text-pink-600 group-hover:scale-110 transition-all shadow-sm">
