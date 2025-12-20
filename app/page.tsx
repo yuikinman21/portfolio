@@ -408,10 +408,11 @@ export default function Home() {
 
 // --- Helper Components ---
 
-function Label({ text, color }: { text: string; color: "purple" | "blue" | "green" | "orange" | "indigo" | "white" | "pink" }) {
+function Label({ text, color }: { text: string; color: "purple" | "blue" | "cyan" | "green" | "orange" | "indigo" | "white" | "pink" }) {
   const colors = {
     purple: "text-purple-600",
     blue: "text-blue-600",
+    cyan: "text-cyan-600",
     green: "text-emerald-600",
     orange: "text-orange-600",
     indigo: "text-indigo-600",
