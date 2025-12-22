@@ -359,35 +359,34 @@ export default function Home() {
               <Label text="07. HOME LAB" color="indigo" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
               <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                RUNNING 24/7
+                NOW STUDYING
               </span>
             </div>
             
             <div>
               <h3 className="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
-                Home Building OS
+                Home OS
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                自宅環境を「ビル」に見立てた統合管理システム。<br/>
-                室温・電力使用量の可視化や、空調・照明の自動制御を行うIoT基盤を自作サーバー上で運用しています。
+                自宅環境を統合管理するシステムの構築<br/>
+                室温・電力使用量の可視化や、空調・照明・ロボット掃除機の自動制御を行うIoT基盤を自作サーバー上で運用しています。<br/>
+                また、Grafanaを用いてダッシュボードを作成し、リアルタイムでデータを監視しています。<br/>
+                将来的には、生成AIと連携させてより高度なスマートホーム化を目指しています。
               </p>
             </div>
           </div>
 
           <div className="mt-6">
             {/* 使用技術スタック（実際のものに合わせて書き換えてください） */}
-            <div className="flex flex-wrap gap-2 mb-4">
-               <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
-               <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
-               <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">MQTT</span>
-               <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
-            </div>
 
             <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
-              <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
-                <span>Status: All Green</span>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">MQTT</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
               </div>
+
               {/* 詳細ページやGitHubへのリンクがあれば href を追加して <a> タグなどに変更してください */}
               <div className="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-400">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" /></svg>
