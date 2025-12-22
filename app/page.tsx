@@ -222,7 +222,7 @@ export default function Home() {
             フロントエンドからバックエンド、3Dモデリング、そしてIoTの研究まで幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
-            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家でIoT機器を用いてビルOS(ならぬホームOS)の構築をしたり、大学院進学に向けて勉強中です。
+            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家でIoT機器を用いてビルOSの構築をしたり、大学院進学に向けて勉強をしたりしています。
           </p>
         </AnimatedBentoCard>
 
@@ -266,6 +266,8 @@ export default function Home() {
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Web Application</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> 3D Modeling</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> TOEIC</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Biulding-OS</span>
             </div>
           </div>
         </AnimatedBentoCard>
@@ -291,7 +293,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Blender","GIMP","DaVinci Resolve", "AviUtl", "VSCode",
-                  "Git", "GitHub", "Vercel"
+                  "Git", "GitHub", "Vercel", "Docker"
                 ].map(tool => (
                   <TechTag key={tool} color="bg-purple-50 text-purple-700 border-purple-100">{tool}</TechTag>
                 ))}
