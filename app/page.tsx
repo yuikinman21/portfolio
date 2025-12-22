@@ -219,10 +219,10 @@ export default function Home() {
             </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
-            フロントエンドからバックエンド、3Dモデリング、そして動画編集まで幅広く挑戦中。<br/>
+            フロントエンドからバックエンド、3Dモデリング、そしてIoTの研究まで幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
-            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、大学院進学に向けて勉強中です。
+            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家でIoT機器を用いてビルOS(ならぬホームOS)の構築をしたり、大学院進学に向けて勉強中です。
           </p>
         </AnimatedBentoCard>
 
