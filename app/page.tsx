@@ -251,8 +251,7 @@ export default function Home() {
             <CertItem 
               title="応用情報技術者 (AP)" 
               date="2025.10" 
-              status="pending"
-              note="結果待ち"
+              status="certified"
             />
             <CertItem 
               title="基本情報技術者 (FE)" 
