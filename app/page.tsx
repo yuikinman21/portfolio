@@ -335,7 +335,7 @@ export default function Home() {
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 実行委員向けの用語まとめサイト<br/>
                 白鷺祭の準備や運営を円滑にするためのリソースを提供。<br />
-                現在、実行委員OBのメンバーと共同開発中です。(リンク先はサンプルです)
+                実行委員会のメンバーと共同開発しました。(リンク先はサンプルです)
               </p>
             </div>
           </div>
