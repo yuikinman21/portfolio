@@ -219,10 +219,10 @@ export default function Home() {
             </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
-            フロントエンドからバックエンド、3Dモデリング、そして動画編集まで幅広く挑戦中。<br/>
+            フロントエンドからバックエンド、3Dモデリング、そしてIoTの研究まで幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
-            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、大学院進学に向けて勉強中です。
+            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家でIoT機器を用いてビルOSの構築をしたり、大学院進学に向けて勉強をしたりしています。
           </p>
         </AnimatedBentoCard>
 
@@ -251,8 +251,7 @@ export default function Home() {
             <CertItem 
               title="応用情報技術者 (AP)" 
               date="2025.10" 
-              status="pending"
-              note="結果待ち"
+              status="certified"
             />
             <CertItem 
               title="基本情報技術者 (FE)" 
@@ -263,9 +262,13 @@ export default function Home() {
           <div className="pt-4 border-t border-slate-100">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
             <div className="flex flex-wrap gap-2">
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> NW</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> SC</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Web Application</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> 3D Modeling</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> TOEIC</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
             </div>
           </div>
         </AnimatedBentoCard>
@@ -291,7 +294,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Blender","GIMP","DaVinci Resolve", "AviUtl", "VSCode",
-                  "Git", "GitHub", "Vercel"
+                  "Git", "GitHub", "Vercel", "Docker"
                 ].map(tool => (
                   <TechTag key={tool} color="bg-purple-50 text-purple-700 border-purple-100">{tool}</TechTag>
                 ))}
@@ -311,7 +314,7 @@ export default function Home() {
               ソースコードや開発ログはこちらから
             </p>
           </div>
-          <div className="w-14 h-14 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 transition-all duration-300 shadow-sm">
+          <div className="w-14 h-14 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 transition-all duration-300 shadow-sm self-end">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
           </div>
         </AnimatedBentoCard>
@@ -334,7 +337,7 @@ export default function Home() {
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 実行委員向けの用語まとめサイト<br/>
                 白鷺祭の準備や運営を円滑にするためのリソースを提供。<br />
-                現在、実行委員OBのメンバーと共同開発中です。(リンク先はサンプルです)
+                実行委員会のメンバーと共同開発しました。(リンク先はサンプルです)
               </p>
             </div>
           </div>
@@ -346,6 +349,49 @@ export default function Home() {
             </div>
             <div className="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-400 group-hover:text-pink-600 group-hover:scale-110 transition-all shadow-sm">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </div>
+          </div>
+        </AnimatedBentoCard>
+
+        {/* 8. Home Building OS */}
+        <AnimatedBentoCard delay={0.8} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-default">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label text="07. HOME LAB" color="indigo" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
+              <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                NOW STUDYING
+              </span>
+            </div>
+            
+            <div>
+              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
+                Home OS
+              </h3>
+              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                自宅環境を統合管理するシステムの構築<br/>
+                室温・電力使用量の可視化や、空調・照明・ロボット掃除機の自動制御を行うIoT基盤を自作サーバー上で運用しています。<br/>
+                また、Grafanaを用いてダッシュボードを作成し、リアルタイムでデータを監視しています。<br/>
+                将来的には、生成AIと連携させてより高度なスマートホーム化を目指しています。
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            {/* 使用技術スタック（実際のものに合わせて書き換えてください） */}
+
+            <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Linux</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
+              </div>
+
+              {/* 詳細ページやGitHubへのリンクがあれば href を追加して <a> タグなどに変更してください */}
+              <div className="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-400">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </div>
             </div>
           </div>
         </AnimatedBentoCard>
@@ -364,10 +410,11 @@ export default function Home() {
 
 // --- Helper Components ---
 
-function Label({ text, color }: { text: string; color: "purple" | "blue" | "green" | "orange" | "indigo" | "white" | "pink" }) {
+function Label({ text, color }: { text: string; color: "purple" | "blue" | "cyan" | "green" | "orange" | "indigo" | "white" | "pink" }) {
   const colors = {
     purple: "text-purple-600",
     blue: "text-blue-600",
+    cyan: "text-cyan-600",
     green: "text-emerald-600",
     orange: "text-orange-600",
     indigo: "text-indigo-600",
