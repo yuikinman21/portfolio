@@ -222,7 +222,7 @@ export default function Home() {
             フロントエンドからバックエンド、3Dモデリング、そしてIoTの研究まで幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
-            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家でIoT機器を用いてビルOSの構築をしたり、大学院進学に向けて勉強をしたりしています。
+            現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家にIoT機器などを導入してスマートホームの構築をしたり、大学院進学に向けて勉強をしたりしています。
           </p>
         </AnimatedBentoCard>
 
@@ -371,14 +371,14 @@ export default function Home() {
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 自宅環境を統合管理するシステムの構築<br/>
                 室温・電力使用量の可視化や、空調・照明・ロボット掃除機の自動制御を行うIoT基盤を自作サーバー上で運用しています。<br/>
-                また、Grafanaを用いてダッシュボードを作成し、リアルタイムでデータを監視しています。<br/>
+                また、Grafanaを用いてダッシュボードを作成し、データを収集したり、家のリビングに最寄り駅の出発情報や地域のゴミ出し情報をまとめて表示しています。<br/>
                 将来的には、生成AIと連携させてより高度なスマートホーム化を目指しています。
               </p>
             </div>
           </div>
 
           <div className="mt-6">
-            {/* 使用技術スタック（実際のものに合わせて書き換えてください） */}
+            {/* 使用技術スタック */}
 
             <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
               <div className="flex flex-wrap gap-2 mb-4">
