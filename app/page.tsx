@@ -390,9 +390,9 @@ export default function Home() {
               </div>
 
               {/* 詳細ページやGitHubへのリンクがあれば href を追加して <a> タグなどに変更してください */}
-              <div className="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-400">
+              {/* <div className="w-10 h-10 rounded-full bg-cyan-50 flex items-center justify-center text-cyan-400">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" /></svg>
-              </div>
+              </div> */}
             </div>
           </div>
         </AnimatedBentoCard>
