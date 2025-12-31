@@ -255,7 +255,7 @@ export default function Home() {
             />
             <CertItem 
               title="基本情報技術者 (FE)" 
-              date="2025.06" 
+              date="2025.07" 
               status="certified" 
             />
           </div>
