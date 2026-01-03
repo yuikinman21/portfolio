@@ -247,7 +247,7 @@ export default function Home() {
         {/* 4. Timeline (History & Status) */}
         <AnimatedBentoCard delay={0.4} className="md:col-span-6 lg:col-span-2 p-6 space-y-6">
           <Label text="03. TIMELINE" color="green" />
-          <div className="space-y-3">
+          {/* <div className="space-y-3">
             <CertItem 
               title="応用情報技術者 (AP)" 
               date="2025.10" 
@@ -257,8 +257,8 @@ export default function Home() {
               title="基本情報技術者 (FE)" 
               date="2025.07" 
               status="certified" 
-            />
-          </div>
+            /> */}
+          {/* </div>
           <div className="pt-4 border-t border-slate-100">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
             <div className="flex flex-wrap gap-2">
@@ -270,8 +270,35 @@ export default function Home() {
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
             </div>
+          </div> */}
+          <div className="space-y-6 mt-4 pl-2 border-l-2 border-slate-100 relative">
+            {/* タイムラインコンテンツ */}
+            <TimelineItem
+              date="2025.10"
+              title="応用情報技術者 (AP) "
+              org="IPA (情報処理推進機構)"
+              icon="📝"
+              type="cert"
+            />
+
+            <TimelineItem
+              date="2025.9"
+              title="研究室配属"
+              org="大阪公立大学 情報工学科 知的ネットワーキング研究グループ"
+              icon="🎓"
+              type="cert"
+            />
+
+            <TimelineItem
+              date="2025.07"
+              title="基本情報技術者 (FE)"
+              org="IPA (情報処理推進機構)"
+              icon="📝"
+              type="cert"
+            />
           </div>
         </AnimatedBentoCard>
+        
 
         {/* 5. Tech Stack */}
         <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6">
