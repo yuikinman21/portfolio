@@ -161,7 +161,7 @@ export default function Home() {
             className="text-slate-500 font-medium max-w-lg text-lg"
           >
             IoTに興味がある大学生<br/>
-            <span className="text-indigo-600">ネットワーク</span>と<span className="text-purple-600">セキュリティ</span>を研究しながら、3Dモデル作成やWeb開発に挑戦中。
+            <span className="text-indigo-600">ネットワーク</span>と<span className="text-purple-600">セキュリティ</span>を研究しながら、Web開発やスマートホームに挑戦中。
           </motion.p>
         </div>
         
@@ -219,7 +219,7 @@ export default function Home() {
             </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
-            フロントエンドからバックエンド、3Dモデリング、そしてIoTの研究まで幅広く挑戦中。<br/>
+            フロントエンドからバックエンド、セキュリティからスマートホームに関する研究など幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
             将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
             現在は、アルバイトで中学生にPythonやBlenderなどを教えながら、家にIoT機器などを導入してスマートホームの構築をしたり、大学院進学に向けて勉強をしたりしています。
