@@ -244,9 +244,9 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
-        {/* 4. Certifications */}
-        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6">
-          <Label text="03. STATUS" color="green" />
+        {/* 4. Timeline (History & Status) */}
+        <AnimatedBentoCard delay={0.4} className="md:col-span-6 lg:col-span-2 p-6 space-y-6">
+          <Label text="03. TIMELINE" color="green" />
           <div className="space-y-3">
             <CertItem 
               title="応用情報技術者 (AP)" 
@@ -456,6 +456,30 @@ function CertItem({ title, date, status, note }: { title: string; date: string; 
         <span className="font-mono text-xs text-slate-400">{date}</span>
         {note && <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">{note}</span>}
       </div>
+    </div>
+  );
+}
+
+function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org: string, children?: ReactNode, icon: string, isCurrent?: boolean, type?: "cert" }) {
+  return (
+    <div className="relative pl-6 pb-2 group">
+      {/* タイムラインの丸ポチ */}
+      <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white 
+        ${isCurrent ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' : 
+          type === 'cert' ? 'bg-amber-400' : 'bg-slate-300'}`} 
+      />
+      
+      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
+        <span className="font-mono text-xs text-slate-400 font-bold">{date}</span>
+        {isCurrent && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 rounded font-bold">CURRENT</span>}
+      </div>
+      
+      <h4 className="font-bold text-slate-800 text-sm group-hover:text-indigo-600 transition-colors">
+        {icon} {title}
+      </h4>
+      <div className="text-xs text-slate-500 font-medium">{org}</div>
+      
+      {children && <div className="mt-1">{children}</div>}
     </div>
   );
 }
