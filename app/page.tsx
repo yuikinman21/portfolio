@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef, MouseEvent } from 'react';
 // アニメーション用ライブラリ
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { ReactNode } from 'react';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
@@ -207,16 +208,6 @@ export default function Home() {
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
             様々なことに挑戦中の<span className="text-indigo-600">大学生</span>です！
-            <html lang="en">
-            <head>
-              <meta charSet="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Document</title>
-            </head>
-            <body>
-              
-            </body>
-            </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、セキュリティからスマートホームに関する研究など幅広く挑戦中。<br/>
@@ -229,7 +220,7 @@ export default function Home() {
         {/* 3. 3D Showcase (02. 3D WORKS) */}
         <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
           <div className="absolute top-6 left-6 z-20 pointer-events-none">
-            <Label text="02. 3D WORKS" color="indigo" />
+            <Label text="02. 3D WORKS" color="purple" />
             <p className="text-slate-400 text-xs mt-1">Interactive 3D Demo with React Three Fiber</p>
           </div>
           
@@ -244,22 +235,47 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
-        {/* 4. Certifications */}
+        {/* 4. Timeline (History & Status) */}
         <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6">
-          <Label text="03. STATUS" color="green" />
+          <Label text="03. TIMELINE" color="green" />
           <div className="space-y-3">
-            <CertItem 
-              title="応用情報技術者 (AP)" 
+            <TimelineItem 
               date="2025.10" 
-              status="certified"
+              title="応用情報技術者 (AP)" 
+              org="情報処理推進機構 (IPA)"
+              type="cert"
             />
-            <CertItem 
-              title="基本情報技術者 (FE)" 
+
+            <TimelineItem
+              date="2025.09 - Present"
+              title="研究室配属"
+              org="知的ネットワーキング研究グループ"
+              isCurrent
+              type="edu"
+            />
+
+            <TimelineItem 
               date="2025.07" 
-              status="certified" 
+              title="基本情報技術者 (FE)" 
+              org="情報処理推進機構 (IPA)"
+              type="cert"
             />
+            <TimelineItem
+              date="2023.04 - Present"
+              title="大阪公立大学 工学部 情報工学科"
+              org="Osaka Metropolitan University"
+              isCurrent
+              type="edu"
+            />
+            <TimelineItem
+              date="2020.04 - 2023.03"
+              title="京都市立西京高等学校 エンタープライジング科"
+              org="Kyoto Saikyo High School"
+              type="edu"
+            />
+
           </div>
-          <div className="pt-4 border-t border-slate-100">
+          {/* <div className="pt-4 border-t border-slate-100">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
             <div className="flex flex-wrap gap-2">
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> TOEIC</span>
@@ -270,12 +286,13 @@ export default function Home() {
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
             </div>
-          </div>
+          </div> */}
         </AnimatedBentoCard>
+        
 
         {/* 5. Tech Stack */}
         <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6">
-          <Label text="04. SKILLS" color="blue" />
+          <Label text="04. Tech Stack & Focus" color="blue" />
           <div className="mt-4 space-y-4">
             <div>
               <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Languages & Frameworks</p>
@@ -300,30 +317,28 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            <div className="w-full h-px bg-slate-200" />
+            <div>
+              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
+              <div className="flex flex-wrap gap-1.5">
+                {[
+                  "TOEIC","NW","SC", "Web Application", "3D Modeling", "IoT",
+                  "Building-OS"
+                ].map(tool => (
+                  <TechTag key={tool} color="bg-orange-50 text-orange-700 border-orange-100">{tool}</TechTag>
+                ))}
+              </div>
+            </div>
           </div>
+
         </AnimatedBentoCard>
 
-        {/* 6. GitHub Link */}
-        <AnimatedBentoCard delay={0.6} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
-          <div>
-            <Label text="05. REPOSITORY" color="orange" />
-            <h3 className="text-2xl font-bold text-slate-800 mt-2 group-hover:text-indigo-600 transition-colors">
-              Check my GitHub
-            </h3>
-            <p className="text-slate-500 text-sm mt-1">
-              ソースコードや開発ログはこちらから
-            </p>
-          </div>
-          <div className="w-14 h-14 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-indigo-600 group-hover:border-indigo-200 group-hover:scale-110 transition-all duration-300 shadow-sm self-end">
-            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          </div>
-        </AnimatedBentoCard>
 
         {/* 7. New Project Card (白鷺祭用語集) */}
-        <AnimatedBentoCard delay={0.7} href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer">
+        <AnimatedBentoCard delay={0.6} href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label text="06. PROJECT" color="pink" />
+              <Label text="05. PROJECT" color="pink" />
               <span className="inline-flex items-center gap-1.5 bg-pink-100 text-pink-600 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide animate-pulse">
                 <span className="w-1.5 h-1.5 rounded-full bg-pink-500"></span>
                 NOW BUILDING
@@ -354,10 +369,10 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 8. Home Building OS */}
-        <AnimatedBentoCard delay={0.8} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-default">
+        <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-default">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label text="07. HOME LAB" color="indigo" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
+              <Label text="06. HOME LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
               <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
                 NOW STUDYING
@@ -396,6 +411,38 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
+        {/* 6. GitHub Link */}
+        <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 w-full h-full">
+           {/* 左側：テキスト情報 */}
+           <div className="relative z-10 w-full md:w-auto md:flex-1 min-w-[200px]">
+            <Label text="07. REPOSITORY" color="orange" />
+            <h3 className="text-3xl font-bold text-slate-800 mt-2 group-hover:text-orange-600 transition-colors">
+              @yuikinman21
+            </h3>
+            <p className="text-slate-500 text-sm mt-2 max-w-md leading-relaxed">
+              ソースコードや開発ログはこちらから<br/>
+            </p>
+           </div>
+            {/* 中央：GitHub Contributions グラフ */}
+           <div className="hidden md:flex flex-[2] justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+             <img 
+               src="https://github-contributions-api.deno.dev/yuikinman21.svg" 
+               alt="GitHub Contributions" 
+               className="w-full h-auto object-contain max-h-[130px] transform scale-100 origin-center"
+             />
+           </div>
+
+           {/* 右側：アイコンとCTAボタン */}
+           <div className="relative z-10 flex flex-col items-center gap-2 flex-shrink-0 ml-auto md:ml-0">
+             <div className="w-16 h-16 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-orange-600 group-hover:border-indigo-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
+               <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+             </div>
+             <span className="text-xs font-bold text-slate-400 group-hover:text-orange-500 transition-colors">View Profile</span>
+           </div>
+          </div>
+        </AnimatedBentoCard>
       </main>
 
       <footer className="py-12 text-center">
@@ -441,21 +488,52 @@ function SocialButton({ href, label }: { href: string; label: string }) {
   );
 }
 
-function CertItem({ title, date, status, note }: { title: string; date: string; status: "certified" | "pending"; note?: string }) {
+function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org?: string, children?: ReactNode, icon?: string, isCurrent?: boolean, type?: "cert" | "work" | "edu" }) {
   return (
-    <div className="flex flex-col border-l-2 border-slate-100 pl-3 py-1 hover:border-indigo-400 transition-colors group">
-      <div className="flex items-center gap-2">
-        <span className="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">{title}</span>
-        {status === "certified" ? (
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-        ) : (
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+        <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-indigo-200 transition-colors group">
+      
+      {/* --- タイムラインの丸ポチ (TimelineItemのステータス円を拡張) --- */}
+      <div 
+        className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white box-content z-10 transition-all duration-300 group-hover:scale-110
+          ${isCurrent 
+            ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' // 現在進行形は緑の光
+            : type === 'cert' 
+              ? 'bg-amber-400' // 資格は黄色
+              : 'bg-slate-300 group-hover:bg-indigo-400' // 過去の経歴はグレー→ホバーで紫
+          }`} 
+      />
+      
+      {/* --- 日付 & ステータスバッジ --- */}
+      <div className="flex flex-wrap items-center gap-x-2 mb-1">
+        <span className="font-mono text-xs text-slate-400 font-bold group-hover:text-indigo-500 transition-colors">
+          {date}
+        </span>
+        {isCurrent && (
+          <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold tracking-wider">
+            CURRENT
+          </span>
         )}
       </div>
-      <div className="flex items-center gap-2 mt-0.5">
-        <span className="font-mono text-xs text-slate-400">{date}</span>
-        {note && <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">{note}</span>}
-      </div>
+      
+      {/* --- タイトル (TimelineItemのデザインを継承) --- */}
+      <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2 group-hover:text-indigo-600 transition-colors">
+        {icon && <span>{icon}</span>}
+        {title}
+      </h4>
+
+      {/* --- 所属・組織名 (新規追加) --- */}
+      {org && (
+        <div className="text-xs text-slate-500 font-medium mt-0.5">
+          {org}
+        </div>
+      )}
+      
+      {/* --- 詳細説明 (childrenで柔軟に記述可能) --- */}
+      {children && (
+        <div className="mt-2 text-xs text-slate-600 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">
+          {children}
+        </div>
+      )}
     </div>
   );
 }
