@@ -430,7 +430,7 @@ export default function Home() {
              <img 
                src="https://github-contributions-api.deno.dev/yuikinman21.svg" 
                alt="GitHub Contributions" 
-               className="w-full max-w-[500px] h-auto object-contain"
+               className="w-full h-auto object-contain max-h-[130px] transform scale-100 origin-center"
              />
            </div>
 
