@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef, MouseEvent } from 'react';
 // アニメーション用ライブラリ
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { ReactNode } from 'react';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
@@ -247,18 +248,42 @@ export default function Home() {
         {/* 4. Timeline (History & Status) */}
         <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6">
           <Label text="03. TIMELINE" color="green" />
-          {/* <div className="space-y-3">
-            <CertItem 
-              title="応用情報技術者 (AP)" 
+          <div className="space-y-3">
+            <TimelineItem 
               date="2025.10" 
-              status="certified"
+              title="応用情報技術者 (AP)" 
+              org="情報処理推進機構 (IPA)"
+              isCurrent
+              type="cert"
             />
-            <CertItem 
-              title="基本情報技術者 (FE)" 
+
+            <TimelineItem
+              date="2024.09"
+              title="研究室配属"
+              org="知的ネットワーキング研究グループ"
+              type="edu"
+            />
+
+            <TimelineItem 
               date="2025.07" 
-              status="certified" 
-            /> */}
-          {/* </div>
+              title="基本情報技術者 (FE)" 
+              org="情報処理推進機構 (IPA)"
+              type="cert"
+            />
+            <TimelineItem
+              date="2022.04 - Present"
+              title="大阪公立大学 工学部 情報工学科"
+              org="Osaka Metropolitan University"
+              type="edu"
+            />
+            <TimelineItem
+              date="2020.04 - 2023.03"
+              title="京都市立西京高等学校 エンタープライジング科"
+              org="Kyoto Saikyo High School"
+              type="edu"
+            />
+
+          </div>
           <div className="pt-4 border-t border-slate-100">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
             <div className="flex flex-wrap gap-2">
@@ -270,32 +295,6 @@ export default function Home() {
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
               <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
             </div>
-          </div> */}
-          <div className="space-y-6 mt-4 pl-2 border-l-2 border-slate-100 relative">
-            {/* タイムラインコンテンツ */}
-            <TimelineItem
-              date="2025.10"
-              title="応用情報技術者 (AP) "
-              org="IPA (情報処理推進機構)"
-              icon="📝"
-              type="cert"
-            />
-
-            <TimelineItem
-              date="2025.9"
-              title="研究室配属"
-              org="大阪公立大学 情報工学科 知的ネットワーキング研究グループ"
-              icon="🎓"
-              type="cert"
-            />
-
-            <TimelineItem
-              date="2025.07"
-              title="基本情報技術者 (FE)"
-              org="IPA (情報処理推進機構)"
-              icon="📝"
-              type="cert"
-            />
           </div>
         </AnimatedBentoCard>
         
@@ -482,45 +481,52 @@ function SocialButton({ href, label }: { href: string; label: string }) {
   );
 }
 
-function CertItem({ title, date, status, note }: { title: string; date: string; status: "certified" | "pending"; note?: string }) {
+function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org?: string, children?: ReactNode, icon?: string, isCurrent?: boolean, type?: "cert" | "work" | "edu" }) {
   return (
-    <div className="flex flex-col border-l-2 border-slate-100 pl-3 py-1 hover:border-indigo-400 transition-colors group">
-      <div className="flex items-center gap-2">
-        <span className="font-bold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors">{title}</span>
-        {status === "certified" ? (
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-        ) : (
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-        )}
-      </div>
-      <div className="flex items-center gap-2 mt-0.5">
-        <span className="font-mono text-xs text-slate-400">{date}</span>
-        {note && <span className="text-[10px] bg-amber-100 text-amber-700 px-1.5 py-0.5 rounded font-medium">{note}</span>}
-      </div>
-    </div>
-  );
-}
-
-function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org: string, children?: ReactNode, icon: string, isCurrent?: boolean, type?: "cert" }) {
-  return (
-    <div className="relative pl-6 pb-2 group">
-      {/* タイムラインの丸ポチ */}
-      <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white 
-        ${isCurrent ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' : 
-          type === 'cert' ? 'bg-amber-400' : 'bg-slate-300'}`} 
+        <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-indigo-200 transition-colors group">
+      
+      {/* --- タイムラインの丸ポチ (TimelineItemのステータス円を拡張) --- */}
+      <div 
+        className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white box-content z-10 transition-all duration-300 group-hover:scale-110
+          ${isCurrent 
+            ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' // 現在進行形は緑の光
+            : type === 'cert' 
+              ? 'bg-amber-400' // 資格は黄色
+              : 'bg-slate-300 group-hover:bg-indigo-400' // 過去の経歴はグレー→ホバーで紫
+          }`} 
       />
       
-      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
-        <span className="font-mono text-xs text-slate-400 font-bold">{date}</span>
-        {isCurrent && <span className="text-[10px] bg-green-100 text-green-700 px-1.5 rounded font-bold">CURRENT</span>}
+      {/* --- 日付 & ステータスバッジ --- */}
+      <div className="flex flex-wrap items-center gap-x-2 mb-1">
+        <span className="font-mono text-xs text-slate-400 font-bold group-hover:text-indigo-500 transition-colors">
+          {date}
+        </span>
+        {isCurrent && (
+          <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold tracking-wider">
+            CURRENT
+          </span>
+        )}
       </div>
       
-      <h4 className="font-bold text-slate-800 text-sm group-hover:text-indigo-600 transition-colors">
-        {icon} {title}
+      {/* --- タイトル (TimelineItemのデザインを継承) --- */}
+      <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2 group-hover:text-indigo-600 transition-colors">
+        {icon && <span>{icon}</span>}
+        {title}
       </h4>
-      <div className="text-xs text-slate-500 font-medium">{org}</div>
+
+      {/* --- 所属・組織名 (新規追加) --- */}
+      {org && (
+        <div className="text-xs text-slate-500 font-medium mt-0.5">
+          {org}
+        </div>
+      )}
       
-      {children && <div className="mt-1">{children}</div>}
+      {/* --- 詳細説明 (childrenで柔軟に記述可能) --- */}
+      {children && (
+        <div className="mt-2 text-xs text-slate-600 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">
+          {children}
+        </div>
+      )}
     </div>
   );
 }
