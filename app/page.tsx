@@ -245,7 +245,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 4. Timeline (History & Status) */}
-        <AnimatedBentoCard delay={0.4} className="md:col-span-6 lg:col-span-2 p-6 space-y-6">
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6">
           <Label text="03. TIMELINE" color="green" />
           {/* <div className="space-y-3">
             <CertItem 
@@ -303,6 +303,20 @@ export default function Home() {
         {/* 5. Tech Stack */}
         <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6">
           <Label text="04. SKILLS" color="blue" />
+          {/* <div>
+            <div>
+              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus Areas</p>
+              <div className="flex flex-wrap gap-2">
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> TOEIC</span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> NW</span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> SC</span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Web Application</span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> 3D Modeling</span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
+              </div>
+            </div>
+          </div> */}
           <div className="mt-4 space-y-4">
             <div>
               <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Languages & Frameworks</p>
