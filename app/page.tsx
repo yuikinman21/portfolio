@@ -247,7 +247,7 @@ export default function Home() {
             />
 
             <TimelineItem
-              date="2025.09"
+              date="2025.09 - Present"
               title="研究室配属"
               org="知的ネットワーキング研究グループ"
               isCurrent
