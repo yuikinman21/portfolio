@@ -316,7 +316,7 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
+              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Tools & Creative</p>
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Blender","GIMP","DaVinci Resolve", "AviUtl", "VSCode",
@@ -327,7 +327,7 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Tools & Creative</p>
+              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "TOEIC","NW","SC", "Web Application", "3D Modeling", "IoT",
