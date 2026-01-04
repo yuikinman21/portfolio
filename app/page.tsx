@@ -535,6 +535,74 @@ export default function Home() {
         </div>
       </Modal>
 
+      <Modal 
+        title="Home OS"
+        isOpen={selectedProject === 'homeos'} 
+        onClose={() => setSelectedProject(null)} 
+      >
+        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
+          {/* 左側: 画像 */}
+          <div className="w-full md:w-3/5 bg-slate-900 relative min-h-[300px]">
+             <Image 
+               src="/screen.png" 
+               alt="Home OS Dashboard" 
+               fill 
+               className="object-contain" // 画像全体が見えるようにcontainに変更（お好みでcoverに）
+             />
+          </div>
+
+          {/* 右側: 詳細情報 */}
+          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
+             <div>
+               <div className="flex items-center gap-2 mb-2">
+                 <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide">NOW STUDYING</span>
+               </div>
+               <h2 className="text-3xl font-black text-slate-800 tracking-tight">
+                 Home OS
+               </h2>
+             </div>
+
+             {/* 概要 Section */}
+             <div>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
+               <p className="text-sm text-slate-600 leading-relaxed">
+                 自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化や、空調・照明の自動制御を行うIoTプラットフォームです。
+                 InfluxDBへのデータ蓄積とGrafanaによる可視化により、エネルギー使用の最適化を目指しています。
+               </p>
+             </div>
+
+             {/* 担当 Section */}
+             <div>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
+               <p className="text-sm text-slate-800 font-medium">
+                 システム構築 / サーバー運用
+               </p>
+               <p className="text-xs text-slate-500 mt-1">
+                 ハードウェア選定からOSインストール、Docker環境構築、Pythonによる制御スクリプト作成まで、IoT基盤のすべてを自作しています。
+               </p>
+             </div>
+
+              {/* 使用技術 Section */}
+              <div>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
+               <div className="flex flex-wrap gap-2">
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Ubuntu</TechTag>
+               </div>
+             </div>
+
+             <div className="mt-auto pt-6">
+               <button disabled className="flex items-center justify-center gap-2 w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold cursor-not-allowed text-sm">
+                 <span>Private Repository</span>
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+               </button>
+             </div>
+          </div>
+        </div>
+      </Modal>
+
       
 
       <footer className="py-12 text-center">
