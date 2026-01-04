@@ -243,7 +243,6 @@ export default function Home() {
               date="2025.10" 
               title="応用情報技術者 (AP)" 
               org="情報処理推進機構 (IPA)"
-              isCurrent
               type="cert"
             />
 
@@ -251,6 +250,7 @@ export default function Home() {
               date="2025.09"
               title="研究室配属"
               org="知的ネットワーキング研究グループ"
+              isCurrent
               type="edu"
             />
 
@@ -261,9 +261,10 @@ export default function Home() {
               type="cert"
             />
             <TimelineItem
-              date="2022.04 - Present"
+              date="2023.04 - Present"
               title="大阪公立大学 工学部 情報工学科"
               org="Osaka Metropolitan University"
+              isCurrent
               type="edu"
             />
             <TimelineItem
