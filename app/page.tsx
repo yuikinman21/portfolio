@@ -337,7 +337,9 @@ export default function Home() {
 
 
         {/* 7. New Project Card (白鷺祭用語集) */}
-        <AnimatedBentoCard delay={0.6} href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer">
+        <AnimatedBentoCard delay={0.6} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
+          onClick={() => setSelectedProject('shirasagisai')}
+        >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label text="05. PROJECT" color="pink" />
