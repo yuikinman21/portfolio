@@ -411,7 +411,7 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
-        {/* 6. GitHub Link */}
+        6. GitHub Link
         <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
           {/* <div>
             <Label text="07. REPOSITORY" color="orange" />
@@ -430,7 +430,7 @@ export default function Home() {
            <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none flex items-end justify-center">
              {/* rshah.ioのAPIを使用して草を表示。色はテーマに合わせてindigo系に調整も可能ですが、デフォルトの緑が認知度が高いです */}
              <img 
-               src="https://ghchart.rshah.io/yuikinman21" 
+               src="https://github-contributions-api.deno.dev/yuikinman21.svg"
                alt="GitHub Contributions" 
                className="w-full h-auto object-cover transform scale-110 translate-y-4 filter grayscale group-hover:grayscale-0 transition-all duration-500"
              />
