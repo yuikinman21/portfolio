@@ -412,7 +412,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 6. GitHub Link */}
-        <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-3 lg:col-span-2 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
+        <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center justify-between group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
           <div>
             <Label text="07. REPOSITORY" color="orange" />
             <h3 className="text-2xl font-bold text-slate-800 mt-2 group-hover:text-indigo-600 transition-colors">
