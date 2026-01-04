@@ -258,7 +258,7 @@ export default function Home() {
             />
 
             <TimelineItem
-              date="2024.09"
+              date="2025.09"
               title="研究室配属"
               org="知的ネットワーキング研究グループ"
               type="edu"
@@ -301,7 +301,7 @@ export default function Home() {
 
         {/* 5. Tech Stack */}
         <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6">
-          <Label text="04. SKILLS" color="blue" />
+          <Label text="04. Tech Stack & Focus" color="blue" />
           <div className="mt-4 space-y-4">
             <div>
               <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Languages & Frameworks</p>
@@ -326,6 +326,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
+            <div className="w-full h-px bg-slate-200" />
             <div>
               <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
               <div className="flex flex-wrap gap-1.5">
