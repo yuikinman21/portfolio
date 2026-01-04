@@ -480,6 +480,24 @@ export default function Home() {
             </a>
           </div>
           
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="md:col-span-2 space-y-4">
+              <h3 className="text-lg font-bold text-slate-800 border-l-4 border-pink-400 pl-3">プロジェクト概要</h3>
+              <p className="text-slate-600 leading-relaxed">
+                大学祭実行委員のための用語まとめサイトです。<br/>
+                白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。<br/>
+                リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
+              </p>
+            </div>
+            <div className="bg-slate-50 p-4 rounded-xl h-fit">
+               <h4 className="font-bold text-slate-700 mb-2 text-sm">Tech Stack</h4>
+               <div className="flex flex-wrap gap-2">
+                 <TechTag color="bg-pink-100 text-pink-700 border-pink-200">Next.js</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-700 border-slate-200">Vercel</TechTag>
+                 {/* 必要なタグを追加 */}
+               </div>
+            </div>
+          </div>
         </div>
         
 
