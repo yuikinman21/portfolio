@@ -208,16 +208,6 @@ export default function Home() {
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
             様々なことに挑戦中の<span className="text-indigo-600">大学生</span>です！
-            <html lang="en">
-            <head>
-              <meta charSet="UTF-8" />
-              <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-              <title>Document</title>
-            </head>
-            <body>
-              
-            </body>
-            </html>
           </h3>
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、セキュリティからスマートホームに関する研究など幅広く挑戦中。<br/>
