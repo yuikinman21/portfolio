@@ -457,50 +457,63 @@ export default function Home() {
         onClose={() => setSelectedProject(null)}
         title="白鷺祭用語集"
       >
-        <div className="space-y-8">
-          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-slate-200 bg-slate-50">
-            <iframe
-              loading="lazy"
+        <div className="lg:col-span-3 bg-state-100 flex items-center justify-center p-6 lg:p-12 relative">
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white">
+            <iframe 
+              loading="lazy" 
               className="w-full h-full border-none"
-              src="https://www.canva.com/design/DAG7xpWBnqk/MhLFHxDBV1d2vRC3gNlrVw/edit?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
-              allowFullScreen
+              src="https://www.canva.com/design/DAG7xpWBnqk/MhLFHxDBV1d2vRC3gNlrVw/edit?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" // ★CanvaのURLを入れてください
+              allowFullScreen 
               allow="fullscreen"
             ></iframe>
           </div>
+        </div>
 
-          <div className="flex justify-end">
-            <a
-              href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full transition-colors shadow-md"
-            >
-              サンプルサイトを見る
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 space-y-4">
-              <h3 className="text-lg font-bold text-slate-800 border-l-4 border-pink-400 pl-3">プロジェクト概要</h3>
-              <p className="text-slate-600 leading-relaxed">
+        <div className="lg:col-span-2 bg-white p-6 lg:p-10 flex flex-col gap-6 overflow-y-auto">
+             
+             {/* タイトルとステータス */}
+             <div>
+               <div className="flex items-center gap-2 mb-2">
+                 <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide">NOW BUILDING</span>
+                 <span className="text-slate-400 text-xs font-mono">2025.12-CURRENT</span>
+               </div>
+               <h2 className="text-3xl font-black text-slate-800 tracking-tight leading-tight">
+                 白鷺祭用語集<br/>
+                 <span className="text-pink-500 opacity-90 text-2xl">概要</span>
+               </h2>
+             </div>
+
+             {/* 説明文 */}
+             <div className="prose prose-sm prose-slate text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed">
                 大学祭実行委員のための用語まとめサイトです。<br/>
                 白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。<br/>
                 リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
               </p>
-            </div>
-            <div className="bg-slate-50 p-4 rounded-xl h-fit">
-               <h4 className="font-bold text-slate-700 mb-2 text-sm">Tech Stack</h4>
-               <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-pink-100 text-pink-700 border-pink-200">Next.js</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-700 border-slate-200">Vercel</TechTag>
-                 {/* 必要なタグを追加 */}
-               </div>
-            </div>
-          </div>
-        </div>
-        
+             </div>
 
+              {/* 技術スタック */}
+             <div>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Technologies</h3>
+               <div className="flex flex-wrap gap-2">
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Next.js</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Vercel</TechTag>
+               </div>
+             </div>
+
+             {/* アクションボタン (下部に固定気味に配置) */}
+             <div className="mt-auto pt-6 border-t border-slate-100">
+               <a 
+                 href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" 
+                 target="_blank" 
+                 rel="noreferrer" 
+                 className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors"
+               >
+                 <span>Visit Website</span>
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+               </a>
+             </div>
+          </div>
       </Modal>
       
       <footer className="py-12 text-center">
