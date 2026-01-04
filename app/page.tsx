@@ -134,6 +134,7 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 }
 
 export default function Home() {
+  const [selectedProject, setSelectedProject] = useState<string | null>(null);
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
       
