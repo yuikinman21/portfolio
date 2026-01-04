@@ -390,9 +390,7 @@ export default function Home() {
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 自宅環境を統合管理するシステムの構築<br/>
-                室温・電力使用量の可視化や、空調・照明・ロボット掃除機の自動制御を行うIoT基盤を自作サーバー上で運用しています。<br/>
-                また、Grafanaを用いてダッシュボードを作成し、統括的に表示できるようにしました。<br/>
-                リビングには最寄り駅の出発情報や地域のゴミ出し情報などをまとめたモニターを設置しスマートディスプレイとして活用しています。<br/>
+                クリックして詳細を見ることができます。<br/>
               </p>
             </div>
           </div>
@@ -404,7 +402,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-2 mb-4">
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Linux</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
               </div>
 
@@ -587,9 +585,9 @@ export default function Home() {
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
                <div className="flex flex-wrap gap-2">
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Ubuntu</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
                </div>
              </div>
 
