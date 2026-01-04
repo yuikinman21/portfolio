@@ -220,7 +220,7 @@ export default function Home() {
         {/* 3. 3D Showcase (02. 3D WORKS) */}
         <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
           <div className="absolute top-6 left-6 z-20 pointer-events-none">
-            <Label text="02. 3D WORKS" color="indigo" />
+            <Label text="02. 3D WORKS" color="purple" />
             <p className="text-slate-400 text-xs mt-1">Interactive 3D Demo with React Three Fiber</p>
           </div>
           
