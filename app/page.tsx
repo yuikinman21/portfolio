@@ -340,7 +340,7 @@ export default function Home() {
         <AnimatedBentoCard delay={0.6} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('shirasagisai')}
         >
-          <div className="space-y-3">
+          <div className="space-y-3 pointer-events-none">
             <div className="flex items-center justify-between">
               <Label text="05. PROJECT" color="pink" />
               <span className="inline-flex items-center gap-1.5 bg-pink-100 text-pink-600 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide animate-pulse">
@@ -355,13 +355,12 @@ export default function Home() {
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 実行委員向けの用語まとめサイト<br/>
-                白鷺祭の準備や運営を円滑にするためのリソースを提供。<br />
-                実行委員会のメンバーと共同開発しました。(リンク先はサンプルです)
+                クリックして詳細やスライドを見ることができます。<br/>
               </p>
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-pink-100/50 pt-4">
+          <div className="mt-6 flex items-center justify-between border-t border-pink-100/50 pt-4 pointer-events-none">
             <div className="flex gap-2">
                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Next.js</span>
                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Vercel</span>
@@ -373,7 +372,9 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 8. Home Building OS */}
-        <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-default">
+        <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
+          onClick={() => setSelectedProject('homeos')}
+        >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label text="06. HOME LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
@@ -449,6 +450,41 @@ export default function Home() {
         </AnimatedBentoCard>
       </main>
 
+      {/* --- Modal for Project Details --- */}
+      {/* 白鷺祭用語集モーダル */}
+      <Modal
+        isOpen={selectedProject === 'shirasagisai'}
+        onClose={() => setSelectedProject(null)}
+        title="白鷺祭用語集"
+      >
+        <div className="space-y-8">
+          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-slate-200 bg-slate-50">
+            <iframe
+              loading="lazy"
+              className="w-full h-full border-none"
+              src="https://www.canva.com/design/DAG7xpWBnqk/MhLFHxDBV1d2vRC3gNlrVw/edit?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+              allowFullScreen
+              allow="fullscreen"
+            ></iframe>
+          </div>
+
+          <div className="flex justify-end">
+            <a
+              href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white px-6 py-2 rounded-full transition-colors shadow-md"
+            >
+              サンプルサイトを見る
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </a>
+          </div>
+          
+        </div>
+        
+
+      </Modal>
+      
       <footer className="py-12 text-center">
         <p className="text-slate-400 text-xs font-mono">
           &copy; {new Date().getFullYear()} YUIKI. All rights reserved. <br/>
