@@ -438,13 +438,12 @@ export default function Home() {
 
            {/* 左側：テキスト情報 */}
            <div className="relative z-10">
-            <Label text="05. REPOSITORY" color="orange" />
+            <Label text="07. REPOSITORY" color="orange" />
             <h3 className="text-3xl font-bold text-slate-800 mt-2 group-hover:text-indigo-600 transition-colors">
-              @yuikinman21
+              <span className="text-indigo-600">@yuikinman21</span>
             </h3>
             <p className="text-slate-500 text-sm mt-2 max-w-md leading-relaxed">
               日々の開発ログや実験的なコードはGitHubで公開しています。<br/>
-              Contribution Graph (背景) は私の開発活動の軌跡です。
             </p>
            </div>
 
