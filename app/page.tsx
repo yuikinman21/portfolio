@@ -450,72 +450,93 @@ export default function Home() {
         </AnimatedBentoCard>
       </main>
 
-      {/* --- Modal for Project Details --- */}
-      {/* 白鷺祭用語集モーダル */}
+      {/* --- プロジェクト詳細モーダル --- */}
+      
+      {/* 1. 白鷺祭用語集のモーダル */}
       <Modal
-        isOpen={selectedProject === 'shirasagisai'}
-        onClose={() => setSelectedProject(null)}
         title="白鷺祭用語集"
+        isOpen={selectedProject === 'shirasagisai'} 
+        onClose={() => setSelectedProject(null)} 
       >
-        <div className="lg:col-span-3 bg-state-100 flex items-center justify-center p-6 lg:p-12 relative">
-          <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white">
-            <iframe 
-              loading="lazy" 
-              className="w-full h-full border-none"
-              src="https://www.canva.com/design/DAG7xpWBnqk/MhLFHxDBV1d2vRC3gNlrVw/edit?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" // ★CanvaのURLを入れてください
-              allowFullScreen 
-              allow="fullscreen"
-            ></iframe>
+        {/* レイアウト修正: gridではなくflexを使用し、md以上で横並び、それ以下で縦並びにする */}
+        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
+          
+          {/* 左側: メインビジュアルエリア (幅: md以上で60%) */}
+          <div className="w-full md:w-3/5 bg-slate-100 flex items-center justify-center p-6 lg:p-10 relative">
+             {/* Canva埋め込み */}
+             <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
+                <iframe 
+                  loading="lazy" 
+                  className="w-full h-full border-none"
+                  src="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?embed" 
+                  allowFullScreen 
+                  allow="fullscreen"
+                ></iframe>
+             </div>
           </div>
-        </div>
 
-        <div className="lg:col-span-2 bg-white p-6 lg:p-10 flex flex-col gap-6 overflow-y-auto">
+          {/* 右側: 詳細情報エリア (幅: md以上で40%) */}
+          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
              
-             {/* タイトルとステータス */}
+             {/* タイトルエリア */}
              <div>
                <div className="flex items-center gap-2 mb-2">
                  <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide">NOW BUILDING</span>
-                 <span className="text-slate-400 text-xs font-mono">2025.12-CURRENT</span>
+                 <span className="text-slate-400 text-xs font-mono">2025.11-Current</span>
                </div>
                <h2 className="text-3xl font-black text-slate-800 tracking-tight leading-tight">
-                 白鷺祭用語集<br/>
-                 <span className="text-pink-500 opacity-90 text-2xl">概要</span>
+                 白鷺祭用語集
                </h2>
              </div>
 
-             {/* 説明文 */}
-             <div className="prose prose-sm prose-slate text-slate-600 leading-relaxed">
-                <p className="text-slate-600 leading-relaxed">
-                大学祭実行委員のための用語まとめサイトです。<br/>
-                白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。<br/>
-                リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
-              </p>
-             </div>
+             {/* 概要 Section */}
+              <div>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  大学祭実行委員のための用語まとめサイトです。<br/>
+                  白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。
+                  リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
+                </p>
+              </div>
 
-              {/* 技術スタック */}
-             <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Technologies</h3>
-               <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Next.js</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Vercel</TechTag>
-               </div>
-             </div>
+              {/* 担当 Section (新規追加) */}
+              <div>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
+                <p className="text-sm text-slate-800 font-medium">
+                  リードエンジニア / UIデザイン
+                </p>
+                <p className="text-xs text-slate-500 mt-1">
+                  要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。
+                </p>
+              </div>
 
-             {/* アクションボタン (下部に固定気味に配置) */}
-             <div className="mt-auto pt-6 border-t border-slate-100">
-               <a 
-                 href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" 
-                 target="_blank" 
-                 rel="noreferrer" 
-                 className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors"
-               >
-                 <span>Visit Website</span>
-                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-               </a>
-             </div>
+              {/* 使用技術 Section */}
+              <div>
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
+                <div className="flex flex-wrap gap-2">
+                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Next.js</TechTag>
+                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Vercel</TechTag>
+                </div>
+              </div>
+
+              {/* アクションボタン */}
+              <div className="mt-auto pt-6">
+                <a 
+                  href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
+                >
+                  <span>サンプルサイトを見る</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              </div>
           </div>
+        </div>
       </Modal>
+
       
+
       <footer className="py-12 text-center">
         <p className="text-slate-400 text-xs font-mono">
           &copy; {new Date().getFullYear()} YUIKI. All rights reserved. <br/>
