@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, MouseEvent } from 'react';
 // アニメーション用ライブラリ
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { ReactNode } from 'react';
+import Modal from './components/Modal';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
