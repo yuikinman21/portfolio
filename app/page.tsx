@@ -422,7 +422,7 @@ export default function Home() {
               @yuikinman21
             </h3>
             <p className="text-slate-500 text-sm mt-2 max-w-md leading-relaxed">
-              日々の開発ログや実験的なコードはGitHubで公開しています。<br/>
+              ソースコードや開発ログはこちらから<br/>
             </p>
            </div>
             {/* 中央：GitHub Contributions グラフ */}
