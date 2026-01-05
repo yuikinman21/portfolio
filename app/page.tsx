@@ -460,7 +460,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
           
           {/* 左側: メインビジュアルエリア (幅: md以上で60%) */}
-          <div className="w-full md:w-3/5 bg-slate-100 flex items-center justify-center p-6 lg:p-10 relative">
+          <div className="w-full md:w-3/5 bg-slate-100 flex items-center justify-center lg:p-10 relative">
              {/* Canva埋め込み */}
              <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
                 <iframe 
@@ -540,12 +540,13 @@ export default function Home() {
       >
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
           {/* 左側: 画像 */}
-          <div className="w-full md:w-3/5 bg-slate-900 relative min-h-[300px]">
+          <div className="w-full md:w-3/5 bg-white relative min-h-[300px] rounded-2xl ">
+            
              <Image 
-               src="/screen.png" 
+               src="/My_Room_OS3.jpg" 
                alt="Home OS Dashboard" 
                fill 
-               className="object-contain" // 画像全体が見えるようにcontainに変更（お好みでcoverに）
+               className="object-contain p-2" // 画像全体が見えるようにcontainに変更（お好みでcoverに）
              />
           </div>
 
@@ -564,8 +565,9 @@ export default function Home() {
              <div>
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
                <p className="text-sm text-slate-600 leading-relaxed">
-                 自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化や、空調・照明の自動制御を行うIoTプラットフォームです。
-                 InfluxDBへのデータ蓄積とGrafanaによる可視化により、エネルギー使用の最適化を目指しています。
+                 自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォームです。
+                 InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基盤として機能しています。<br/>
+                 将来的にはMaaSやスマートシティ関連の研究開発に応用できるよう、拡張性の高い設計を目指しています。
                </p>
              </div>
 
