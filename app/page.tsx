@@ -404,6 +404,7 @@ export default function Home() {
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Node-RED</span>
               </div>
 
               <div className="w-10 h-10 rounded-full bg-white border border-cyan-200 flex items-center justify-center text-cyan-400 group-hover:text-cyan-600 group-hover:scale-110 transition-all shadow-sm">
@@ -575,7 +576,7 @@ export default function Home() {
                  システム構築 / サーバー運用
                </p>
                <p className="text-xs text-slate-500 mt-1">
-                 ハードウェア選定からOSインストール、Docker環境構築、Pythonによる制御スクリプト作成まで、IoT基盤のすべてを自作しています。
+                 Docker環境構築、Node-REDやPythonによる制御スクリプト作成、IoT基盤のすべてを自作しています。
                </p>
              </div>
 
@@ -587,6 +588,7 @@ export default function Home() {
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Ubuntu</TechTag>
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Node-RED</TechTag>
                </div>
              </div>
              <div className="mt-auto pt-6">
