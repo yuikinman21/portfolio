@@ -12,7 +12,7 @@ type PupilData = {
 };
 
 function SceneContent() {
-  const { scene } = useGLTF('/EXPO2025_eye.glb');
+  const { scene } = useGLTF('/EXPO2025_eye.glb?v=${Date.now()}');
   
   // 瞳のデータを管理する配列Ref
   const pupilsRef = useRef<PupilData[]>([]);
@@ -24,13 +24,40 @@ function SceneContent() {
       // 名前に "Hitomi_Blue" を含むメッシュを探す
       if ((child as THREE.Mesh).isMesh && child.name.includes('Hitomi_Blue')) {
         const mesh = child as THREE.Mesh;
+
+// ■ 横方向のズレ (World Y軸回転)
+        // プラスで左、マイナスで右へ向きます
+        const shiftX = 0.4; 
+
+        // ■ 縦方向のズレ (World X軸回転)
+        // プラスで下、マイナスで上へ向きます
+        const shiftY = 0.0; 
+
+        // 1. 横回転（Y軸まわり）のクォータニオンを作成
+        // new THREE.Vector3(0, 1, 0) は「世界の真上」を指す軸です
+        const qx = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, 1, 0), 
+          shiftX
+        );
+
+        // 2. 縦回転（X軸まわり）のクォータニオンを作成
+        // new THREE.Vector3(1, 0, 0) は「世界の真横」を指す軸です
+        const qy = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(1, 0, 0), 
+          shiftY
+        );
+
+        // 3. 2つの回転を合成する (縦 × 横)
+        const offsetRotation = qy.multiply(qx);
         
         // ★重要：初期の「姿勢（クォータニオン）」を保存しておく
         const initialQuaternion = mesh.quaternion.clone();
 
+        const centeredQuaternion = initialQuaternion.multiply(offsetRotation);
+
         pupilsRef.current.push({
           mesh: mesh,
-          baseQuaternion: initialQuaternion
+          baseQuaternion: centeredQuaternion
         });
       }
     });
