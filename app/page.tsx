@@ -336,7 +336,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
 
-        {/* 7. New Project Card (白鷺祭用語集) */}
+        {/* 6. New Project Card (白鷺祭用語集) */}
         <AnimatedBentoCard delay={0.6} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('shirasagisai')}
         >
@@ -371,7 +371,7 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
-        {/* 8. Home Building OS */}
+        {/* 7. Home Building OS */}
         <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('homeos')}
         >
@@ -413,7 +413,7 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
-        {/* 6. GitHub Link */}
+        {/* 8. GitHub Link */}
         <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 w-full h-full">
@@ -481,7 +481,7 @@ export default function Home() {
                  <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide">NOW BUILDING</span>
                  <span className="text-slate-400 text-xs font-mono">2025.11-Current</span>
                </div>
-               <h2 className="text-3xl font-black text-slate-800 tracking-tight leading-tight">
+               <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
                  白鷺祭用語集
                </h2>
              </div>
@@ -589,12 +589,7 @@ export default function Home() {
                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
                </div>
              </div>
-
              <div className="mt-auto pt-6">
-               <button disabled className="flex items-center justify-center gap-2 w-full bg-slate-100 text-slate-400 py-3 rounded-xl font-bold cursor-not-allowed text-sm">
-                 <span>Private Repository</span>
-                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-               </button>
              </div>
           </div>
         </div>
