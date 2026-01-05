@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Environment, Float, Center } from '@react-three/drei';
-import { Suspense, useEffect, useRef } from 'react';
+import { Suspense, useEffect, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
 // 瞳のデータ構造
@@ -13,6 +13,8 @@ type PupilData = {
 
 function SceneContent() {
   const { scene } = useGLTF('/EXPO2025_eye.glb?v=${Date.now()}');
+
+  const clone = useMemo(() => scene.clone(), [scene]);
   
   // 瞳のデータを管理する配列Ref
   const pupilsRef = useRef<PupilData[]>([]);
@@ -27,7 +29,7 @@ function SceneContent() {
 
 // ■ 横方向のズレ (World Y軸回転)
         // プラスで左、マイナスで右へ向きます
-        const shiftX = 0.4; 
+        const shiftX = -0.4; 
 
         // ■ 縦方向のズレ (World X軸回転)
         // プラスで下、マイナスで上へ向きます
@@ -53,7 +55,7 @@ function SceneContent() {
         // ★重要：初期の「姿勢（クォータニオン）」を保存しておく
         const initialQuaternion = mesh.quaternion.clone();
 
-        const centeredQuaternion = initialQuaternion.multiply(offsetRotation);
+        const centeredQuaternion = initialQuaternion.premultiply(offsetRotation);
 
         pupilsRef.current.push({
           mesh: mesh,
