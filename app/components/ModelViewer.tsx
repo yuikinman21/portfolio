@@ -2,7 +2,7 @@
 
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Environment, Float, Center } from '@react-three/drei';
-import { Suspense, useEffect, useRef, useMemo } from 'react';
+import { Suspense, useEffect, useRef, useMemo, useState } from 'react';
 import * as THREE from 'three';
 
 type PupilData = {
@@ -18,26 +18,47 @@ function SceneContent() {
   
   const pupilsRef = useRef<PupilData[]>([]);
 
+  // ★画面サイズ判定用のState
+  const [isMobile, setIsMobile] = useState(false);
+
+  // ★画面サイズを監視するEffect
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 768px)');
+    
+    // 初期値をセット
+    setIsMobile(mediaQuery.matches);
+
+    // リスナー定義
+    const handleResize = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    // イベントリスナー登録
+    mediaQuery.addEventListener('change', handleResize);
+
+    // クリーンアップ
+    return () => mediaQuery.removeEventListener('change', handleResize);
+  }, []);
+
   useEffect(() => {
     pupilsRef.current = [];
+
+    // ★ここで画面サイズに応じて補正値を切り替える
+    // isMobile(768px未満)なら 0.0、それ以外(PC等)なら 0.3
+    const shiftX = isMobile ? 0.0 : 0.4; 
+    const shiftY = isMobile ? 0.1 : 0.0; 
 
     clone.traverse((child) => {
       if ((child as THREE.Mesh).isMesh && child.name.includes('Hitomi_Blue')) {
         const mesh = child as THREE.Mesh;
 
-        // ★★★ 修正の核心 ★★★
-        // 初回の「本当の初期位置」を userData に保存し、
-        // 2回目以降（リロードや再マウント時）は絶対にそれを使うようにする。
+        // 初回の「本当の初期位置」を userData に保存
         if (!mesh.userData.initialQuaternion) {
           mesh.userData.initialQuaternion = mesh.quaternion.clone();
         }
         
         // 現在の mesh.quaternion ではなく、保存しておいた初期値を使う
         const initialQuaternion = mesh.userData.initialQuaternion.clone();
-
-        // 補正値（必要なければ0.0）
-        const shiftX = 0.3; 
-        const shiftY = 0.0; 
 
         const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), shiftX);
         const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), shiftY);
@@ -51,7 +72,8 @@ function SceneContent() {
         });
       }
     });
-  }, [clone]);
+    // ★依存配列に isMobile を追加し、画面サイズが変わるたびに再計算させる
+  }, [clone, isMobile]);
 
   useFrame((state) => {
     if (pupilsRef.current.length === 0) return;
