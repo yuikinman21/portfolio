@@ -627,6 +627,7 @@ export default function Home() {
              <div>
                <div className="flex items-center gap-2 mb-2">
                  <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide">NOW STUDYING</span>
+                 <span className="text-slate-400 text-xs font-mono">2025.12-Current</span>
                </div>
                <h2 className="text-3xl font-black text-slate-800 tracking-tight">
                  Home OS
