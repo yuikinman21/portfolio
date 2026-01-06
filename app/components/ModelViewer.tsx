@@ -13,7 +13,7 @@ type PupilData = {
 function SceneContent() {
   const { scene } = useGLTF('/EXPO2025_eye.glb');
   
-  // ★対策1：キャッシュ汚染を防ぐため、必ずクローンを作成する
+  // useMemoでクローンを作成
   const clone = useMemo(() => scene.clone(), [scene]);
   
   const pupilsRef = useRef<PupilData[]>([]);
@@ -25,16 +25,24 @@ function SceneContent() {
       if ((child as THREE.Mesh).isMesh && child.name.includes('Hitomi_Blue')) {
         const mesh = child as THREE.Mesh;
 
-        // 初期位置のズレ補正（必要なければ 0.0）
-        const shiftX = 0.0; 
+        // ★★★ 修正の核心 ★★★
+        // 初回の「本当の初期位置」を userData に保存し、
+        // 2回目以降（リロードや再マウント時）は絶対にそれを使うようにする。
+        if (!mesh.userData.initialQuaternion) {
+          mesh.userData.initialQuaternion = mesh.quaternion.clone();
+        }
+        
+        // 現在の mesh.quaternion ではなく、保存しておいた初期値を使う
+        const initialQuaternion = mesh.userData.initialQuaternion.clone();
+
+        // 補正値（必要なければ0.0）
+        const shiftX = 0.3; 
         const shiftY = 0.0; 
 
         const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), shiftX);
         const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), shiftY);
         const offsetRotation = qy.multiply(qx);
         
-        // クローンにより、常に「汚れていない」初期角度が取得できる
-        const initialQuaternion = mesh.quaternion.clone();
         const centeredQuaternion = initialQuaternion.premultiply(offsetRotation);
 
         pupilsRef.current.push({
@@ -48,8 +56,6 @@ function SceneContent() {
   useFrame((state) => {
     if (pupilsRef.current.length === 0) return;
 
-    // ★対策2：v9推奨の state.pointer を使用する
-    // これによりマウス・タッチの座標取得が最新仕様で統一されます
     const mouseX = state.pointer.x; 
     const mouseY = state.pointer.y; 
     
