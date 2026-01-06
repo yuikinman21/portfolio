@@ -229,7 +229,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 2. About Me */}
-        <AnimatedBentoCard delay={0.2} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4 bg-slate-50 h-full">
+        <AnimatedBentoCard delay={0.2} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-center space-y-4 bg-slate-50">
           <Label text="01. WHO AM I" color="indigo" />
           <h3 className="text-xl font-bold text-slate-800 leading-snug">
             様々なことに挑戦中の<span className="text-indigo-600">大学生</span>です！
@@ -261,7 +261,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 4. Timeline (History & Status) */}
-        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6 bg-slate-50 h-full">
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 space-y-6 bg-slate-50">
           <Label text="03. TIMELINE" color="green" />
           <div className="space-y-3">
             <TimelineItem 
