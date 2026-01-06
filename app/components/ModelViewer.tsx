@@ -5,56 +5,36 @@ import { OrbitControls, useGLTF, Environment, Float, Center } from '@react-three
 import { Suspense, useEffect, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
-// 瞳のデータ構造
 type PupilData = {
   mesh: THREE.Mesh;
-  baseQuaternion: THREE.Quaternion; // 角度(Euler)ではなく、姿勢(Quaternion)で保存
+  baseQuaternion: THREE.Quaternion;
 };
 
 function SceneContent() {
-  const { scene } = useGLTF('/EXPO2025_eye.glb?v=${Date.now()}');
-
+  const { scene } = useGLTF('/EXPO2025_eye.glb');
+  
+  // ★対策1：キャッシュ汚染を防ぐため、必ずクローンを作成する
   const clone = useMemo(() => scene.clone(), [scene]);
   
-  // 瞳のデータを管理する配列Ref
   const pupilsRef = useRef<PupilData[]>([]);
 
   useEffect(() => {
     pupilsRef.current = [];
 
-    scene.traverse((child) => {
-      // 名前に "Hitomi_Blue" を含むメッシュを探す
+    clone.traverse((child) => {
       if ((child as THREE.Mesh).isMesh && child.name.includes('Hitomi_Blue')) {
         const mesh = child as THREE.Mesh;
 
-// ■ 横方向のズレ (World Y軸回転)
-        // プラスで左、マイナスで右へ向きます
+        // 初期位置のズレ補正（必要なければ 0.0）
         const shiftX = 0.0; 
-
-        // ■ 縦方向のズレ (World X軸回転)
-        // プラスで下、マイナスで上へ向きます
         const shiftY = 0.0; 
 
-        // 1. 横回転（Y軸まわり）のクォータニオンを作成
-        // new THREE.Vector3(0, 1, 0) は「世界の真上」を指す軸です
-        const qx = new THREE.Quaternion().setFromAxisAngle(
-          new THREE.Vector3(0, 1, 0), 
-          shiftX
-        );
-
-        // 2. 縦回転（X軸まわり）のクォータニオンを作成
-        // new THREE.Vector3(1, 0, 0) は「世界の真横」を指す軸です
-        const qy = new THREE.Quaternion().setFromAxisAngle(
-          new THREE.Vector3(1, 0, 0), 
-          shiftY
-        );
-
-        // 3. 2つの回転を合成する (縦 × 横)
+        const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), shiftX);
+        const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), shiftY);
         const offsetRotation = qy.multiply(qx);
         
-        // ★重要：初期の「姿勢（クォータニオン）」を保存しておく
+        // クローンにより、常に「汚れていない」初期角度が取得できる
         const initialQuaternion = mesh.quaternion.clone();
-
         const centeredQuaternion = initialQuaternion.premultiply(offsetRotation);
 
         pupilsRef.current.push({
@@ -63,54 +43,34 @@ function SceneContent() {
         });
       }
     });
-  }, [scene]);
+  }, [clone]);
 
   useFrame((state) => {
     if (pupilsRef.current.length === 0) return;
 
-    const mouseX = state.mouse.x; // -1 (左) ~ 1 (右)
-    const mouseY = state.mouse.y; // -1 (下) ~ 1 (上)
+    // ★対策2：v9推奨の state.pointer を使用する
+    // これによりマウス・タッチの座標取得が最新仕様で統一されます
+    const mouseX = state.pointer.x; 
+    const mouseY = state.pointer.y; 
     
-    // 動きの大きさ（お好みで調整してください）
     const intensity = 0.2;
-
-    // ■カメラの向きに合わせて回転軸を作る
-    // これにより、モデルが横を向いていても、カメラから見て「上下左右」に正しく動きます
     const camera = state.camera;
 
-    const eyeTiltQuaternion = new THREE.Quaternion().setFromAxisAngle(
-      new THREE.Vector3(0, 1, 0), 
-      0.4 // ここに本来設定したかった「0.4」を入れる
-    );
-    
-    // カメラの「右方向」と「上方向」のベクトルを取得
     const camRight = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const camUp = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
 
-    camRight.applyQuaternion(eyeTiltQuaternion);
-    camUp.applyQuaternion(eyeTiltQuaternion);
-
-    // ■マウスの動きに応じた回転を作る
-    // 縦の動き(Y) -> カメラの右軸(camRight)を中心に回転
     const rotationX = new THREE.Quaternion().setFromAxisAngle(camRight, -mouseY * intensity);
-    // 横の動き(X) -> カメラの上軸(camUp)を中心に回転
     const rotationY = new THREE.Quaternion().setFromAxisAngle(camUp, mouseX * intensity);
 
-    // 回転を合成する (横回転 × 縦回転)
     const targetRotation = rotationY.multiply(rotationX);
 
     pupilsRef.current.forEach(({ mesh, baseQuaternion }) => {
-      // ★重要： 「マウス回転」 × 「初期姿勢」 の順番で適用
-      // これで「元の向きを保ったまま、カメラから見た方向にグリッと動く」ようになります
       const finalQuaternion = targetRotation.clone().multiply(baseQuaternion);
-
-      // 滑らかに動かす (Slerp)
       mesh.quaternion.slerp(finalQuaternion, 0.1);
     });
   });
 
-  // モデルのサイズ調整（scaleはお好みで）
-  return <primitive object={scene} scale={1.5} />;
+  return <primitive object={clone} scale={1.5} />;
 }
 
 export default function ModelViewer() {
@@ -121,13 +81,11 @@ export default function ModelViewer() {
           <Environment preset="city" />
           <ambientLight intensity={0.5} />
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} intensity={1} />
-          
           <Float speed={2} rotationIntensity={1} floatIntensity={1}>
             <Center>
               <SceneContent />
             </Center>
           </Float>
-          
           <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={4} />
         </Suspense>
       </Canvas>
