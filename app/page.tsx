@@ -4,7 +4,7 @@ import Image from "next/image";
 import dynamic from 'next/dynamic';
 import { useState, useEffect, useRef, MouseEvent } from 'react';
 // アニメーション用ライブラリ
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
 
@@ -135,6 +135,29 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+
+  const homeOsImages = [
+    "/My_Room_OS3.jpg",
+    "/My_Room_OS4.jpg", 
+  ];
+  
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 次の画像へ
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % homeOsImages.length);
+  };
+
+  // 前の画像へ
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + homeOsImages.length) % homeOsImages.length);
+  };
+
+  // モーダルを閉じたときにインデックスをリセットしたければ追加（任意）
+  useEffect(() => {
+    if (selectedProject === null) setCurrentImageIndex(0);
+  }, [selectedProject]);
+
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
       
@@ -460,17 +483,28 @@ export default function Home() {
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
           
           {/* 左側: メインビジュアルエリア (幅: md以上で60%) */}
-          <div className="w-full md:w-3/5 bg-slate-100 flex items-center justify-center lg:p-10 relative">
-             {/* Canva埋め込み */}
-             <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
-                <iframe 
-                  loading="lazy" 
-                  className="w-full h-full border-none"
-                  src="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?embed" 
-                  allowFullScreen 
-                  allow="fullscreen"
-                ></iframe>
-             </div>
+          <div className="w-full md:w-3/5 bg-slate-100 flex flex-col items-center justify-center p-6 lg:p-10 relative gap-6">
+              {/* Canva埋め込み */}
+            <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
+              <iframe 
+                loading="lazy" 
+                className="w-full h-full border-none"
+                src="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?embed" 
+                allowFullScreen 
+                allow="fullscreen"
+              ></iframe>
+            </div>
+
+            <a 
+               href="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-pink-600 hover:border-pink-200 hover:shadow-md transition-all duration-300"
+             >
+               <span>別のタブで開く</span>
+               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+             </a>
+
           </div>
 
           {/* 右側: 詳細情報エリア (幅: md以上で40%) */}
@@ -540,21 +574,71 @@ export default function Home() {
       >
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
           {/* 左側: 画像 */}
-          <div className="w-full md:w-3/5 bg-white relative min-h-[300px] rounded-2xl ">
-            
-             <Image 
-               src="/My_Room_OS3.jpg" 
-               alt="Home OS Dashboard" 
-               fill 
-               className="object-contain p-2" // 画像全体が見えるようにcontainに変更（お好みでcoverに）
-             />
-          </div>
+        <div className="w-full md:w-3/5 bg-slate-100 relative min-h-[300px] flex items-center justify-center p-4 md:p-8 overflow-hidden">
+           
+           {/* 画像表示部分 (AnimatePresenceでフェード切替) */}
+           <div className="relative w-full h-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
+             <AnimatePresence mode="wait">
+               <motion.div
+                 key={currentImageIndex}
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: 1 }}
+                 exit={{ opacity: 0 }}
+                 transition={{ duration: 0.3 }}
+                 className="relative w-full h-full"
+               >
+                 <Image 
+                   src={homeOsImages[currentImageIndex]} 
+                   alt={`Home OS Slide ${currentImageIndex + 1}`}
+                   fill 
+                   className="object-contain p-1" 
+                   priority
+                 />
+               </motion.div>
+             </AnimatePresence>
+           </div>
+
+           {/* --- ナビゲーションボタン (画像が2枚以上ある時のみ表示) --- */}
+           {homeOsImages.length > 1 && (
+             <>
+               {/* 左ボタン */}
+               <button 
+                 onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                 className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
+               >
+                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+               </button>
+
+               {/* 右ボタン */}
+               <button 
+                 onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                 className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
+               >
+                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+               </button>
+
+               {/* インジケーター (下部の点) */}
+               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                 {homeOsImages.map((_, idx) => (
+                   <button
+                     key={idx}
+                     onClick={() => setCurrentImageIndex(idx)}
+                     className={`w-2 h-2 rounded-full transition-all shadow-sm ${
+                       idx === currentImageIndex ? "bg-indigo-600 w-4" : "bg-white/60 hover:bg-white"
+                     }`}
+                   />
+                 ))}
+               </div>
+             </>
+           )}
+        </div>
 
           {/* 右側: 詳細情報 */}
           <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
              <div>
                <div className="flex items-center gap-2 mb-2">
                  <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide">NOW STUDYING</span>
+                 <span className="text-slate-400 text-xs font-mono">2025.12-Current</span>
                </div>
                <h2 className="text-3xl font-black text-slate-800 tracking-tight">
                  Home OS
