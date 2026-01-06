@@ -29,7 +29,7 @@ function SceneContent() {
 
 // ■ 横方向のズレ (World Y軸回転)
         // プラスで左、マイナスで右へ向きます
-        const shiftX = 0.4; 
+        const shiftX = 0.0; 
 
         // ■ 縦方向のズレ (World X軸回転)
         // プラスで下、マイナスで上へ向きます
@@ -77,10 +77,18 @@ function SceneContent() {
     // ■カメラの向きに合わせて回転軸を作る
     // これにより、モデルが横を向いていても、カメラから見て「上下左右」に正しく動きます
     const camera = state.camera;
+
+    const eyeTiltQuaternion = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(0, 1, 0), 
+      0.4 // ここに本来設定したかった「0.4」を入れる
+    );
     
     // カメラの「右方向」と「上方向」のベクトルを取得
     const camRight = new THREE.Vector3(1, 0, 0).applyQuaternion(camera.quaternion);
     const camUp = new THREE.Vector3(0, 1, 0).applyQuaternion(camera.quaternion);
+
+    camRight.applyQuaternion(eyeTiltQuaternion);
+    camUp.applyQuaternion(eyeTiltQuaternion);
 
     // ■マウスの動きに応じた回転を作る
     // 縦の動き(Y) -> カメラの右軸(camRight)を中心に回転
@@ -102,7 +110,7 @@ function SceneContent() {
   });
 
   // モデルのサイズ調整（scaleはお好みで）
-  return <primitive object={scene} scale={1.5} rotation={[0, -0.4, 0]} />;
+  return <primitive object={scene} scale={1.5} />;
 }
 
 export default function ModelViewer() {
