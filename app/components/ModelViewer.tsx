@@ -102,7 +102,7 @@ function SceneContent() {
   });
 
   // モデルのサイズ調整（scaleはお好みで）
-  return <primitive object={scene} scale={1.5} />;
+  return <primitive object={scene} scale={1.5} rotation={[0, -0.4, 0]} />;
 }
 
 export default function ModelViewer() {
