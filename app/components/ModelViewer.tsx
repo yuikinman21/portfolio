@@ -29,7 +29,7 @@ function SceneContent() {
 
 // ■ 横方向のズレ (World Y軸回転)
         // プラスで左、マイナスで右へ向きます
-        const shiftX = -0.4; 
+        const shiftX = 0.4; 
 
         // ■ 縦方向のズレ (World X軸回転)
         // プラスで下、マイナスで上へ向きます
