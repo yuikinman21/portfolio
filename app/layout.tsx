@@ -15,6 +15,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "YUIKI - Portfolio",
   description: "Engineering logic, crafting future.",
+  icons: {
+    icon: '/サーキュラー8bit.jpg',
+    apple: '/サーキュラー8bit.jpg',
+  },
 };
 
 export default function RootLayout({
