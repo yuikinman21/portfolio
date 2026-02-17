@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "YUIKI - Portfolio",
   description: "Engineering logic, crafting future.",
   icons: {
-    icon: '/サーキュラー8bit.jpg',
+    icon: '/サーキュラー8bit.png',
     apple: '/サーキュラー8bit.jpg',
   },
 };
