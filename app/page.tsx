@@ -393,15 +393,15 @@ export default function Home() {
           </div>
 
           <div className="w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col">
-            {/* 画面コンテンツ（すでにある画像を使用） */}
-            <div className="relative w-full aspect-video bg-slate-900">
+            {/* 画像*/}
+            <div className="relative w-full aspect-video bg-slate-900 overflow-hidden">
               <Image 
                 src="/Home_OS_2.0.png"
                 alt="Home OS Dashboard Mockup"
                 fill
-                className="object-contain opacity-90 group-hover:opacity-100 transition-all duration-700"
+                className="object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent pointer-events-none"></div>
             </div>
           </div>
 
