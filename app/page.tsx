@@ -158,7 +158,7 @@ export default function Home() {
   useEffect(() => {
     if (selectedProject === null) {
       setCurrentImageIndex(0);
-      setHomeOsTab('v1');
+      setHomeOsTab('v2');
     }
   }, [selectedProject]);
 
@@ -643,10 +643,10 @@ export default function Home() {
                     <div>
                       <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
                       <div className="flex flex-wrap gap-2">
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Node-RED</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
                       </div>
                     </div>
                   </motion.div>
@@ -670,11 +670,12 @@ export default function Home() {
                     <div>
                       <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v2.0 New Stack</h3>
                       <div className="flex flex-wrap gap-2">
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
-                        <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Node-RED</TechTag>
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Flutter</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Dart</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
                         
                       </div>
                     </div>
