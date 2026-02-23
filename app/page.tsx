@@ -137,8 +137,8 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   const homeOsImagesV1 = [
-    "/My_Room_OS3.jpg",
     "/My_Room_OS4.jpg", 
+    "/My_Room_OS3.jpg",
   ];
   
   const homeOsImagesV2 = [
