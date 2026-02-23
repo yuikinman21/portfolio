@@ -136,31 +136,37 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  const homeOsImages = [
+  const homeOsImagesV1 = [
     "/My_Room_OS3.jpg",
     "/My_Room_OS4.jpg", 
+  ];
+  
+  const homeOsImagesV2 = [
+    "/Home_OS_2.0.png",
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [homeOsTab, setHomeOsTab] = useState<'v1' | 'v2'>('v1');
 
+  const activeImages = homeOsTab === 'v1' ? homeOsImagesV1 : homeOsImagesV2;
   // 次の画像へ
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % homeOsImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % activeImages.length);
   };
 
   // 前の画像へ
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + homeOsImages.length) % homeOsImages.length);
+    setCurrentImageIndex((prev) => (prev - 1 + activeImages.length) % activeImages.length);
   };
 
   // モーダルを閉じたときにインデックスをリセットしたければ追加（任意）
   useEffect(() => {
+    setCurrentImageIndex(0);
     if (selectedProject === null) {
       setCurrentImageIndex(0);
       setHomeOsTab('v2');
     }
-  }, [selectedProject]);
+  }, [selectedProject, homeOsTab]);
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
@@ -386,18 +392,18 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex-1 w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none">
+          <div className="flex-1 w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col min-h-[160px]">
             {/* 疑似ウィンドウヘッダー */}
-            <div className="absolute top-0 w-full h-6 bg-slate-800/90 backdrop-blur-md flex items-center px-3 gap-1.5 z-20">
+            <div className="w-full h-6 bg-slate-800/90 backdrop-blur-md flex items-center px-3 gap-1.5 z-20 shrink-0">
               <div className="w-2 h-2 rounded-full bg-red-400"></div>
               <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
               <div className="w-2 h-2 rounded-full bg-green-400"></div>
               <span className="ml-2 text-[8px] text-slate-400 font-mono tracking-widest">HOME_OS_DASHBOARD</span>
             </div>
             {/* 画面コンテンツ（すでにある画像を使用） */}
-            <div className="absolute top-6 bottom-0 w-full">
+            <div className="relative w-full flex-1 bg-slate-900">
               <Image 
-                src="/public/Home_OS_2.0.png" // 実際のダッシュボード画像に変更可能
+                src="/Home_OS_2.0.png" // 実際のダッシュボード画像に変更可能
                 alt="Home OS Dashboard Mockup"
                 fill
                 className="object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
@@ -549,7 +555,7 @@ export default function Home() {
           <div className="relative w-full h-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
             <AnimatePresence mode="wait">
               <motion.div
-                key={currentImageIndex}
+                key={activeImages[currentImageIndex]}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
@@ -557,7 +563,7 @@ export default function Home() {
                 className="relative w-full h-full"
               >
                 <Image 
-                  src={homeOsImages[currentImageIndex]} 
+                  src={activeImages[currentImageIndex]}
                   alt={`Home OS Slide ${currentImageIndex + 1}`}
                   fill 
                   className="object-contain p-1" 
@@ -568,7 +574,7 @@ export default function Home() {
           </div>
 
           {/* --- ナビゲーションボタン (画像が2枚以上ある時のみ表示) --- */}
-          {homeOsImages.length > 1 && (
+          {activeImages.length > 1 && (
             <>
               {/* 左ボタン */}
               <button 
@@ -588,7 +594,7 @@ export default function Home() {
 
               {/* インジケーター (下部の点) */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                {homeOsImages.map((_, idx) => (
+                {activeImages.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentImageIndex(idx)}
