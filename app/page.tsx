@@ -368,13 +368,13 @@ export default function Home() {
 
         </AnimatedBentoCard>
 
-        {/* 6. Home Building OS */}
+        {/* 6. Home OS */}
         <AnimatedBentoCard delay={0.6} className="md:col-span-6 lg:col-span-2 lg:row-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('homeos')}
         >
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label text="05. HOME LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
+              <Label text="05. Home LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
               <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
                 NOW STUDYING
@@ -392,23 +392,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex-1 w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col min-h-[160px]">
-            {/* 疑似ウィンドウヘッダー */}
-            <div className="w-full h-6 bg-slate-800/90 backdrop-blur-md flex items-center px-3 gap-1.5 z-20 shrink-0">
-              <div className="w-2 h-2 rounded-full bg-red-400"></div>
-              <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-              <div className="w-2 h-2 rounded-full bg-green-400"></div>
-              <span className="ml-2 text-[8px] text-slate-400 font-mono tracking-widest">HOME_OS_DASHBOARD</span>
-            </div>
+          <div className="w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col">
             {/* 画面コンテンツ（すでにある画像を使用） */}
-            <div className="relative w-full flex-1 bg-slate-900">
+            <div className="relative w-full aspect-video bg-slate-900">
               <Image 
-                src="/Home_OS_2.0.png" // 実際のダッシュボード画像に変更可能
+                src="/Home_OS_2.0.png"
                 alt="Home OS Dashboard Mockup"
                 fill
-                className="object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                className="object-contain opacity-90 group-hover:opacity-100 transition-all duration-700"
               />
-              {/* うっすらとかかるサイバーグラデーション */}
               <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent"></div>
             </div>
           </div>
@@ -473,10 +465,10 @@ export default function Home() {
         >
           <div className="space-y-2 pointer-events-none">
             <div className="flex items-center justify-between">
-              <Label text="07. RESEARCH" color="purple" />
+              <Label text="07. PRE-RESEARCH" color="purple" />
               <span className="inline-flex items-center gap-1.5 bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                PRE-GRADUATION RESEARCH
+                NOW RESEARCHING
               </span>
             </div>
             <div>
