@@ -142,6 +142,7 @@ export default function Home() {
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [homeOsTab, setHomeOsTab] = useState<'v1' | 'v2'>('v1');
 
   // 次の画像へ
   const nextImage = () => {
@@ -155,7 +156,10 @@ export default function Home() {
 
   // モーダルを閉じたときにインデックスをリセットしたければ追加（任意）
   useEffect(() => {
-    if (selectedProject === null) setCurrentImageIndex(0);
+    if (selectedProject === null) {
+      setCurrentImageIndex(0);
+      setHomeOsTab('v1');
+    }
   }, [selectedProject]);
 
   return (
@@ -382,11 +386,32 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="flex-1 w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none">
+            {/* 疑似ウィンドウヘッダー */}
+            <div className="absolute top-0 w-full h-6 bg-slate-800/90 backdrop-blur-md flex items-center px-3 gap-1.5 z-20">
+              <div className="w-2 h-2 rounded-full bg-red-400"></div>
+              <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
+              <div className="w-2 h-2 rounded-full bg-green-400"></div>
+              <span className="ml-2 text-[8px] text-slate-400 font-mono tracking-widest">HOME_OS_DASHBOARD</span>
+            </div>
+            {/* 画面コンテンツ（すでにある画像を使用） */}
+            <div className="absolute top-6 bottom-0 w-full">
+              <Image 
+                src="/public/Home_OS_2.0.png" // 実際のダッシュボード画像に変更可能
+                alt="Home OS Dashboard Mockup"
+                fill
+                className="object-cover object-top opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+              />
+              {/* うっすらとかかるサイバーグラデーション */}
+              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent"></div>
+            </div>
+          </div>
+
+          <div className="mt-2 relative z-10 pointer-events-none">
             {/* 使用技術スタック */}
 
             <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-2">
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
@@ -578,50 +603,81 @@ export default function Home() {
         </div>
 
           {/* 右側: 詳細情報 */}
-          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
-             <div>
-               <div className="flex items-center gap-2 mb-2">
-                 <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide">NOW STUDYING</span>
-                 <span className="text-slate-400 text-xs font-mono">2025.12-Current</span>
-               </div>
-               <h2 className="text-3xl font-black text-slate-800 tracking-tight">
-                 Home OS
-               </h2>
+          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col overflow-y-auto relative">
+             
+             {/* ★ タブ切り替えトグルUI ★ */}
+             <div className="flex bg-slate-100/80 p-1.5 rounded-full mb-6 w-full max-w-[280px]">
+               <button 
+                 onClick={() => setHomeOsTab('v1')}
+                 className={`flex-1 text-[11px] font-bold py-2 px-4 rounded-full transition-all duration-300 ${homeOsTab === 'v1' ? 'bg-white text-cyan-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+               >
+                 v1.0 Overview
+               </button>
+               <button 
+                 onClick={() => setHomeOsTab('v2')}
+                 className={`flex-1 text-[11px] font-bold py-2 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-1 ${homeOsTab === 'v2' ? 'bg-cyan-600 text-white shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+               >
+                 v2.0 Update <span className="text-yellow-300">✨</span>
+               </button>
              </div>
 
-             {/* 概要 Section */}
-             <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
-               <p className="text-sm text-slate-600 leading-relaxed">
-                 自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォームです。
-                 InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基盤として機能しています。<br/>
-                 将来的にはMaaSやスマートシティ関連の研究開発に応用できるよう、拡張性の高い設計を目指しています。
-               </p>
-             </div>
-
-             {/* 担当 Section */}
-             <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
-               <p className="text-sm text-slate-800 font-medium">
-                 システム構築 / サーバー運用
-               </p>
-               <p className="text-xs text-slate-500 mt-1">
-                 Docker環境構築、Node-REDやPythonによる制御スクリプト作成、IoT基盤のすべてを自作しています。
-               </p>
-             </div>
-
-              {/* 使用技術 Section */}
-              <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
-               <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
-                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
-                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Ubuntu</TechTag>
-                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
-                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
-               </div>
-             </div>
-             <div className="mt-auto pt-6">
+             {/* ★ アニメーション付きコンテンツエリア ★ */}
+             <div className="relative flex-1">
+               <AnimatePresence mode="wait">
+                 {homeOsTab === 'v1' ? (
+                   <motion.div 
+                     key="v1"
+                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
+                     className="flex flex-col gap-6"
+                   >
+                     <div>
+                       <div className="flex items-center gap-2 mb-2">
+                         <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">PAST VERSION</span>
+                       </div>
+                       <h2 className="text-3xl font-black text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
+                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                         自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォームです。<br/>
+                         InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基礎基盤として構築しました。
+                       </p>
+                     </div>
+                     <div>
+                       <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
+                       <div className="flex flex-wrap gap-2">
+                         <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
+                         <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
+                         <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
+                         <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Node-RED</TechTag>
+                       </div>
+                     </div>
+                   </motion.div>
+                 ) : (
+                   <motion.div 
+                     key="v2"
+                     initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
+                     className="flex flex-col gap-6"
+                   >
+                     <div>
+                       <div className="flex items-center gap-2 mb-2">
+                         <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
+                       </div>
+                       <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
+                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                         実運用での課題を解決するため、フロントエンドを<b>Flutter</b>で完全再構築しました。<br/><br/>
+                         従来のGrafanaによる「受動的な可視化（Read）」から、ダッシュボード上で直接家電を操作できる「双方向のコントロール（Write）」へと進化。<br/>
+                         操作性豊かなUIへの変更により、単なる情報の表示ツールから、真の「パーソナルOS」へと昇華させています。
+                       </p>
+                     </div>
+                     <div>
+                       <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v2.0 New Stack</h3>
+                       <div className="flex flex-wrap gap-2">
+                         <TechTag color="bg-blue-100 text-blue-700 border-blue-200">Flutter</TechTag>
+                         <TechTag color="bg-cyan-50 text-cyan-700 border-cyan-100">Dart</TechTag>
+                         <TechTag color="bg-slate-100 text-slate-600 border-slate-200">REST API</TechTag>
+                       </div>
+                     </div>
+                   </motion.div>
+                 )}
+               </AnimatePresence>
              </div>
           </div>
         </div>
