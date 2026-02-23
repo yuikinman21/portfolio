@@ -136,27 +136,38 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
-  const homeOsImages = [
-    "/My_Room_OS3.jpg",
+  const homeOsImagesV1 = [
     "/My_Room_OS4.jpg", 
+    "/My_Room_OS3.jpg",
+  ];
+  
+  const homeOsImagesV2 = [
+    "/Home_OS_2.0.png",
+    "/Home_OS_2.0_mobile.png",
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [homeOsTab, setHomeOsTab] = useState<'v1' | 'v2'>('v1');
 
+  const activeImages = homeOsTab === 'v1' ? homeOsImagesV1 : homeOsImagesV2;
   // 次の画像へ
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % homeOsImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % activeImages.length);
   };
 
   // 前の画像へ
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + homeOsImages.length) % homeOsImages.length);
+    setCurrentImageIndex((prev) => (prev - 1 + activeImages.length) % activeImages.length);
   };
 
   // モーダルを閉じたときにインデックスをリセットしたければ追加（任意）
   useEffect(() => {
-    if (selectedProject === null) setCurrentImageIndex(0);
-  }, [selectedProject]);
+    setCurrentImageIndex(0);
+    if (selectedProject === null) {
+      setCurrentImageIndex(0);
+      setHomeOsTab('v2');
+    }
+  }, [selectedProject, homeOsTab]);
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
@@ -358,14 +369,69 @@ export default function Home() {
 
         </AnimatedBentoCard>
 
+        {/* 6. Home OS */}
+        <AnimatedBentoCard delay={0.6} className="md:col-span-6 lg:col-span-2 lg:row-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
+          onClick={() => setSelectedProject('homeos')}
+        >
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label text="05. Home LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
+              <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
+                NOW STUDYING
+              </span>
+            </div>
+            
+            <div>
+              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
+                Home OS 2.0
+              </h3>
+              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                自宅環境を統合管理するシステムの構築<br/>
+                クリックして詳細を見ることができます。<br/>
+              </p>
+            </div>
+          </div>
 
-        {/* 6. New Project Card (白鷺祭用語集) */}
-        <AnimatedBentoCard delay={0.6} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
+          <div className="w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col">
+            {/* 画像*/}
+            <div className="relative w-full aspect-video bg-slate-900 overflow-hidden">
+              <Image 
+                src="/Home_OS_2.0.png"
+                alt="Home OS Dashboard Mockup"
+                fill
+                className="object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent pointer-events-none"></div>
+            </div>
+          </div>
+
+          <div className="mt-2 relative z-10 pointer-events-none">
+            {/* 使用技術スタック */}
+
+            <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
+              <div className="flex flex-wrap gap-2">
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Node-RED</span>
+              </div>
+
+              <div className="w-10 h-10 rounded-full bg-white border border-cyan-200 flex items-center justify-center text-cyan-400 group-hover:text-cyan-600 group-hover:scale-110 transition-all shadow-sm">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+              </div>
+            </div>
+          </div>
+        </AnimatedBentoCard>
+
+        {/* 7. New Project Card (白鷺祭用語集) */}
+        <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('shirasagisai')}
         >
           <div className="space-y-3 pointer-events-none">
             <div className="flex items-center justify-between">
-              <Label text="05. PROJECT" color="pink" />
+              <Label text="06. PROJECT" color="pink" />
               <span className="inline-flex items-center gap-1.5 bg-pink-100 text-pink-600 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide animate-pulse">
                 <span className="w-1.5 h-1.5 rounded-full bg-pink-500"></span>
                 NOW BUILDING
@@ -394,86 +460,236 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
-        {/* 7. Home Building OS */}
-        <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
-          onClick={() => setSelectedProject('homeos')}
+        {/* 8. IoTセキュリティ研究 (右下: 1マス分配置) - 新規追加 */}
+        <AnimatedBentoCard delay={0.8} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-purple-300 bg-gradient-to-br from-purple-50/50 to-white transition-colors cursor-pointer"
+          onClick={() => setSelectedProject('iot')}
         >
-          <div className="space-y-3">
+          <div className="space-y-2 pointer-events-none">
             <div className="flex items-center justify-between">
-              <Label text="06. HOME LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
-              <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                NOW STUDYING
+              <Label text="07. PRE-RESEARCH" color="purple" />
+              <span className="inline-flex items-center gap-1.5 bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                NOW RESEARCHING
               </span>
             </div>
-            
             <div>
-              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
-                Home OS
+              <h3 className="text-xl font-bold text-slate-800 group-hover:text-purple-600 transition-colors">
+                IoTマルウェアの通信分析
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                自宅環境を統合管理するシステムの構築<br/>
-                クリックして詳細を見ることができます。<br/>
+                機械学習を用いたスマートホームデバイスの脅威検知<br/>
+                各マルウェアの通信特徴を分析し、異常検知・マルウェア識別モデルを構築<br/>
               </p>
             </div>
           </div>
+          <div className="mt-6 flex items-center justify-between border-t border-purple-100/50 pt-4 pointer-events-none">
+            <div className="flex gap-2">
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Python</span>
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Network Security</span>
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Machine Learning</span>
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Packet Analysis</span>
 
-          <div className="mt-6">
-            {/* 使用技術スタック */}
-
-            <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Node-RED</span>
-              </div>
-
-              <div className="w-10 h-10 rounded-full bg-white border border-cyan-200 flex items-center justify-center text-cyan-400 group-hover:text-cyan-600 group-hover:scale-110 transition-all shadow-sm">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
-              </div>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white border border-purple-200 flex items-center justify-center text-purple-400 group-hover:text-purple-600 group-hover:scale-110 transition-all shadow-sm">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
             </div>
           </div>
         </AnimatedBentoCard>
 
+
         {/* 8. GitHub Link */}
-        <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
+        <AnimatedBentoCard delay={0.9} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 w-full h-full">
-           {/* 左側：テキスト情報 */}
-           <div className="relative z-10 w-full md:w-auto md:flex-1 min-w-[200px]">
-            <Label text="07. REPOSITORY" color="orange" />
-            <h3 className="text-3xl font-bold text-slate-800 mt-2 group-hover:text-orange-600 transition-colors">
-              @yuikinman21
-            </h3>
-            <p className="text-slate-500 text-sm mt-2 max-w-md leading-relaxed">
-              ソースコードや開発ログはこちらから<br/>
-            </p>
-           </div>
-            {/* 中央：GitHub Contributions グラフ */}
-           <div className="hidden md:flex flex-[2] justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-500">
-             <img 
-               src="https://github-contributions-api.deno.dev/yuikinman21.svg" 
-               alt="GitHub Contributions" 
-               className="w-full h-auto object-contain max-h-[130px] transform scale-100 origin-center"
-             />
-           </div>
+            {/* 左側：テキスト情報 */}
+            <div className="relative z-10 w-full md:w-auto md:flex-1 min-w-[200px]">
+              <Label text="07. REPOSITORY" color="orange" />
+              <h3 className="text-3xl font-bold text-slate-800 mt-2 group-hover:text-orange-600 transition-colors">
+                @yuikinman21
+              </h3>
+              <p className="text-slate-500 text-sm mt-2 max-w-md leading-relaxed">
+                ソースコードや開発ログはこちらから<br/>
+              </p>
+            </div>
+              {/* 中央：GitHub Contributions グラフ */}
+            <div className="hidden md:flex flex-[2] justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+              <img 
+                src="https://github-contributions-api.deno.dev/yuikinman21.svg" 
+                alt="GitHub Contributions" 
+                className="w-full h-auto object-contain max-h-[130px] transform scale-100 origin-center"
+              />
+            </div>
 
-           {/* 右側：アイコンとCTAボタン */}
-           <div className="relative z-10 flex flex-col items-center gap-2 flex-shrink-0 mx-auto md:mx-0">
-             <div className="w-16 h-16 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-orange-600 group-hover:border-indigo-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
-               <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-             </div>
-             <span className="text-xs font-bold text-slate-400 group-hover:text-orange-500 transition-colors">View Profile</span>
-           </div>
+            {/* 右側：アイコンとCTAボタン */}
+            <div className="relative z-10 flex flex-col items-center gap-2 flex-shrink-0 mx-auto md:mx-0">
+              <div className="w-16 h-16 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-orange-600 group-hover:border-indigo-200 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-sm">
+                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </div>
+              <span className="text-xs font-bold text-slate-400 group-hover:text-orange-500 transition-colors">View Profile</span>
+            </div>
           </div>
         </AnimatedBentoCard>
       </main>
 
       {/* --- プロジェクト詳細モーダル --- */}
       
-      {/* 1. 白鷺祭用語集のモーダル */}
+
+      {/* 1. Home OSのモーダル*/}
+      <Modal 
+        title="Home OS 2.0"
+        isOpen={selectedProject === 'homeos'} 
+        onClose={() => setSelectedProject(null)} 
+      >
+        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
+          {/* 左側: 画像 */}
+        <div className="w-full md:w-3/5 bg-slate-100 relative min-h-[300px] flex items-center justify-center p-4 md:p-8 overflow-hidden">
+           
+          {/* 画像表示部分 (AnimatePresenceでフェード切替) */}
+          <div className="relative w-full h-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeImages[currentImageIndex]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="relative w-full h-full"
+              >
+                <Image 
+                  src={activeImages[currentImageIndex]}
+                  alt={`Home OS Slide ${currentImageIndex + 1}`}
+                  fill 
+                  className="object-contain p-1" 
+                  priority
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* --- ナビゲーションボタン (画像が2枚以上ある時のみ表示) --- */}
+          {activeImages.length > 1 && (
+            <>
+              {/* 左ボタン */}
+              <button 
+                onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+              </button>
+
+              {/* 右ボタン */}
+              <button 
+                onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              </button>
+
+              {/* インジケーター (下部の点) */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {activeImages.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentImageIndex(idx)}
+                    className={`w-2 h-2 rounded-full transition-all shadow-sm ${
+                      idx === currentImageIndex ? "bg-indigo-600 w-4" : "bg-white/60 hover:bg-white"
+                    }`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+          {/* 右側: 詳細情報 */}
+          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col overflow-y-auto relative">
+             
+            {/* ★ タブ切り替えトグルUI ★ */}
+            <div className="flex bg-slate-100 p-1 rounded-full mb-2 w-full max-w-[280px] relative isolate">
+              <button 
+                onClick={() => setHomeOsTab('v1')}
+                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 z-10 ${homeOsTab === 'v1' ? 'text-cyan-800' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                {homeOsTab === 'v1' && (
+                  <motion.div layoutId="homeOsTabBg" className="absolute inset-0 bg-white rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
+                )}
+                v1.0 Overview
+              </button>
+
+              <button 
+                onClick={() => setHomeOsTab('v2')}
+                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 flex items-center justify-center gap-1 z-10 ${homeOsTab === 'v2' ? 'text-white' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                {homeOsTab === 'v2' && (
+                  <motion.div layoutId="homeOsTabBg" className="absolute inset-0 bg-cyan-600 rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
+                )}
+                v2.0 Update <span className="text-yellow-300">✨</span>
+              </button>
+            </div>
+
+            {/* ★ アニメーション付きコンテンツエリア ★ */}
+            <div className="relative flex-1">
+              <AnimatePresence mode="wait">
+                {homeOsTab === 'v1' ? (
+                  <motion.div 
+                    key="v1"
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
+                    className="flex flex-col gap-6"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">PAST VERSION</span>
+                      </div>
+                      <h2 className="text-3xl font-black text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
+                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                        自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォーム。<br/>
+                        InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基礎基盤として構築。
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
+                      <div className="flex flex-wrap gap-2">
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="v2"
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
+                    className="flex flex-col gap-6"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
+                      </div>
+                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
+                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                        フロントエンドを<b>Flutter</b>で完全再構築。<br/><br/>
+                        これにより、従来の<b>Grafana</b>による「表示」から、ダッシュボード上での「操作」へと進化。<br/>
+                        操作性豊かなUIへの変更により、さらに直感的に分かりやすく理解できるようになった。<br/>
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v2.0 New Stack</h3>
+                      <div className="flex flex-wrap gap-2">
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Flutter</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Dart</TechTag>
+                        
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* 2. 白鷺祭用語集のモーダル */}
       <Modal
         title="白鷺祭用語集"
         isOpen={selectedProject === 'shirasagisai'} 
@@ -496,193 +712,137 @@ export default function Home() {
             </div>
 
             <a 
-               href="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-pink-600 hover:border-pink-200 hover:shadow-md transition-all duration-300"
-             >
-               <span>別のタブで開く</span>
-               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-             </a>
+              href="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-pink-600 hover:border-pink-200 hover:shadow-md transition-all duration-300"
+            >
+              <span>別のタブで開く</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </a>
 
           </div>
 
           {/* 右側: 詳細情報エリア (幅: md以上で40%) */}
           <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
              
-             {/* タイトルエリア */}
-             <div>
-               <div className="flex items-center gap-2 mb-2">
-                 <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide">NOW BUILDING</span>
-                 <span className="text-slate-400 text-xs font-mono">2025.11-Current</span>
-               </div>
-               <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
-                 白鷺祭用語集
-               </h2>
-             </div>
-
-             {/* 概要 Section */}
-              <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  大学祭実行委員のための用語まとめサイトです。<br/>
-                  白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。
-                  リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
-                </p>
+            {/* タイトルエリア */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide">NOW BUILDING</span>
+                <span className="text-slate-400 text-xs font-mono">2025.11-Current</span>
               </div>
+              <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
+                白鷺祭用語集
+              </h2>
+            </div>
 
-              {/* 担当 Section (新規追加) */}
-              <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
-                <p className="text-sm text-slate-800 font-medium">
-                  リードエンジニア / UIデザイン
-                </p>
-                <p className="text-xs text-slate-500 mt-1">
-                  要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。
-                </p>
-              </div>
+            {/* 概要 Section */}
+            <div>
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                大学祭実行委員のための用語まとめサイトです。<br/>
+                白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。
+                リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
+              </p>
+            </div>
 
-              {/* 使用技術 Section */}
-              <div>
-                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
-                <div className="flex flex-wrap gap-2">
-                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Next.js</TechTag>
-                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Vercel</TechTag>
-                </div>
-              </div>
+            {/* 担当 Section (新規追加) */}
+            <div>
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
+              <p className="text-sm text-slate-800 font-medium">
+                リードエンジニア / UIデザイン
+              </p>
+              <p className="text-xs text-slate-500 mt-1">
+                要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。
+              </p>
+            </div>
 
-              {/* アクションボタン */}
-              <div className="mt-auto pt-6">
-                <a 
-                  href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
-                >
-                  <span>サンプルサイトを見る</span>
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </a>
+            {/* 使用技術 Section */}
+            <div>
+              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
+              <div className="flex flex-wrap gap-2">
+                <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
+                <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
               </div>
+            </div>
+
+            {/* アクションボタン */}
+            <div className="mt-auto pt-6">
+              <a 
+                href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" 
+                target="_blank" 
+                rel="noreferrer" 
+                className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
+              >
+                <span>サンプルサイトを見る</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+            </div>
           </div>
         </div>
       </Modal>
 
+      {/* 3. IoTセキュリティ研究のモーダル*/}
       <Modal 
-        title="Home OS"
-        isOpen={selectedProject === 'homeos'} 
+        title="IoTマルウェアの通信分析"
+        isOpen={selectedProject === 'iot'} 
         onClose={() => setSelectedProject(null)} 
       >
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
-          {/* 左側: 画像 */}
-        <div className="w-full md:w-3/5 bg-slate-100 relative min-h-[300px] flex items-center justify-center p-4 md:p-8 overflow-hidden">
-           
-           {/* 画像表示部分 (AnimatePresenceでフェード切替) */}
-           <div className="relative w-full h-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
-             <AnimatePresence mode="wait">
-               <motion.div
-                 key={currentImageIndex}
-                 initial={{ opacity: 0 }}
-                 animate={{ opacity: 1 }}
-                 exit={{ opacity: 0 }}
-                 transition={{ duration: 0.3 }}
-                 className="relative w-full h-full"
-               >
-                 <Image 
-                   src={homeOsImages[currentImageIndex]} 
-                   alt={`Home OS Slide ${currentImageIndex + 1}`}
-                   fill 
-                   className="object-contain p-1" 
-                   priority
-                 />
-               </motion.div>
-             </AnimatePresence>
-           </div>
+          {/* 左側: ビジュアルエリア */}
+          <div className="w-full md:w-3/5 bg-slate-100 flex flex-col items-center justify-center p-6 lg:p-10 relative gap-6">
+              {/* Canva埋め込み */}
+            <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
+              <iframe 
+                loading="lazy" 
+                className="w-full h-full border-none"
+                src="https://www.canva.com/design/DAHCJZi458Y/mzojWOXa0asjUIGbfKOOcw/view?embed" 
+                allowFullScreen 
+                allow="fullscreen"
+              ></iframe>
+            </div>
 
-           {/* --- ナビゲーションボタン (画像が2枚以上ある時のみ表示) --- */}
-           {homeOsImages.length > 1 && (
-             <>
-               {/* 左ボタン */}
-               <button 
-                 onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                 className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
-               >
-                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-               </button>
+            <a 
+              href="https://www.canva.com/design/DAHCJZi458Y/D5pKPXqx5wr8eBM6YmTShg/view?utm_content=DAHCJZi458Y&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h0f81bba7c7" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-purple-600 hover:border-purple-200 hover:shadow-md transition-all duration-300"
+            >
+              <span>別のタブで開く</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </a>
 
-               {/* 右ボタン */}
-               <button 
-                 onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                 className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
-               >
-                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-               </button>
-
-               {/* インジケーター (下部の点) */}
-               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                 {homeOsImages.map((_, idx) => (
-                   <button
-                     key={idx}
-                     onClick={() => setCurrentImageIndex(idx)}
-                     className={`w-2 h-2 rounded-full transition-all shadow-sm ${
-                       idx === currentImageIndex ? "bg-indigo-600 w-4" : "bg-white/60 hover:bg-white"
-                     }`}
-                   />
-                 ))}
-               </div>
-             </>
-           )}
-        </div>
+          </div>
 
           {/* 右側: 詳細情報 */}
           <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
              <div>
                <div className="flex items-center gap-2 mb-2">
-                 <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide">NOW STUDYING</span>
-                 <span className="text-slate-400 text-xs font-mono">2025.12-Current</span>
+                 <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full tracking-wide">ACADEMIC RESEARCH</span>
                </div>
-               <h2 className="text-3xl font-black text-slate-800 tracking-tight">
-                 Home OS
-               </h2>
+               <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
              </div>
-
-             {/* 概要 Section */}
              <div>
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
                <p className="text-sm text-slate-600 leading-relaxed">
-                 自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォームです。
-                 InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基盤として機能しています。<br/>
-                 将来的にはMaaSやスマートシティ関連の研究開発に応用できるよう、拡張性の高い設計を目指しています。
+                 スマート家電等のIoTデバイスを標的としたマルウェアの挙動解析と分類手法の研究（プレ卒論）に取り組んでいます。<br/><br/>
+                 実環境に近いデータセット（Aposemat IoT-23）を活用し、パケットキャプチャ（pcap）データからフロー単位の特徴量を抽出・変換する手法を構築しました。機械学習アルゴリズムに<b>ランダムフォレスト</b>を採用し、マルウェアファミリーの統合を行うことで<b>99.9%以上の高精度な多値分類</b>を達成しています。<br/><br/>
+                 箱ひげ図を用いた統計的評価により、MiraiのDDoS攻撃特性やHide and Seekの探索挙動など、各マルウェアの機能的な違いを解明するアプローチを行っています。
                </p>
              </div>
-
-             {/* 担当 Section */}
-             <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
-               <p className="text-sm text-slate-800 font-medium">
-                 システム構築 / サーバー運用
-               </p>
-               <p className="text-xs text-slate-500 mt-1">
-                 Docker環境構築、Node-REDやPythonによる制御スクリプト作成、IoT基盤のすべてを自作しています。
-               </p>
-             </div>
-
-              {/* 使用技術 Section */}
               <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">キーワード</h3>
                <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Ubuntu</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Node-RED</TechTag>
+                 <TechTag color="bg--50 text-purple-700 border-purple-200">Network Security</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Machine Learning</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Packet Analysis</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Python</TechTag>
                </div>
-             </div>
-             <div className="mt-auto pt-6">
              </div>
           </div>
         </div>
       </Modal>
-
       
 
       <footer className="py-12 text-center">
