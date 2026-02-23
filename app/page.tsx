@@ -336,7 +336,7 @@ export default function Home() {
                 {[
                   "C", "C++", "Java", "Python", "Processing",
                   "JavaScript", "TypeScript", "Next.js", "Tailwind CSS",
-                  "HTML5", "CSS3", "GAS"
+                  "HTML5", "CSS3", "GAS", "VBA", "Dart"
                 ].map(tech => (
                   <TechTag key={tech} color="bg-blue-50 text-blue-700 border-blue-100">{tech}</TechTag>
                 ))}
@@ -347,7 +347,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "Blender","GIMP","DaVinci Resolve", "AviUtl", "VSCode",
-                  "Git", "GitHub", "Vercel", "Docker"
+                  "Git", "GitHub", "Vercel", "Docker", "Canva", "Flutter"
                 ].map(tool => (
                   <TechTag key={tool} color="bg-purple-50 text-purple-700 border-purple-100">{tool}</TechTag>
                 ))}
@@ -359,7 +359,7 @@ export default function Home() {
               <div className="flex flex-wrap gap-1.5">
                 {[
                   "TOEIC","NW","SC", "Web Application", "3D Modeling", "IoT",
-                  "Building-OS"
+                  "Building-OS", "Cybersecurity", "MaaS", "Smart Home"
                 ].map(tool => (
                   <TechTag key={tool} color="bg-orange-50 text-orange-700 border-orange-100">{tool}</TechTag>
                 ))}
@@ -416,6 +416,8 @@ export default function Home() {
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Node-RED</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Flutter</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Dart</span>
               </div>
 
               <div className="w-10 h-10 rounded-full bg-white border border-cyan-200 flex items-center justify-center text-cyan-400 group-hover:text-cyan-600 group-hover:scale-110 transition-all shadow-sm">
@@ -650,6 +652,7 @@ export default function Home() {
                       <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
                       <div className="flex flex-wrap gap-2">
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Ubuntu</TechTag>
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
