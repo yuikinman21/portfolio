@@ -791,14 +791,28 @@ export default function Home() {
       >
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
           {/* 左側: ビジュアルエリア */}
-          <div className="w-full md:w-3/5 bg-slate-900 flex flex-col items-center justify-center p-6 lg:p-10 relative overflow-hidden">
-             {/* サイバー感のある背景装飾 */}
-             <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #8b5cf6 0%, transparent 60%)' }}></div>
-             <div className="relative z-10 text-center space-y-4">
-                <svg className="w-24 h-24 mx-auto text-purple-400 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
-                <h3 className="text-2xl font-black text-white tracking-widest font-mono">MALWARE<br/>ANALYSIS</h3>
-                <p className="text-purple-300 text-xs font-mono">Aposemat IoT-23 Dataset</p>
-             </div>
+          <div className="w-full md:w-3/5 bg-slate-100 flex flex-col items-center justify-center p-6 lg:p-10 relative gap-6">
+              {/* Canva埋め込み */}
+            <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
+              <iframe 
+                loading="lazy" 
+                className="w-full h-full border-none"
+                src="https://www.canva.com/design/DAHCJZi458Y/mzojWOXa0asjUIGbfKOOcw/view?embed" 
+                allowFullScreen 
+                allow="fullscreen"
+              ></iframe>
+            </div>
+
+            <a 
+              href="https://www.canva.com/design/DAHCJZi458Y/D5pKPXqx5wr8eBM6YmTShg/view?utm_content=DAHCJZi458Y&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h0f81bba7c7" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-purple-600 hover:border-purple-200 hover:shadow-md transition-all duration-300"
+            >
+              <span>別のタブで開く</span>
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </a>
+
           </div>
 
           {/* 右側: 詳細情報 */}
