@@ -359,7 +359,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 6. Home Building OS */}
-        <AnimatedBentoCard delay={0.6} className="md:col-span-6 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
+        <AnimatedBentoCard delay={0.6} className="md:col-span-6 lg:col-span-2 lg:row-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('homeos')}
         >
           <div className="space-y-3">
@@ -461,7 +461,7 @@ export default function Home() {
 
 
         {/* 8. GitHub Link */}
-        <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
+        <AnimatedBentoCard delay={0.9} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
 
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 w-full h-full">
            {/* 左側：テキスト情報 */}
@@ -590,6 +590,7 @@ export default function Home() {
         </div>
       </Modal>
 
+      {/* 2. Home OSのモーダル*/}
       <Modal 
         title="Home OS"
         isOpen={selectedProject === 'homeos'} 
@@ -706,6 +707,52 @@ export default function Home() {
         </div>
       </Modal>
 
+      {/* 3. IoTセキュリティ研究のモーダル*/}
+      <Modal 
+        title="IoTマルウェアの通信分析"
+        isOpen={selectedProject === 'iot'} 
+        onClose={() => setSelectedProject(null)} 
+      >
+        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
+          {/* 左側: ビジュアルエリア */}
+          <div className="w-full md:w-3/5 bg-slate-900 flex flex-col items-center justify-center p-6 lg:p-10 relative overflow-hidden">
+             {/* サイバー感のある背景装飾 */}
+             <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 50% 50%, #8b5cf6 0%, transparent 60%)' }}></div>
+             <div className="relative z-10 text-center space-y-4">
+                <svg className="w-24 h-24 mx-auto text-purple-400 opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" /></svg>
+                <h3 className="text-2xl font-black text-white tracking-widest font-mono">MALWARE<br/>ANALYSIS</h3>
+                <p className="text-purple-300 text-xs font-mono">Aposemat IoT-23 Dataset</p>
+             </div>
+          </div>
+
+          {/* 右側: 詳細情報 */}
+          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
+             <div>
+               <div className="flex items-center gap-2 mb-2">
+                 <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full tracking-wide">ACADEMIC RESEARCH</span>
+               </div>
+               <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
+             </div>
+             <div>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">研究概要</h3>
+               <p className="text-sm text-slate-600 leading-relaxed">
+                 スマート家電等のIoTデバイスを標的としたマルウェアの挙動解析と分類手法の研究（プレ卒論）に取り組んでいます。<br/><br/>
+                 実環境に近いデータセット（Aposemat IoT-23）を活用し、パケットキャプチャ（pcap）データからフロー単位の特徴量を抽出・変換する手法を構築しました。機械学習アルゴリズムに<b>ランダムフォレスト</b>を採用し、マルウェアファミリーの統合を行うことで<b>99.9%以上の高精度な多値分類</b>を達成しています。<br/><br/>
+                 箱ひげ図を用いた統計的評価により、MiraiのDDoS攻撃特性やHide and Seekの探索挙動など、各マルウェアの機能的な違いを解明するアプローチを行っています。
+               </p>
+             </div>
+              <div>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">キーワード</h3>
+               <div className="flex flex-wrap gap-2">
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Network Security</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Machine Learning</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Packet Analysis</TechTag>
+                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
+               </div>
+             </div>
+          </div>
+        </div>
+      </Modal>
       
 
       <footer className="py-12 text-center">
