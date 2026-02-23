@@ -373,7 +373,7 @@ export default function Home() {
             
             <div>
               <h3 className="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
-                Home OS
+                Home OS 2.0
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 自宅環境を統合管理するシステムの構築<br/>
@@ -582,8 +582,8 @@ export default function Home() {
               <div>
                 <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
                 <div className="flex flex-wrap gap-2">
-                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Next.js</TechTag>
-                  <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Vercel</TechTag>
+                  <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
+                  <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
                 </div>
               </div>
 
@@ -707,11 +707,11 @@ export default function Home() {
               <div>
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
                <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Docker</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Grafana</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Ubuntu</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Node-RED</TechTag>
+                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
+                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
+                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Ubuntu</TechTag>
+                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
+                 <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
                </div>
              </div>
              <div className="mt-auto pt-6">
@@ -747,7 +747,7 @@ export default function Home() {
                <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
              </div>
              <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">研究概要</h3>
+               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
                <p className="text-sm text-slate-600 leading-relaxed">
                  スマート家電等のIoTデバイスを標的としたマルウェアの挙動解析と分類手法の研究（プレ卒論）に取り組んでいます。<br/><br/>
                  実環境に近いデータセット（Aposemat IoT-23）を活用し、パケットキャプチャ（pcap）データからフロー単位の特徴量を抽出・変換する手法を構築しました。機械学習アルゴリズムに<b>ランダムフォレスト</b>を採用し、マルウェアファミリーの統合を行うことで<b>99.9%以上の高精度な多値分類</b>を達成しています。<br/><br/>
@@ -757,10 +757,10 @@ export default function Home() {
               <div>
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">キーワード</h3>
                <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Network Security</TechTag>
+                 <TechTag color="bg--50 text-purple-700 border-purple-200">Network Security</TechTag>
                  <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Machine Learning</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Packet Analysis</TechTag>
-                 <TechTag color="bg-slate-100 text-slate-600 border-slate-200">Python</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Packet Analysis</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Python</TechTag>
                </div>
              </div>
           </div>
