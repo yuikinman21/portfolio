@@ -436,6 +436,29 @@ export default function Home() {
           </div>
         </AnimatedBentoCard>
 
+        {/* 8. IoTセキュリティ研究 (右下: 1マス分配置) - 新規追加 */}
+        <AnimatedBentoCard delay={0.8} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-purple-300 bg-gradient-to-br from-purple-50/50 to-white transition-colors cursor-pointer"
+          onClick={() => setSelectedProject('iot')}
+        >
+          <div className="space-y-2 pointer-events-none">
+            <div className="flex items-center justify-between">
+              <Label text="07. RESEARCH" color="purple" />
+              <span className="inline-flex items-center gap-1.5 bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
+                <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                ACADEMIC
+              </span>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-slate-800 group-hover:text-purple-600 transition-colors">
+                IoTマルウェアの通信分析
+              </h3>
+              <p className="text-slate-500 text-xs mt-1 leading-relaxed">
+                機械学習を用いたスマートホーム環境の脅威検知
+              </p>
+            </div>
+          </div>
+        </AnimatedBentoCard>
+
 
         {/* 8. GitHub Link */}
         <AnimatedBentoCard delay={0.8} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
