@@ -445,16 +445,29 @@ export default function Home() {
               <Label text="07. RESEARCH" color="purple" />
               <span className="inline-flex items-center gap-1.5 bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
                 <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                ACADEMIC
+                PRE-GRADUATION RESEARCH
               </span>
             </div>
             <div>
               <h3 className="text-xl font-bold text-slate-800 group-hover:text-purple-600 transition-colors">
                 IoTマルウェアの通信分析
               </h3>
-              <p className="text-slate-500 text-xs mt-1 leading-relaxed">
-                機械学習を用いたスマートホーム環境の脅威検知
+              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                機械学習を用いたスマートホームデバイスの脅威検知<br/>
+                各マルウェアの通信特徴を分析し、異常検知・マルウェア識別モデルを構築<br/>
               </p>
+            </div>
+          </div>
+          <div className="mt-6 flex items-center justify-between border-t border-purple-100/50 pt-4 pointer-events-none">
+            <div className="flex gap-2">
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Python</span>
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Network Security</span>
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Machine Learning</span>
+              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Packet Analysis</span>
+
+            </div>
+            <div className="w-10 h-10 rounded-full bg-white border border-purple-200 flex items-center justify-center text-purple-400 group-hover:text-purple-600 group-hover:scale-110 transition-all shadow-sm">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
             </div>
           </div>
         </AnimatedBentoCard>
