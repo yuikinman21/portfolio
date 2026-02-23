@@ -641,6 +641,7 @@ export default function Home() {
                     <div>
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">PAST VERSION</span>
+                        <span className="text-slate-400 text-xs font-mono">2025.11-2026.02</span>
                       </div>
                       <h2 className="text-3xl font-black text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
@@ -668,6 +669,7 @@ export default function Home() {
                     <div>
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
+                        <span className="text-slate-400 text-xs font-mono">2026.02-Current</span>
                       </div>
                       <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
@@ -823,13 +825,14 @@ export default function Home() {
              <div>
                <div className="flex items-center gap-2 mb-2">
                  <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full tracking-wide">ACADEMIC RESEARCH</span>
+                 <span className="text-slate-400 text-xs font-mono">2025.09-2026.01</span>
                </div>
                <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
              </div>
              <div>
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
                <p className="text-sm text-slate-600 leading-relaxed">
-                 スマート家電等のIoTデバイスを標的としたマルウェアの挙動解析と分類手法の研究（プレ卒論）に取り組んでいます。<br/><br/>
+                 スマート家電等のIoTデバイスを標的としたマルウェアの挙動解析と分類手法の研究（プレ卒論）に取り組んでいました。<br/><br/>
                  実環境に近いデータセット（Aposemat IoT-23）を活用し、パケットキャプチャ（pcap）データからフロー単位の特徴量を抽出・変換する手法を構築しました。機械学習アルゴリズムに<b>ランダムフォレスト</b>を採用し、マルウェアファミリーの統合を行うことで<b>99.9%以上の高精度な多値分類</b>を達成しています。<br/><br/>
                  箱ひげ図を用いた統計的評価により、MiraiのDDoS攻撃特性やHide and Seekの探索挙動など、各マルウェアの機能的な違いを解明するアプローチを行っています。
                </p>
@@ -837,7 +840,7 @@ export default function Home() {
               <div>
                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">キーワード</h3>
                <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg--50 text-purple-700 border-purple-200">Network Security</TechTag>
+                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Network Security</TechTag>
                  <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Machine Learning</TechTag>
                  <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Packet Analysis</TechTag>
                  <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Python</TechTag>
