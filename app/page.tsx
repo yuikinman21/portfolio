@@ -636,8 +636,8 @@ export default function Home() {
                       </div>
                       <h2 className="text-3xl font-black text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォームです。<br/>
-                        InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基礎基盤として構築しました。
+                        自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォーム。<br/>
+                        InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基礎基盤として構築。
                       </p>
                     </div>
                     <div>
@@ -662,9 +662,9 @@ export default function Home() {
                       </div>
                       <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        実運用での課題を解決するため、フロントエンドを<b>Flutter</b>で完全再構築しました。<br/><br/>
-                        従来のGrafanaによる「受動的な可視化（Read）」から、ダッシュボード上で直接家電を操作できる「双方向のコントロール（Write）」へと進化。<br/>
-                        操作性豊かなUIへの変更により、単なる情報の表示ツールから、真の「パーソナルOS」へと昇華させています。
+                        フロントエンドを<b>Flutter</b>で完全再構築。<br/><br/>
+                        これにより、従来の<b>Grafana</b>による「表示」から、ダッシュボード上での「操作」へと進化。<br/>
+                        操作性豊かなUIへの変更により、さらに直感的に分かりやすく理解できるようになった。<br/>
                       </p>
                     </div>
                     <div>
@@ -672,10 +672,6 @@ export default function Home() {
                       <div className="flex flex-wrap gap-2">
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Flutter</TechTag>
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Dart</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
                         
                       </div>
                     </div>
