@@ -612,17 +612,24 @@ export default function Home() {
           <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col overflow-y-auto relative">
              
             {/* ★ タブ切り替えトグルUI ★ */}
-            <div className="flex bg-slate-100/80 p-1.5 rounded-full mb-6 w-full max-w-[280px]">
+            <div className="flex bg-slate-100 p-1 rounded-full mb-2 w-full max-w-[280px] relative isolate">
               <button 
                 onClick={() => setHomeOsTab('v1')}
-                className={`flex-1 text-[11px] font-bold py-2 px-4 rounded-full transition-all duration-300 ${homeOsTab === 'v1' ? 'bg-white text-cyan-700 shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 z-10 ${homeOsTab === 'v1' ? 'text-cyan-800' : 'text-slate-400 hover:text-slate-600'}`}
               >
+                {homeOsTab === 'v1' && (
+                  <motion.div layoutId="homeOsTabBg" className="absolute inset-0 bg-white rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
+                )}
                 v1.0 Overview
               </button>
+
               <button 
                 onClick={() => setHomeOsTab('v2')}
-                className={`flex-1 text-[11px] font-bold py-2 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-1 ${homeOsTab === 'v2' ? 'bg-cyan-600 text-white shadow-sm' : 'text-slate-400 hover:text-slate-600'}`}
+                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 flex items-center justify-center gap-1 z-10 ${homeOsTab === 'v2' ? 'text-white' : 'text-slate-400 hover:text-slate-600'}`}
               >
+                {homeOsTab === 'v2' && (
+                  <motion.div layoutId="homeOsTabBg" className="absolute inset-0 bg-cyan-600 rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
+                )}
                 v2.0 Update <span className="text-yellow-300">✨</span>
               </button>
             </div>
