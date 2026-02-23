@@ -143,6 +143,7 @@ export default function Home() {
   
   const homeOsImagesV2 = [
     "/Home_OS_2.0.png",
+    "/Home_OS_2.0_mobile.png",
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -535,7 +536,7 @@ export default function Home() {
 
       {/* 1. Home OSのモーダル*/}
       <Modal 
-        title="Home OS"
+        title="Home OS 2.0"
         isOpen={selectedProject === 'homeos'} 
         onClose={() => setSelectedProject(null)} 
       >
