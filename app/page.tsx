@@ -358,7 +358,7 @@ export default function Home() {
               <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
               <div className="flex flex-wrap gap-1.5">
                 {[
-                  "TOEIC","NW","SC", "Web Application", "3D Modeling", "IoT",
+                  "TOEIC","NW","SC", "FP", "Web Application", "3D Modeling", "IoT",
                   "Building-OS", "Cybersecurity", "MaaS", "Smart Home"
                 ].map(tool => (
                   <TechTag key={tool} color="bg-orange-50 text-orange-700 border-orange-100">{tool}</TechTag>
