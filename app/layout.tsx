@@ -44,6 +44,9 @@ export const metadata: Metadata = {
     description: "Engineering logic, crafting future.",
     images: ['/サーキュラー8bit.jpg'],
   },
+  verification: {
+    google: 'kK-fS0ZwkpLXOm-a3oHAUkpCibUHAlD2w5_h9rBwcy0',
+  },
 };
 
 export default function RootLayout({
