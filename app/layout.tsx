@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'YUIKI Portfolio',
     images: [
       {
-        url: '/サーキュラー8bit.jpg', // SNSでシェアされた時に表示される画像
+        url: '/サーキュラー8bit.jpg',
         width: 800,
         height: 600,
         alt: 'YUIKI Portfolio Profile Image',
@@ -56,7 +56,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* 修正ポイント: suppressHydrationWarning={true} を追加 */}
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
