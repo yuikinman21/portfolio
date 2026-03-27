@@ -336,7 +336,7 @@ export default function Home() {
                 {[
                   "C", "C++", "Java", "Python", "Processing",
                   "JavaScript", "TypeScript", "Next.js", "Tailwind CSS",
-                  "HTML5", "CSS3", "GAS", "VBA", "Dart"
+                  "HTML5", "CSS3", "GAS", "VBA", "Dart", "Swift"
                 ].map(tech => (
                   <TechTag key={tech} color="bg-blue-50 text-blue-700 border-blue-100">{tech}</TechTag>
                 ))}
