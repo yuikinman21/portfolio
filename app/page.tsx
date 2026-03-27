@@ -142,8 +142,11 @@ export default function Home() {
   ];
   
   const homeOsImagesV2 = [
-    "/Home_OS_2.0.png",
-    "/Home_OS_2.0_mobile.png",
+    "/Home_OS_2.0.1_0.png",
+    "/Home_OS_2.0.1.png",
+    "/Home_OS_2.0.1_mobile_1.png",
+    "/Home_OS_2.0.1_mobile_2.png",
+    "/Home_OS_2.0.1_mobile_3.png",
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -397,7 +400,7 @@ export default function Home() {
             {/* 画像*/}
             <div className="relative w-full aspect-video bg-slate-900 overflow-hidden">
               <Image 
-                src="/Home_OS_2.0.png"
+                src="/Home_OS_2.0.1.png"
                 alt="Home OS Dashboard Mockup"
                 fill
                 className="object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
