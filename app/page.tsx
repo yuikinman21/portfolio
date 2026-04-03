@@ -237,7 +237,7 @@ export default function Home() {
           <div className="mt-8 text-center space-y-1 relative z-10">
             <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
             <p className="text-slate-500 font-mono text-sm bg-slate-100 px-3 py-1 rounded-full inline-block">
-              Osaka Metropolitan Univ. Student B3
+              Osaka Metropolitan Univ. Student B4
             </p>
           </div>
         </AnimatedBentoCard>
