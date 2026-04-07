@@ -304,14 +304,13 @@ export default function Home() {
               type="edu"
             />
 
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-
-            {/* <TimelineItem 
+            <TimelineItem 
               date="2025.07" 
               title="基本情報技術者 (FE)" 
               org="情報処理推進機構 (IPA)"
               type="cert"
             />
+
             <TimelineItem
               date="2023.04 - Present"
               title="大阪公立大学 工学部 情報工学科"
@@ -319,19 +318,13 @@ export default function Home() {
               isCurrent
               type="edu"
             />
+
             <TimelineItem
               date="2020.04 - 2023.03"
               title="京都市立西京高等学校 エンタープライジング科"
               org="Kyoto Saikyo High School"
               type="edu"
-            /> */}
-
-          </div>
-          <div className="mt-4 pt-4 border-t border-green-100/50 flex items-center justify-between pointer-events-none">
-            <span className="text-xs font-bold text-slate-400 group-hover:text-green-600 transition-colors">View Full History</span>
-            <div className="w-8 h-8 rounded-full bg-white border border-green-200 flex items-center justify-center text-green-400 group-hover:text-green-600 group-hover:scale-110 transition-all shadow-sm">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            </div>
+            />
           </div>
         </AnimatedBentoCard>
         
