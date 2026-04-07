@@ -280,7 +280,7 @@ export default function Home() {
 
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
 
-          <div className="space-y-3 mt-4 overflow-y-auto max-h-[450px] pr-2 pb-12 custom-scrollbar relative z-0">
+          <div className="space-y-3 mt-4 overflow-y-auto max-h-[450px] pl-3 pr-3 pb-12 custom-scrollbar relative z-0">
 
             <div className="space-y-3">
               <TimelineItem 
