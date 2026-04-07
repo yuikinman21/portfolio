@@ -966,7 +966,7 @@ function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { d
             ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' 
             : type === 'cert' 
               ? 'bg-amber-400' 
-              : 'bg-slate-300 group-hover:bg-green-400' // 過去の経歴の丸ポチもホバー時に緑になるように変更
+              : 'bg-slate-300 group-hover:bg-green-400'
           }`} 
       />
       
@@ -983,7 +983,7 @@ function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { d
       </div>
       
       {/* --- タイトル --- */}
-      <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2 group-hover:text-green-500 transition-colors">
+      <h4 className="font-bold text-emerald-700 text-sm flex items-center gap-2 group-hover:text-green-500 transition-colors">
         {icon && <span>{icon}</span>}
         {title}
       </h4>
