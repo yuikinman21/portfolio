@@ -279,6 +279,13 @@ export default function Home() {
           <Label text="03. TIMELINE" color="green" />
           <div className="space-y-3">
             <TimelineItem 
+              date="2026.04" 
+              title="ファイナンシャル・プランニング技能士3級 (FP3級)" 
+              org="日本FP協会"
+              type="cert"
+            />
+
+            <TimelineItem 
               date="2025.10" 
               title="応用情報技術者 (AP)" 
               org="情報処理推進機構 (IPA)"
