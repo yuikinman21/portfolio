@@ -291,7 +291,7 @@ export default function Home() {
             >
               <TimelineItem
                 date="2026.04"
-                title="FP3級（ファイナンシャル・プランニング技能士）"
+                title="ファイナンシャル・プランニング技能士3級 (FP3級)"
                 org="日本FP協会"
                 type="cert"
               />
