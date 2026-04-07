@@ -957,22 +957,22 @@ function SocialButton({ href, label }: { href: string; label: string }) {
 
 function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org?: string, children?: ReactNode, icon?: string, isCurrent?: boolean, type?: "cert" | "work" | "edu" }) {
   return (
-        <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-indigo-200 transition-colors group">
+    <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-green-200 transition-colors group">
       
-      {/* --- タイムラインの丸ポチ (TimelineItemのステータス円を拡張) --- */}
+      {/* --- タイムラインの丸ポチ --- */}
       <div 
         className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white box-content z-10 transition-all duration-300 group-hover:scale-110
           ${isCurrent 
-            ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' // 現在進行形は緑の光
+            ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' 
             : type === 'cert' 
-              ? 'bg-amber-400' // 資格は黄色
-              : 'bg-slate-300 group-hover:bg-indigo-400' // 過去の経歴はグレー→ホバーで紫
+              ? 'bg-amber-400' 
+              : 'bg-slate-300 group-hover:bg-green-400' // 過去の経歴の丸ポチもホバー時に緑になるように変更
           }`} 
       />
       
       {/* --- 日付 & ステータスバッジ --- */}
       <div className="flex flex-wrap items-center gap-x-2 mb-1">
-        <span className="font-mono text-xs text-slate-400 font-bold group-hover:text-indigo-500 transition-colors">
+        <span className="font-mono text-xs text-slate-400 font-bold transition-colors">
           {date}
         </span>
         {isCurrent && (
@@ -982,20 +982,20 @@ function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { d
         )}
       </div>
       
-      {/* --- タイトル (TimelineItemのデザインを継承) --- */}
-      <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2 group-hover:text-indigo-600 transition-colors">
+      {/* --- タイトル --- */}
+      <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2 group-hover:text-green-500 transition-colors">
         {icon && <span>{icon}</span>}
         {title}
       </h4>
 
-      {/* --- 所属・組織名 (新規追加) --- */}
+      {/* --- 所属・組織名 --- */}
       {org && (
         <div className="text-xs text-slate-500 font-medium mt-0.5">
           {org}
         </div>
       )}
       
-      {/* --- 詳細説明 (childrenで柔軟に記述可能) --- */}
+      {/* --- 詳細説明 --- */}
       {children && (
         <div className="mt-2 text-xs text-slate-600 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">
           {children}
