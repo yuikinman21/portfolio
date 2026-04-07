@@ -275,8 +275,11 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 4. Timeline (History & Status) */}
-        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6">
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 flex flex-col relative overflow-hidden">
           <Label text="03. TIMELINE" color="green" />
+
+          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          
           <div className="space-y-3">
             <TimelineItem 
               date="2026.04" 
