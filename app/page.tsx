@@ -275,11 +275,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 4. Timeline (History & Status) */}
-        <AnimatedBentoCard 
-        delay={0.4} 
-        className="md:col-span-3 lg:col-span-1 p-6 flex flex-col justify-between group hover:border-green-300 bg-gradient-to-br from-green-50/30 to-white transition-colors cursor-pointer"
-        onClick={() => setSelectedProject('timeline')}
-        >
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6">
           <Label text="03. TIMELINE" color="green" />
           <div className="space-y-3">
             <TimelineItem 
