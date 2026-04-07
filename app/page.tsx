@@ -279,50 +279,53 @@ export default function Home() {
           <Label text="03. TIMELINE" color="green" />
 
           <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
-          
-          <div className="space-y-3">
-            <TimelineItem 
-              date="2026.04" 
-              title="ファイナンシャル・プランニング技能士3級 (FP3級)" 
-              org="日本FP協会"
-              type="cert"
-            />
 
-            <TimelineItem 
-              date="2025.10" 
-              title="応用情報技術者 (AP)" 
-              org="情報処理推進機構 (IPA)"
-              type="cert"
-            />
+          <div className="space-y-3 mt-4 overflow-y-auto max-h-[450px] pr-2 pb-12 custom-scrollbar relative z-0">
 
-            <TimelineItem
-              date="2025.09 - Present"
-              title="研究室配属"
-              org="知的ネットワーキング研究グループ"
-              isCurrent
-              type="edu"
-            />
+            <div className="space-y-3">
+              <TimelineItem 
+                date="2026.04" 
+                title="ファイナンシャル・プランニング技能士3級 (FP3級)" 
+                org="日本FP協会"
+                type="cert"
+              />
 
-            <TimelineItem 
-              date="2025.07" 
-              title="基本情報技術者 (FE)" 
-              org="情報処理推進機構 (IPA)"
-              type="cert"
-            />
-            <TimelineItem
-              date="2023.04 - Present"
-              title="大阪公立大学 工学部 情報工学科"
-              org="Osaka Metropolitan University"
-              isCurrent
-              type="edu"
-            />
-            <TimelineItem
-              date="2020.04 - 2023.03"
-              title="京都市立西京高等学校 エンタープライジング科"
-              org="Kyoto Saikyo High School"
-              type="edu"
-            />
+              <TimelineItem 
+                date="2025.10" 
+                title="応用情報技術者 (AP)" 
+                org="情報処理推進機構 (IPA)"
+                type="cert"
+              />
 
+              <TimelineItem
+                date="2025.09 - Present"
+                title="研究室配属"
+                org="知的ネットワーキング研究グループ"
+                isCurrent
+                type="edu"
+              />
+
+              <TimelineItem 
+                date="2025.07" 
+                title="基本情報技術者 (FE)" 
+                org="情報処理推進機構 (IPA)"
+                type="cert"
+              />
+              <TimelineItem
+                date="2023.04 - Present"
+                title="大阪公立大学 工学部 情報工学科"
+                org="Osaka Metropolitan University"
+                isCurrent
+                type="edu"
+              />
+              <TimelineItem
+                date="2020.04 - 2023.03"
+                title="京都市立西京高等学校 エンタープライジング科"
+                org="Kyoto Saikyo High School"
+                type="edu"
+              />
+
+            </div>
           </div>
           {/* <div className="pt-4 border-t border-slate-100">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
