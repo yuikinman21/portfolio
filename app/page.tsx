@@ -304,9 +304,7 @@ export default function Home() {
               type="edu"
             />
 
-            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent pointer-events-none" />
-
-            {/* <TimelineItem 
+            <TimelineItem 
               date="2025.07" 
               title="基本情報技術者 (FE)" 
               org="情報処理推進機構 (IPA)"
@@ -324,15 +322,21 @@ export default function Home() {
               title="京都市立西京高等学校 エンタープライジング科"
               org="Kyoto Saikyo High School"
               type="edu"
-            /> */}
+            />
 
           </div>
-          <div className="mt-4 pt-4 border-t border-green-100/50 flex items-center justify-between pointer-events-none">
-            <span className="text-xs font-bold text-slate-400 group-hover:text-green-600 transition-colors">View Full History</span>
-            <div className="w-8 h-8 rounded-full bg-white border border-green-200 flex items-center justify-center text-green-400 group-hover:text-green-600 group-hover:scale-110 transition-all shadow-sm">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          {/* <div className="pt-4 border-t border-slate-100">
+            <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> TOEIC</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> NW</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> SC</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Web Application</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> 3D Modeling</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
+              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
             </div>
-          </div>
+          </div> */}
         </AnimatedBentoCard>
         
 
