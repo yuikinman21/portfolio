@@ -957,16 +957,16 @@ function SocialButton({ href, label }: { href: string; label: string }) {
 
 function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org?: string, children?: ReactNode, icon?: string, isCurrent?: boolean, type?: "cert" | "work" | "edu" }) {
   return (
-    <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-green-200 transition-colors group">
+    <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-green-200 transition-colors group/item">
       
       {/* --- タイムラインの丸ポチ --- */}
       <div 
-        className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white box-content z-10 transition-all duration-300 group-hover:scale-110
+        className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white box-content z-10 transition-all duration-300 group-hover/item:scale-110
           ${isCurrent 
             ? 'bg-green-500 shadow-[0_0_0_4px_rgba(34,197,94,0.1)]' 
             : type === 'cert' 
               ? 'bg-amber-400' 
-              : 'bg-slate-300 group-hover:bg-green-400'
+              : 'bg-slate-300 group-hover/item:bg-green-400'
           }`} 
       />
       
@@ -983,7 +983,7 @@ function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { d
       </div>
       
       {/* --- タイトル --- */}
-      <h4 className="font-bold text-emerald-700 text-sm flex items-center gap-2 group-hover:text-green-500 transition-colors">
+      <h4 className="font-bold text-slate-800 text-sm flex items-center gap-2 group-hover/item:text-emerald-600 transition-colors">
         {icon && <span>{icon}</span>}
         {title}
       </h4>
@@ -997,7 +997,7 @@ function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { d
       
       {/* --- 詳細説明 --- */}
       {children && (
-        <div className="mt-2 text-xs text-slate-600 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity">
+        <div className="mt-2 text-xs text-slate-600 leading-relaxed opacity-80 group-hover/item:opacity-100 transition-opacity">
           {children}
         </div>
       )}
