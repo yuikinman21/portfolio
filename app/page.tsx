@@ -275,103 +275,109 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 4. Timeline (History & Status) */}
-        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 flex flex-col relative overflow-hidden">
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 flex flex-col group h-full">
           <Label text="03. TIMELINE" color="green" />
 
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/80 to-transparent z-10 pointer-events-none" />
+          <div 
+            className="flex-1 mt-4 relative w-full min-h-[280px]"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+            }}
+          >
+            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden pl-4 pr-2 pb-16 custom-scrollbar snap-y snap-mandatory space-y-1">
 
-          <div className="space-y-3 mt-4 overflow-y-auto max-h-[450px] pl-3 pr-3 pb-12 custom-scrollbar relative z-0">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              >
+                <TimelineItem
+                  date="2026.04"
+                  title="ファイナンシャル・プランニング技能士3級 (FP3級)"
+                  org="日本FP協会"
+                  type="cert"
+                />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
-            >
-              <TimelineItem
-                date="2026.04"
-                title="ファイナンシャル・プランニング技能士3級 (FP3級)"
-                org="日本FP協会"
-                type="cert"
-              />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              >
+                <TimelineItem
+                  date="2025.10"
+                  title="応用情報技術者 (AP)"
+                  org="情報処理推進機構 (IPA)"
+                  type="cert"
+                />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
-            >
-              <TimelineItem
-                date="2025.10"
-                title="応用情報技術者 (AP)"
-                org="情報処理推進機構 (IPA)"
-                type="cert"
-              />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              >
+                <TimelineItem
+                  date="2025.09 - Present"
+                  title="研究室配属"
+                  org="知的ネットワーキング研究グループ"
+                  isCurrent type="edu"
+                />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
-            >
-              <TimelineItem
-                date="2025.09 - Present"
-                title="研究室配属"
-                org="知的ネットワーキング研究グループ"
-                isCurrent type="edu"
-              />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              >
+                <TimelineItem
+                  date="2025.07"
+                  title="基本情報技術者 (FE)"
+                  org="情報処理推進機構 (IPA)"
+                  type="cert"
+                />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
-            >
-              <TimelineItem
-                date="2025.07"
-                title="基本情報技術者 (FE)"
-                org="情報処理推進機構 (IPA)"
-                type="cert"
-              />
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              >
+                <TimelineItem
+                  date="2023.04 - Present"
+                  title="大阪公立大学 工学部 情報工学科"
+                  org="Osaka Metropolitan University"
+                  isCurrent type="edu"
+                />
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
-            >
-              <TimelineItem
-                date="2023.04 - Present"
-                title="大阪公立大学 工学部 情報工学科"
-                org="Osaka Metropolitan University"
-                isCurrent type="edu"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
-            >
-              <TimelineItem
-                date="2020.04 - 2023.03"
-                title="京都市立西京高等学校 エンタープライジング科"
-                org="Kyoto Saikyo High School"
-                type="edu" />
-            </motion.div>
-
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              >
+                <TimelineItem
+                  date="2020.04 - 2023.03"
+                  title="京都市立西京高等学校 エンタープライジング科"
+                  org="Kyoto Saikyo High School"
+                  type="edu" />
+              </motion.div>
+            </div>
           </div>
+
           {/* <div className="pt-4 border-t border-slate-100">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
             <div className="flex flex-wrap gap-2">
