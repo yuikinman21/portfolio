@@ -147,6 +147,7 @@ export default function Home() {
     "/Home_OS_2.0.1_mobile_1.png",
     "/Home_OS_2.0.1_mobile_2.png",
     "/Home_OS_2.0.1_mobile_3.png",
+    "/Home_OS_2.0.2.png",
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
