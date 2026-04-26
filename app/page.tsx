@@ -279,13 +279,13 @@ export default function Home() {
           <Label text="03. TIMELINE" color="green" />
 
           <div 
-            className="flex-1 mt-4 relative w-full min-h-[280px]"
+            className="flex-1 mt-4 relative w-full h-full min-h-[0]"
             style={{
-              maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)'
+              maskImage: 'linear-gradient(to bottom, black calc(100% - 40px), transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 40px), transparent 100%)'
             }}
           >
-            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden pl-4 pr-2 pb-16 custom-scrollbar snap-y snap-mandatory space-y-1">
+            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden pl-4 pr-2 pb-6 custom-scrollbar snap-y snap-mandatory space-y-1">
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
