@@ -7,6 +7,7 @@ import { useState, useEffect, useRef, MouseEvent } from 'react';
 import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
+import HackingEffect from './components/HackingEffect';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
@@ -135,6 +136,7 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const [isHacked, setIsHacked] = useState(false);
 
   const homeOsImagesV1 = [
     "/My_Room_OS4.jpg", 
@@ -175,6 +177,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
+      <HackingEffect isActive={isHacked} onComplete={() => setIsHacked(false)} />
       
       {/* --- Header Area --- */}
       <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4">
@@ -228,14 +231,19 @@ export default function Home() {
           
           {/* ↓↓↓ className末尾に "mx-auto" を追加しました ↓↓↓ */}
           <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto">
-            <Image
-              src="/サーキュラー8bit.jpg"
-              alt="YUIKI Profile Icon"
-              fill
-              className="object-cover"
-              // style={{objectPosition: '45% 50%'}}
-              priority
-            />
+            <div 
+            onClick={() => setIsHacked(true)}
+            className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto cursor-pointer"
+          >
+              <Image
+                src="/サーキュラー8bit.jpg"
+                alt="YUIKI Profile Icon"
+                fill
+                className="object-cover"
+                // style={{objectPosition: '45% 50%'}}
+                priority
+              />
+            </div>
           </div>
           <div className="mt-8 text-center space-y-1 relative z-10">
             <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
