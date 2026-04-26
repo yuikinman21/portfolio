@@ -89,12 +89,12 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
             }
 
             @keyframes screen-glitch {
-              0% { filter: hue-rotate(0deg) contrast(1.5); transform: translate(2px, 1px) skew(0deg); }
-              20% { filter: hue-rotate(90deg) contrast(2); transform: translate(-2px, -2px) skew(-5deg); }
-              40% { filter: hue-rotate(180deg) contrast(1.2); transform: translate(1px, 2px) skew(5deg); }
-              60% { filter: hue-rotate(270deg) contrast(3) invert(1); transform: translate(-1px, -1px) skew(-2deg); }
-              80% { filter: hue-rotate(300deg) contrast(1); transform: translate(2px, -2px) skew(2deg); }
-              100% { filter: hue-rotate(360deg) contrast(1.5); transform: translate(0, 0) skew(0deg); }
+              0% { filter: hue-rotate(0deg) contrast(1.2); transform: translate(1px, 0px); }
+              20% { filter: hue-rotate(90deg) contrast(1.5); transform: translate(-1px, 0px); }
+              40% { filter: hue-rotate(180deg) contrast(1.1); transform: translate(0px, 1px); }
+              60% { filter: hue-rotate(270deg) contrast(2) invert(0.8); transform: translate(0px, -1px); }
+              80% { filter: hue-rotate(300deg) contrast(1.2); transform: translate(1px, 0px); }
+              100% { filter: hue-rotate(360deg) contrast(1.2); transform: translate(0, 0); }
             }
           `}</style>
 
