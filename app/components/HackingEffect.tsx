@@ -50,7 +50,6 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
-    // パスコードを 'yuikinman21' に変更
     if (inputCode.toLowerCase() === 'yuikinman21') {
       setPhase('unlocking');
       setTimeout(() => {
@@ -68,7 +67,6 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
       {isActive && phase !== 'idle' && (
         <div id="hack-container" className="fixed inset-0 w-screen h-[100dvh] z-[9999] flex items-center justify-center pointer-events-auto">
           
-          {/* --- バグ演出フェーズのみ魔法のCSSを適用 --- */}
           {phase === 'corrupting' && (
             <style>{`
               body { overflow: hidden !important; }
@@ -112,30 +110,30 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
             </div>
           )}
 
-          {/* --- ロック画面（モダンで人間らしいデザインに変更） --- */}
+          {/* --- ロック画面（ハッカー風のダークデザインに戻す） --- */}
           {(phase === 'locked' || phase === 'unlocking') && (
             <motion.div
-              initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-              animate={{ opacity: 1, backdropFilter: "blur(16px)" }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.6 }}
-              className="absolute inset-0 bg-slate-900/60 flex flex-col items-center justify-center p-4"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
+              className="absolute inset-0 bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center font-mono p-4"
             >
               {phase === 'locked' ? (
-                // --- 入力フォーム ---
-                <div className="max-w-md w-full p-8 bg-white/90 border border-white/20 rounded-3xl shadow-2xl text-center">
-                  <div className="w-14 h-14 mx-auto mb-4 text-indigo-500 bg-indigo-50 rounded-full flex items-center justify-center">
-                    <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                // --- パスコード入力フォーム ---
+                <div className="max-w-md w-full p-8 bg-black/80 border border-red-500/50 rounded-2xl shadow-[0_0_80px_rgba(220,38,38,0.3)] text-center">
+                  <div className="w-16 h-16 mx-auto mb-6 text-red-500 animate-pulse">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
                   
-                  <h2 className="text-2xl font-bold text-slate-800 mb-2">
-                    <HackedText text="Authentication Required" />
+                  <h2 className="text-3xl md:text-4xl font-black text-red-500 mb-2 tracking-widest drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
+                    <HackedText text="SYSTEM LOCKED" />
                   </h2>
-                  <p className="text-slate-500 text-sm mb-6 leading-relaxed">
+                  <p className="text-red-400 text-sm mb-8 leading-relaxed">
                     セキュリティシステムが作動しました。<br/>
-                    解除するにはユーザーID（<span className="font-bold text-indigo-600">yuikinman21</span>）を入力してください。
+                    解除するにはユーザーID（<span className="font-bold text-red-500">yuikinman21</span>）を入力してください。
                   </p>
 
                   <form onSubmit={handleUnlock} className="space-y-4">
@@ -145,17 +143,17 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
                         value={inputCode}
                         onChange={(e) => setInputCode(e.target.value)}
                         placeholder="Enter User ID..."
-                        className={`w-full bg-slate-50 border ${errorMsg ? 'border-red-400 bg-red-50 text-red-600' : 'border-slate-200'} text-slate-700 px-4 py-3 rounded-xl focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-center font-medium text-lg`}
+                        className={`w-full bg-slate-900 border ${errorMsg ? 'border-red-500 bg-red-950/30' : 'border-red-500/30'} text-red-500 px-4 py-4 rounded-xl focus:outline-none focus:border-red-500 transition-colors text-center tracking-widest font-bold text-lg`}
                         autoFocus
                       />
                       {errorMsg && (
-                        <motion.p initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="absolute -bottom-6 left-0 right-0 text-red-500 text-xs font-bold">
+                        <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="absolute -bottom-7 left-0 right-0 text-red-500 text-sm font-bold">
                           IDが正しくありません
                         </motion.p>
                       )}
                     </div>
                     
-                    <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold transition-colors shadow-md mt-2">
+                    <button type="submit" className="w-full bg-red-600 hover:bg-red-500 text-white border border-red-500 py-4 rounded-xl font-bold tracking-widest transition-colors text-lg mt-4 shadow-[0_0_20px_rgba(220,38,38,0.4)]">
                       アクセスを復元
                     </button>
                   </form>
@@ -163,19 +161,19 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
               ) : (
                 // --- 解除成功画面 ---
                 <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="text-center bg-white/90 p-10 rounded-3xl shadow-2xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center"
                 >
-                  <div className="w-16 h-16 mx-auto mb-4 text-green-500 bg-green-50 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <div className="w-24 h-24 mx-auto mb-6 text-emerald-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)]">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h2 className="text-2xl font-bold text-slate-800 mb-2">
-                    <HackedText text="Welcome Back!" />
+                  <h2 className="text-4xl md:text-5xl font-black text-emerald-400 mb-4 tracking-widest drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]">
+                    <HackedText text="ACCESS GRANTED" />
                   </h2>
-                  <p className="text-slate-500 text-sm">ポートフォリオを復元しています...</p>
+                  <p className="text-emerald-500 font-bold text-lg animate-pulse">ポートフォリオを復元しています...</p>
                 </motion.div>
               )}
             </motion.div>
