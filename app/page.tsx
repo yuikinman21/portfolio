@@ -7,6 +7,7 @@ import { useState, useEffect, useRef, MouseEvent } from 'react';
 import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
+import HackingEffect from './components/HackingEffect';
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
