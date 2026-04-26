@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// --- 文字化けコンポーネント ---
 const CYBER_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+";
 
 function HackedText({ text, speed = 30 }: { text: string, speed?: number }) {
@@ -28,41 +27,35 @@ function HackedText({ text, speed = 30 }: { text: string, speed?: number }) {
   return <span>{displayText}</span>;
 }
 
-// --- メインのエフェクトコンポーネント ---
 type Props = {
   isActive: boolean;
   onComplete: () => void;
 };
 
 export default function HackingEffect({ isActive, onComplete }: Props) {
-  // 演出のフェーズ管理: idle(待機) -> corrupting(バグ進行) -> locked(ロック画面) -> unlocking(解除中)
   const [phase, setPhase] = useState<'idle' | 'corrupting' | 'locked' | 'unlocking'>('idle');
   const [inputCode, setInputCode] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
 
-  // 発動時の進行タイマー
   useEffect(() => {
     if (isActive && phase === 'idle') {
-      setPhase('corrupting'); // バグ演出開始
-      // 2.5秒後にロック画面へ移行
-      const t = setTimeout(() => setPhase('locked'), 2500);
+      setPhase('corrupting');
+      // 4秒間サイトがバグり続け、その後ロック画面へ
+      const t = setTimeout(() => setPhase('locked'), 4000);
       return () => clearTimeout(t);
     }
   }, [isActive, phase]);
 
-  // パスコード解除の処理
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault();
-    // パスコードを 'yuiki' に設定（大文字小文字区別なし）
     if (inputCode.toLowerCase() === 'yuiki') {
-      setPhase('unlocking'); // 解除成功画面へ
+      setPhase('unlocking');
       setTimeout(() => {
         setPhase('idle');
         setInputCode('');
-        onComplete(); // page.tsxに終了を伝えて完全に消す
+        onComplete();
       }, 2500);
     } else {
-      // パスコード間違い
       setErrorMsg(true);
       setTimeout(() => setErrorMsg(false), 1000);
       setInputCode('');
@@ -72,31 +65,56 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
   return (
     <AnimatePresence>
       {isActive && phase !== 'idle' && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
+        // z-indexを最大にし、ポインターイベントを奪う
+        <div id="hack-container" className="fixed inset-0 w-screen h-[100dvh] z-[9999] flex items-center justify-center pointer-events-auto">
           
-          {/* --- フェーズ1: サイトが徐々にバグるエフェクト --- */}
+          {/* --- 魔法のCSS: 元のサイト全体を物理的にバグらせる --- */}
+          <style>{`
+            /* スクロールを禁止 */
+            body { overflow: hidden !important; }
+
+            /* ヘッダー・メイン・フッターを激しく揺らす＆クリック無効化 */
+            header, main, footer {
+              animation: screen-glitch 0.2s infinite !important;
+              pointer-events: none !important; /* 全てのボタンを無効化 */
+            }
+
+            /* サイト内のすべての文字をターミナル風の赤字に変更 */
+            header *, main *, footer * {
+              font-family: 'Courier New', Courier, monospace !important;
+              color: #ef4444 !important;
+              text-shadow: 2px 0px 0px rgba(255,0,0,0.8), -2px 0px 0px rgba(0,0,255,0.8) !important;
+              border-color: #ef4444 !important;
+              background-color: rgba(0,0,0,0.1) !important;
+            }
+
+            @keyframes screen-glitch {
+              0% { filter: hue-rotate(0deg) contrast(1.5); transform: translate(2px, 1px) skew(0deg); }
+              20% { filter: hue-rotate(90deg) contrast(2); transform: translate(-2px, -2px) skew(-5deg); }
+              40% { filter: hue-rotate(180deg) contrast(1.2); transform: translate(1px, 2px) skew(5deg); }
+              60% { filter: hue-rotate(270deg) contrast(3) invert(1); transform: translate(-1px, -1px) skew(-2deg); }
+              80% { filter: hue-rotate(300deg) contrast(1); transform: translate(2px, -2px) skew(2deg); }
+              100% { filter: hue-rotate(360deg) contrast(1.5); transform: translate(0, 0) skew(0deg); }
+            }
+          `}</style>
+
+          {/* --- フェーズ1: 画面全体に散りばめられるエラーコード --- */}
           {phase === 'corrupting' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 2.5, ease: "easeIn" }}
-              // 背景を反転＆色を変えて、元のサイトを不気味に見せる
-              className="absolute inset-0 bg-red-900/20 backdrop-invert backdrop-hue-rotate-90 pointer-events-none overflow-hidden"
-            >
-              {/* 元のサイトの上にランダムな文字化けエラーを散りばめる */}
-              {Array.from({ length: 15 }).map((_, i) => (
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {Array.from({ length: 30 }).map((_, i) => (
                 <div 
                   key={i} 
-                  className="absolute text-red-500 font-mono text-sm md:text-xl font-bold opacity-80 mix-blend-difference"
+                  className="absolute text-red-500 font-mono text-xl md:text-3xl font-black mix-blend-difference drop-shadow-[0_0_10px_rgba(255,0,0,0.8)]"
                   style={{ 
                     top: `${Math.random() * 100}%`, 
                     left: `${Math.random() * 100}%`,
+                    animation: `pulse ${Math.random() * 0.5 + 0.1}s infinite alternate`
                   }}
                 >
-                  <HackedText text={`ERR_0x${Math.floor(Math.random()*10000).toString(16).toUpperCase()}`} speed={50} />
+                  <HackedText text={`FATAL_ERR_0x${Math.floor(Math.random()*999999).toString(16).toUpperCase()}`} speed={40} />
                 </div>
               ))}
-            </motion.div>
+            </div>
           )}
 
           {/* --- フェーズ2 & 3: ロック画面 --- */}
@@ -106,22 +124,21 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.4 }}
-              className="absolute inset-0 bg-slate-950/95 backdrop-blur-md flex flex-col items-center justify-center font-mono pointer-events-auto p-4"
+              className="absolute inset-0 bg-slate-950/95 backdrop-blur-xl flex flex-col items-center justify-center font-mono p-4"
             >
               {phase === 'locked' ? (
-                // --- 入力フォーム（ロック中） ---
-                <div className="max-w-md w-full p-8 bg-black/60 border border-red-500/30 rounded-2xl shadow-[0_0_50px_rgba(220,38,38,0.15)] text-center">
+                // --- パスコード入力フォーム ---
+                <div className="max-w-md w-full p-8 bg-black/80 border border-red-500/50 rounded-2xl shadow-[0_0_80px_rgba(220,38,38,0.3)] text-center">
                   <div className="w-16 h-16 mx-auto mb-6 text-red-500 animate-pulse">
-                    {/* ロックアイコン */}
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                   </div>
                   
-                  <h2 className="text-3xl font-black text-red-500 mb-2 tracking-widest">
+                  <h2 className="text-3xl md:text-4xl font-black text-red-500 mb-2 tracking-widest drop-shadow-[0_0_10px_rgba(220,38,38,0.8)]">
                     <HackedText text="SYSTEM LOCKED" />
                   </h2>
-                  <p className="text-red-400/60 text-xs md:text-sm mb-8 leading-relaxed">
+                  <p className="text-red-400 text-sm mb-8 leading-relaxed">
                     Unauthorized access detected.<br/>Enter the master passcode to decrypt.
                   </p>
 
@@ -132,17 +149,17 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
                         value={inputCode}
                         onChange={(e) => setInputCode(e.target.value)}
                         placeholder="Passcode..."
-                        className={`w-full bg-slate-900/50 border ${errorMsg ? 'border-red-500' : 'border-red-500/30'} text-red-500 px-4 py-3 rounded-lg focus:outline-none focus:border-red-500 transition-colors text-center tracking-widest font-bold`}
+                        className={`w-full bg-slate-900 border ${errorMsg ? 'border-red-500 bg-red-950/30' : 'border-red-500/30'} text-red-500 px-4 py-4 rounded-xl focus:outline-none focus:border-red-500 transition-colors text-center tracking-widest font-bold text-lg`}
                         autoFocus
                       />
                       {errorMsg && (
-                        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute -bottom-6 left-0 right-0 text-red-500 text-xs font-bold">
+                        <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="absolute -bottom-7 left-0 right-0 text-red-500 text-sm font-bold">
                           ACCESS DENIED
                         </motion.p>
                       )}
                     </div>
                     
-                    <button type="submit" className="w-full bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/50 py-3 rounded-lg font-bold tracking-widest transition-colors text-sm mt-2">
+                    <button type="submit" className="w-full bg-red-600 hover:bg-red-500 text-white border border-red-500 py-4 rounded-xl font-bold tracking-widest transition-colors text-lg mt-4 shadow-[0_0_20px_rgba(220,38,38,0.4)]">
                       DECRYPT
                     </button>
                   </form>
@@ -154,16 +171,15 @@ export default function HackingEffect({ isActive, onComplete }: Props) {
                   animate={{ opacity: 1, y: 0 }}
                   className="text-center"
                 >
-                  <div className="w-20 h-20 mx-auto mb-6 text-emerald-500">
-                    {/* アンロックアイコン */}
+                  <div className="w-24 h-24 mx-auto mb-6 text-emerald-500 drop-shadow-[0_0_15px_rgba(16,185,129,0.8)]">
                     <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h2 className="text-3xl font-black text-emerald-400 mb-2 tracking-widest drop-shadow-[0_0_10px_rgba(52,211,153,0.5)]">
+                  <h2 className="text-4xl md:text-5xl font-black text-emerald-400 mb-4 tracking-widest drop-shadow-[0_0_15px_rgba(52,211,153,0.8)]">
                     <HackedText text="ACCESS GRANTED" />
                   </h2>
-                  <p className="text-emerald-500/70 text-sm animate-pulse">System restoring...</p>
+                  <p className="text-emerald-500 font-bold text-lg animate-pulse">System restoring...</p>
                 </motion.div>
               )}
             </motion.div>
