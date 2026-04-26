@@ -214,6 +214,7 @@ export default function Home() {
         >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" />
           <SocialButton href="https://qiita.com/yuikinman21" label="Qiita" />
+          <SocialButton href="https://note.com/yuikinman21" label="Note" />
           <SocialButton href="mailto:yuikinman21@gmail.com" label="Contact" />
         </motion.div>
       </header>
