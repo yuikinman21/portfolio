@@ -9,7 +9,7 @@ import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import HackingEffect from './components/HackingEffect';
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter } from 'react-icons/si';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiVisualstudiocode } from 'react-icons/si';
 
 type SkillType = {
   name: string;
@@ -173,8 +173,8 @@ export default function Home() {
     { name: "Blender", icon: <SiBlender />, exp: "3年", level: 4, color: "text-orange-500", category: "CREATIVE", description: "ポートフォリオの3Dオブジェクト制作や、プログラミングスクールでの指導経験もある、得意なクリエイティブツールです。", url: "https://www.blender.org/" },
     { name: "GitHub", icon: <FaGithub />, exp: "3年", level: 4, color: "text-slate-800", category: "TOOLS", description: "バージョン管理はもちろん、白鷺祭実行委員会などのチーム開発におけるタスク管理やコラボレーションフローを実践しています。", url: "https://github.com/" },
     { name: "Vercel", icon: <SiVercel />, exp: "1.5年", level: 4, color: "text-slate-900", category: "TOOLS", description: "フロントエンドアプリケーションの迅速なホスティングと、GitHubと連携したデプロイパイプラインとして活用中です。", url: "https://vercel.com/" },
-    { name: "IoT Devices", icon: <FaNetworkWired />, exp: "2年", level: 4, color: "text-emerald-600", category: "TOOLS", description: "スマート家電の制御や、パケットキャプチャを用いたIoTマルウェアの通信分析など、研究・趣味の両面で扱っています。" },
-    { name: "NW / SC", icon: <FaShieldAlt />, exp: "勉強中", level: 2, color: "text-purple-600", category: "TOOLS", description: "ネットワークインフラの深い知識と、情報処理安全確保支援士などのセキュリティ専門スキル習得に向けて日々学習しています。", url: "https://www.ipa.go.jp/" },
+    { name: "VS Code", icon: <SiVisualstudiocode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "メインの開発エディタとして使用。各種拡張機能やスニペットを活用し、生産性の高いコーディング環境を構築しています。", url: "https://code.visualstudio.com/" },
+    { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 3, color: "text-slate-700", category: "CREATIVE", description: "Webサイトや動画の素材となる画像加工、ロゴ作成などに活用しているオープンソースの画像編集ソフトウェアです。", url: "https://www.gimp.org/" },
     { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "3年", level: 4, color: "text-red-400", category: "CREATIVE", description: "映像編集やカラーグレーディングに活用し、クリエイティブな表現の幅を広げつつ、講師としての指導も行っています。", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
   ], []);
 
@@ -479,8 +479,8 @@ export default function Home() {
         <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6 flex flex-col bg-white overflow-hidden h-full">
           <Label text="04. TECH STACK & FOCUS" color="blue" />
 
-          {/* ★ インライン詳細情報エリア (高さを130pxに拡大し、リンク機能を追加) */}
-          <div className="mt-5 h-[130px] relative shrink-0">
+          {/* ★ インライン詳細情報エリア (高さを140pxに拡張し、内部構造を整理) */}
+          <div className="mt-5 h-[140px] relative shrink-0">
             <AnimatePresence mode="wait">
               {selectedSkill && (
                 <motion.div
@@ -489,38 +489,41 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.3 }}
-                  // ★ クリックで公式URLへ飛ぶ処理
                   onClick={() => {
                     if (selectedSkill.url) window.open(selectedSkill.url, '_blank', 'noopener,noreferrer');
                   }}
                   className={`absolute inset-0 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200 flex gap-4 shadow-sm transition-all group/link ${selectedSkill.url ? 'cursor-pointer hover:shadow-md hover:border-blue-300' : ''}`}
                 >
+                  {/* 左: アイコン */}
                   <div className={`text-4xl ${selectedSkill.color} w-14 h-14 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0`}>
                     {selectedSkill.icon}
                   </div>
                   
-                  <div className="flex-1 flex flex-col justify-between overflow-hidden">
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <div className="flex items-center gap-2 overflow-hidden">
-                          <h3 className={`font-bold text-slate-800 text-sm truncate ${selectedSkill.url ? 'group-hover/link:text-blue-600 transition-colors' : ''}`}>
-                            {selectedSkill.name}
-                          </h3>
-                          <span className="hidden sm:inline-block text-[8px] font-bold text-slate-500 bg-slate-200/50 px-1.5 py-0.5 rounded border border-slate-200 shrink-0 ml-1">
-                            {selectedSkill.category}
-                          </span>
-                        </div>
-                        <span className="text-[9px] font-bold text-blue-600 font-mono bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100 shrink-0 ml-2">
-                          経験年数: {selectedSkill.exp}
+                  {/* 右: テキスト・ゲージ領域（重ならないようにflexで分割） */}
+                  <div className="flex-1 flex flex-col min-w-0">
+                    
+                    {/* 1段目: タイトル・バッジ・経験年数 */}
+                    <div className="flex justify-between items-start gap-2 mb-1.5">
+                      <div className="flex flex-col gap-1 min-w-0">
+                        <h3 className={`font-bold text-slate-800 text-sm truncate ${selectedSkill.url ? 'group-hover/link:text-blue-600 transition-colors' : ''}`}>
+                          {selectedSkill.name}
+                        </h3>
+                        <span className="w-max text-[8px] font-bold text-slate-500 bg-slate-200/50 px-1.5 py-0.5 rounded border border-slate-200">
+                          {selectedSkill.category}
                         </span>
                       </div>
-                      {/* ★ line-clamp-3 に変更して3行まで表示 */}
-                      <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-3 mt-0.5">
-                        {selectedSkill.description}
-                      </p>
+                      <span className="text-[9px] font-bold text-blue-600 font-mono bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100 shrink-0 whitespace-nowrap">
+                        経験: {selectedSkill.exp}
+                      </span>
                     </div>
+
+                    {/* 2段目: 説明文 (mb-autoでプログレスバーを下に押しやる) */}
+                    <p className="text-[10px] text-slate-500 leading-snug line-clamp-2 mb-auto">
+                      {selectedSkill.description}
+                    </p>
                     
-                    <div className="flex items-center gap-2 mt-1.5">
+                    {/* 3段目: プログレスバー */}
+                    <div className="flex items-center gap-2 mt-2 shrink-0">
                       <span className="text-[9px] text-slate-400 font-bold w-6">Lv.{selectedSkill.level}</span>
                       <div className="flex-1 bg-slate-200 rounded-full h-1.5 overflow-hidden">
                         <motion.div
@@ -539,8 +542,7 @@ export default function Home() {
 
           {/* 無限スクロール領域 */}
           <div className="mt-2 flex-1 flex flex-col justify-center gap-4 group-hover-pause mask-horizontal-fade min-h-0">
-            
-            {/* 上段：LANGUAGE & FRAMEWORKS (★ overflow-hiddenを削除し、見切れを防止) */}
+            {/* 上段：LANGUAGE & FRAMEWORKS */}
             <div className="w-full relative py-3 -my-3">
               <div className="animate-scroll-left flex gap-4 px-2">
                 {[...skillLanguages, ...skillLanguages].map((skill, idx) => (
@@ -555,7 +557,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 下段：TOOLS & CREATIVE (★ overflow-hiddenを削除し、見切れを防止) */}
+            {/* 下段：TOOLS & CREATIVE */}
             <div className="w-full relative py-3 -my-3">
               <div className="animate-scroll-right flex gap-4 px-2">
                 {[...skillTools, ...skillTools].map((skill, idx) => (
@@ -571,17 +573,31 @@ export default function Home() {
             </div>
           </div>
 
-          {/* FOCUS領域 */}
+          {/* ★ デザインを一新した FOCUS領域（システムインジケーター風） */}
           <div className="mt-4 pt-4 border-t border-slate-100 shrink-0">
-            <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider font-bold">Current Focus</p>
+            <div className="flex items-center gap-2 mb-3">
+              <p className="text-[10px] text-slate-400 font-mono uppercase tracking-wider font-bold">Current Focus</p>
+              <div className="flex-1 h-px bg-slate-100"></div>
+            </div>
             <div className="flex flex-wrap gap-2">
-              <span className="text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-md">TOEIC</span>
-              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md">NW / SC</span>
-              <span className="text-[11px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">Web Application</span>
-              <span className="text-[11px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">3D Modeling</span>
-              <span className="text-[11px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">IoT</span>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-blue-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></span> TOEIC
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-emerald-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm"></span> NW / SC
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-indigo-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-sm"></span> Web Application
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-orange-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-sm"></span> 3D Modeling
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-cyan-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shadow-sm animate-pulse"></span> IoT
+              </div>
             </div>
           </div>
+          
         </AnimatedBentoCard>
 
         {/* 6. Home OS */}
