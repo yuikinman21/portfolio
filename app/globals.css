@@ -104,10 +104,10 @@ body {
 /* 無限スクロール用アニメーション（カクつき修正＆マージン調整版） */
 @keyframes scroll-left {
   0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-50% - 8px)); } /* gap-4 (16px) の半分の8px */
+  100% { transform: translateX(-50%); }
 }
 @keyframes scroll-right {
-  0% { transform: translateX(calc(-50% - 8px)); }
+  0% { transform: translateX(-50%); }
   100% { transform: translateX(0); }
 }
 .animate-scroll-left {

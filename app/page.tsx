@@ -546,7 +546,7 @@ export default function Home() {
             {/* 上段：LANGUAGE & FRAMEWORKS */}
             <div className="w-full relative py-3 -my-3">
               <div className="animate-scroll-left flex gap-4 px-2">
-                {[...skillLanguages, ...skillLanguages].map((skill, idx) => (
+                {[...skillLanguages, ...skillLanguages, ...skillLanguages, ...skillLanguages].map((skill, idx) => (
                   <div
                     key={`lang-${idx}`}
                     onClick={() => handleSkillClick(skill)}
@@ -561,7 +561,7 @@ export default function Home() {
             {/* 下段：TOOLS & CREATIVE */}
             <div className="w-full relative py-3 -my-3">
               <div className="animate-scroll-right flex gap-4 px-2">
-                {[...skillTools, ...skillTools].map((skill, idx) => (
+                {[...skillTools, ...skillTools, ...skillTools, ...skillTools].map((skill, idx) => (
                   <div
                     key={`tool-${idx}`}
                     onClick={() => handleSkillClick(skill)}
