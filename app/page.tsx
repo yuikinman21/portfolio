@@ -156,27 +156,27 @@ export default function Home() {
 
   // 上段用データ（LANGUAGE / FRAMEWORK）
   const skillLanguages: SkillType[] = useMemo(() => [
-    { name: "Python", icon: <FaPython />, exp: "3年", level: 4, color: "text-blue-500", category: "LANGUAGE", description: "データ解析、マルウェア通信の機械学習分類（ランダムフォレスト等）、IoT制御など、最も使用歴が長く得意とする言語です。", url: "https://www.python.org/" },
-    { name: "TypeScript", icon: <SiTypescript />, exp: "2年", level: 3, color: "text-blue-600", category: "LANGUAGE", description: "型安全な開発基盤として、ReactやNext.jsと組み合わせて堅牢なフロントエンド開発に活用しています。", url: "https://www.typescriptlang.org/" },
-    { name: "Next.js", icon: <SiNextdotjs />, exp: "1.5年", level: 3, color: "text-slate-800", category: "FRAMEWORK", description: "このポートフォリオや「白鷺祭用語集」などのWebアプリケーション構築に使用している、現在のメインフレームワークです。", url: "https://nextjs.org/" },
-    { name: "React", icon: <FaReact />, exp: "2年", level: 4, color: "text-cyan-400", category: "FRAMEWORK", description: "コンポーネント指向を用いたUI構築に精通しており、Framer Motion等と連携したリッチな画面開発が可能です。", url: "https://react.dev/" },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "2年", level: 4, color: "text-cyan-500", category: "FRAMEWORK", description: "Bento GridのようなモダンなUIデザインやレスポンシブ対応を、迅速かつ美しく実装するための主軸スタイリングツールです。", url: "https://tailwindcss.com/" },
-    { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE", description: "大学の講義やアルゴリズムの学習、パフォーマンスが要求される低レイヤの処理やハードウェア制御の理解に使用しています。", url: "https://cplusplus.com/" },
-    { name: "Java", icon: <FaJava />, exp: "2年", level: 3, color: "text-red-500", category: "LANGUAGE", description: "オブジェクト指向プログラミングの基礎として学習し、システム全体のアーキテクチャ設計の理解に役立てています。", url: "https://dev.java/" },
-    { name: "GAS", icon: <SiGoogleappsscript />, exp: "2年", level: 4, color: "text-green-600", category: "TOOLS", description: "学園祭実行委員会でのシフト管理や業務自動化など、Google Workspaceと連携した組織の効率化システム構築に活用しました。", url: "https://developers.google.com/apps-script" },
-    { name: "Dart", icon: <SiDart />, exp: "1年", level: 3, color: "text-blue-400", category: "LANGUAGE", description: "Home OS 2.0のフロントエンドロジック構築に使用し、非同期処理やAPI通信を用いた堅牢なシステムを実装しています。", url: "https://dart.dev/" },
-    { name: "Flutter", icon: <SiFlutter />, exp: "1年", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "従来のダッシュボードを進化させ、双方向の家電操作を可能にする「Home OS 2.0」のUI構築に採用したモバイル/Webフレームワークです。", url: "https://flutter.dev/" },
+    { name: "Python", icon: <FaPython />, exp: "3年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
+    { name: "TypeScript", icon: <SiTypescript />, exp: "1年未満", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
+    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年未満", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
+    { name: "React", icon: <FaReact />, exp: "1年未満", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年未満", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+    { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE", description: "CもC#も触ったことあります！", url: "https://cplusplus.com/" },
+    { name: "Java", icon: <FaJava />, exp: "2年", level: 1, color: "text-red-500", category: "LANGUAGE", description: "大学の授業で少しだけ触りました！", url: "https://dev.java/" },
+    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "高校でのゼミ活動から使っています！JavaScriptとほぼ一緒なので少し慣れてます！", url: "https://developers.google.com/apps-script" },
+    { name: "Dart", icon: <SiDart />, exp: "1年未満", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
+    { name: "Flutter", icon: <SiFlutter />, exp: "1年未満", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "今一番触っています！研究でも開発でも活躍中！", url: "https://flutter.dev/" },
   ], []);
 
   // 下段用データ（TOOLS / CREATIVE）
   const skillTools: SkillType[] = useMemo(() => [
-    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの各サービス（InfluxDBやNode-REDなど）をコンテナ化し、環境依存のないデプロイと運用を実現しています。", url: "https://www.docker.com/" },
-    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 4, color: "text-orange-500", category: "CREATIVE", description: "ポートフォリオの3Dオブジェクト制作や、プログラミングスクールでの指導経験もある、得意なクリエイティブツールです。", url: "https://www.blender.org/" },
-    { name: "GitHub", icon: <FaGithub />, exp: "3年", level: 4, color: "text-slate-800", category: "TOOLS", description: "バージョン管理はもちろん、白鷺祭実行委員会などのチーム開発におけるタスク管理やコラボレーションフローを実践しています。", url: "https://github.com/" },
-    { name: "Vercel", icon: <SiVercel />, exp: "1.5年", level: 4, color: "text-slate-900", category: "TOOLS", description: "フロントエンドアプリケーションの迅速なホスティングと、GitHubと連携したデプロイパイプラインとして活用中です。", url: "https://vercel.com/" },
-    { name: "VS Code", icon: <VscVscode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "メインの開発エディタとして使用。各種拡張機能やスニペットを活用し、生産性の高いコーディング環境を構築しています。", url: "https://code.visualstudio.com/" },
-    { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 3, color: "text-slate-700", category: "CREATIVE", description: "Webサイトや動画の素材となる画像加工、ロゴ作成などに活用しているオープンソースの画像編集ソフトウェアです。", url: "https://www.gimp.org/" },
-    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "3年", level: 4, color: "text-red-400", category: "CREATIVE", description: "映像編集やカラーグレーディングに活用し、クリエイティブな表現の幅を広げつつ、講師としての指導も行っています。", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
+    { name: "Docker", icon: <FaDocker />, exp: "1年未満", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
+    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
+    { name: "GitHub", icon: <FaGithub />, exp: "1年未満", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
+    { name: "Vercel", icon: <SiVercel />, exp: "1年未満", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
+    { name: "VS Code", icon: <VscVscode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "Atomがサービス終了してからはこれを使ってます！", url: "https://code.visualstudio.com/" },
+    { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
+    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "2年", level: 2, color: "text-red-400", category: "CREATIVE", description: "映像編集をする時に使っています！", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
   ], []);
 
   const allSkills = useMemo(() => [...skillLanguages, ...skillTools], [skillLanguages, skillTools]);
