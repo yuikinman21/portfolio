@@ -13,7 +13,7 @@ import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVer
 
 type SkillType = {
   name: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
   exp: string;
   level: number;
   color: string;
