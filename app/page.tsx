@@ -358,7 +358,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 4. Timeline (History & Status) */}
-        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 flex flex-col group h-full min-h-[400px] md:min-h-0">
+        <AnimatedBentoCard delay={0.4} className="md:col-span-3 lg:col-span-1 p-6 flex flex-col group h-full min-h-[400px]">
           <Label text="03. TIMELINE" color="green" />
 
           <div 
