@@ -2,12 +2,24 @@
 
 import Image from "next/image";
 import dynamic from 'next/dynamic';
-import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { useState, useEffect, useRef, useMemo, MouseEvent } from 'react';
 // アニメーション用ライブラリ
 import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import HackingEffect from './components/HackingEffect';
+import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel } from 'react-icons/si';
+
+type SkillType = {
+  name: string;
+  icon: JSX.Element;
+  exp: string;
+  level: number;
+  color: string;
+  category: 'Language' | 'Tool';
+  description: string;
+};
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
 const ModelViewer = dynamic(() => import('./components/ModelViewer'), { 
@@ -137,6 +149,60 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [isHacked, setIsHacked] = useState(false);
+
+  const [hoveredSkill, setHoveredSkill] = useState<any>(null);
+
+  const skillLanguages: SkillType[] = [
+    { name: "Python", icon: <FaPython />, exp: "3年", level: 4, color: "text-blue-500", category: "Language", description: "データ解析や機械学習、IoTデバイスの制御など幅広く使用しています。" },
+    { name: "TypeScript", icon: <SiTypescript />, exp: "2年", level: 3, color: "text-blue-600", category: "Language", description: "型安全なWebフロントエンド開発の主軸として活用しています。" },
+    { name: "Next.js", icon: <SiNextdotjs />, exp: "1.5年", level: 3, color: "text-slate-800", category: "Language", description: "このポートフォリオサイトや白鷺祭用語集などの構築に使用しています。" },
+    { name: "React", icon: <FaReact />, exp: "2年", level: 4, color: "text-cyan-400", category: "Language", description: "コンポーネント指向のUI開発に精通しています。" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "2年", level: 4, color: "text-cyan-500", category: "Language", description: "モダンでユーティリティファーストなスタイリングを迅速に行えます。" },
+    { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "Language", description: "競技プログラミングやアルゴリズムの学習、パフォーマンスが求められる処理に使用します。" },
+    { name: "Java", icon: <FaJava />, exp: "2年", level: 3, color: "text-red-500", category: "Language", description: "オブジェクト指向プログラミングの基礎として学習し、バックエンド開発にも応用可能です。" },
+  ];
+
+  const skillTools: SkillType[] = [
+    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "Tool", description: "Home OSの構築など、コンテナ化による環境構築・デプロイに利用しています。" },
+    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 4, color: "text-orange-500", category: "Tool", description: "ポートフォリオ内の3Dモデル作成や、3Dアニメーションの制作実績があります。" },
+    { name: "GitHub", icon: <FaGithub />, exp: "3年", level: 4, color: "text-slate-800", category: "Tool", description: "チーム開発でのバージョン管理や、CI/CDパイプラインとの連携に使用しています。" },
+    { name: "Vercel", icon: <SiVercel />, exp: "1.5年", level: 4, color: "text-slate-900", category: "Tool", description: "Next.jsプロジェクトの迅速なデプロイとホスティング環境として重宝しています。" },
+    { name: "IoT Devices", icon: <FaNetworkWired />, exp: "2年", level: 4, color: "text-emerald-600", category: "Tool", description: "各種センサーやアクチュエータを用いたスマートホーム環境の構築経験があります。" },
+    { name: "NW / SC", icon: <FaShieldAlt />, exp: "勉強中", level: 2, color: "text-purple-600", category: "Tool", description: "ネットワークスペシャリスト、情報処理安全確保支援士の資格取得に向けて学習中です。" },
+  ];
+
+  // ★ ここから追加・変更：自動切り替えのロジック
+  const allSkills = useMemo(() => [...skillLanguages, ...skillTools], []);
+  const [selectedSkill, setSelectedSkill] = useState<SkillType | null>(null);
+  const [lastInteraction, setLastInteraction] = useState<number>(0);
+
+  // 初回レンダリング時にランダムなスキルを表示
+  useEffect(() => {
+    setSelectedSkill(allSkills[Math.floor(Math.random() * allSkills.length)]);
+  }, [allSkills]);
+
+  // 4秒ごとに自動切り替え（クリックされた場合は10秒間一時停止）
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // 最後のクリックから10秒経過していない場合はスキップ
+      if (Date.now() - lastInteraction < 10000) return;
+      
+      setSelectedSkill((prev) => {
+        if (!prev) return allSkills[0];
+        const currentIndex = allSkills.findIndex((s) => s.name === prev.name);
+        const nextIndex = (currentIndex + 1) % allSkills.length;
+        return allSkills[nextIndex];
+      });
+    }, 4000); 
+
+    return () => clearInterval(interval);
+  }, [allSkills, lastInteraction]);
+
+  // アイコンクリック時の処理
+  const handleSkillClick = (skill: SkillType) => {
+    setSelectedSkill(skill);
+    setLastInteraction(Date.now()); // タイマーをリセット
+  };
 
   const homeOsImagesV1 = [
     "/My_Room_OS4.jpg", 
@@ -404,47 +470,106 @@ export default function Home() {
         </AnimatedBentoCard>
         
 
-        {/* 5. Tech Stack */}
-        <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6">
-          <Label text="04. Tech Stack & Focus" color="blue" />
-          <div className="mt-4 space-y-4">
-            <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Languages & Frameworks</p>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  "C", "C++", "Java", "Python", "Processing",
-                  "JavaScript", "TypeScript", "Next.js", "Tailwind CSS",
-                  "HTML5", "CSS3", "GAS", "VBA", "Dart", "Swift"
-                ].map(tech => (
-                  <TechTag key={tech} color="bg-blue-50 text-blue-700 border-blue-100">{tech}</TechTag>
-                ))}
-              </div>
+        {/* 5. Tech Stack & Focus */}
+        <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6 flex flex-col bg-white overflow-hidden justify-between h-full">
+          <div className="flex flex-col h-full">
+            <Label text="04. TECH STACK & FOCUS" color="blue" />
+
+            {/* ★ 追加：インライン詳細情報エリア（自動切り替え） ★ */}
+            <div className="mt-6 h-[110px] relative shrink-0">
+              <AnimatePresence mode="wait">
+                {selectedSkill && (
+                  <motion.div
+                    key={selectedSkill.name}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200 flex gap-4 shadow-sm"
+                  >
+                    {/* アイコン */}
+                    <div className={`text-4xl ${selectedSkill.color} w-14 h-14 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0`}>
+                      {selectedSkill.icon}
+                    </div>
+                    
+                    {/* 詳細テキスト */}
+                    <div className="flex-1 flex flex-col justify-between overflow-hidden">
+                      <div>
+                        <div className="flex justify-between items-center mb-1">
+                          <h3 className="font-bold text-slate-800 text-sm truncate pr-2">{selectedSkill.name}</h3>
+                          <span className="text-[9px] font-bold text-blue-600 font-mono bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100 shrink-0">
+                            EXP: {selectedSkill.exp}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-2">
+                          {selectedSkill.description}
+                        </p>
+                      </div>
+                      
+                      {/* プログレスバー */}
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="text-[9px] text-slate-400 font-bold w-6">Lv.{selectedSkill.level}</span>
+                        <div className="flex-1 bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${(selectedSkill.level / 5) * 100}%` }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="bg-gradient-to-r from-blue-400 to-indigo-500 h-full rounded-full"
+                          ></motion.div>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
-            <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Tools & Creative</p>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  "Blender","GIMP","DaVinci Resolve", "AviUtl", "VSCode",
-                  "Git", "GitHub", "Vercel", "Docker", "Canva", "Flutter"
-                ].map(tool => (
-                  <TechTag key={tool} color="bg-purple-50 text-purple-700 border-purple-100">{tool}</TechTag>
-                ))}
+
+            {/* 無限スクロール領域（ツールチップを廃止してスッキリ） */}
+            <div className="mt-4 flex-1 flex flex-col justify-center gap-4 group-hover-pause mask-horizontal-fade">
+              
+              {/* 上段：Languages (左スクロール) */}
+              <div className="w-full relative overflow-hidden py-2 -my-2">
+                <div className="animate-scroll-left flex gap-4 px-2">
+                  {[...skillLanguages, ...skillLanguages].map((skill, idx) => (
+                    <div
+                      key={`lang-${idx}`}
+                      onClick={() => handleSkillClick(skill)}
+                      className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer"
+                    >
+                      <div className={`text-2xl ${skill.color}`}>{skill.icon}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="w-full h-px bg-slate-200" />
-            <div>
-              <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
-              <div className="flex flex-wrap gap-1.5">
-                {[
-                  "TOEIC","NW","SC", "FP", "Web Application", "3D Modeling", "IoT",
-                  "Building-OS", "Cybersecurity", "MaaS", "Smart Home"
-                ].map(tool => (
-                  <TechTag key={tool} color="bg-orange-50 text-orange-700 border-orange-100">{tool}</TechTag>
-                ))}
+
+              {/* 下段：Tools (右スクロール) */}
+              <div className="w-full relative overflow-hidden py-2 -my-2">
+                <div className="animate-scroll-right flex gap-4 px-2">
+                  {[...skillTools, ...skillTools].map((skill, idx) => (
+                    <div
+                      key={`tool-${idx}`}
+                      onClick={() => handleSkillClick(skill)}
+                      className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer"
+                    >
+                      <div className={`text-2xl ${skill.color}`}>{skill.icon}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
+          {/* FOCUS領域 */}
+          <div className="mt-4 pt-4 border-t border-slate-100">
+            <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider font-bold">Current Focus</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-[11px] font-bold text-blue-700 bg-blue-50 border border-blue-100 px-2.5 py-1 rounded-md">TOEIC</span>
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md">NW / SC</span>
+              <span className="text-[11px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">Web Application</span>
+              <span className="text-[11px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">3D Modeling</span>
+              <span className="text-[11px] font-bold text-slate-600 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded-md">IoT</span>
+            </div>
+          </div>
         </AnimatedBentoCard>
 
         {/* 6. Home OS */}

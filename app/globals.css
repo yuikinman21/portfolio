@@ -99,30 +99,35 @@ body {
   scrollbar-color: #e2e8f0 transparent;
 }
 
-/* 無限スクロール用アニメーション */
+/* --- app/globals.css --- */
+
+/* 無限スクロール用アニメーション（カクつき修正＆マージン調整版） */
 @keyframes scroll-left {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  100% { transform: translateX(calc(-50% - 8px)); } /* gap-4 (16px) の半分の8px */
 }
 @keyframes scroll-right {
-  0% { transform: translateX(-50%); }
+  0% { transform: translateX(calc(-50% - 8px)); }
   100% { transform: translateX(0); }
 }
 .animate-scroll-left {
-  animation: scroll-left 25s linear infinite;
+  animation: scroll-left 30s linear infinite;
   width: max-content;
+  display: flex; /* flexboxを明示的に指定 */
 }
 .animate-scroll-right {
-  animation: scroll-right 25s linear infinite;
+  animation: scroll-right 30s linear infinite;
   width: max-content;
+  display: flex;
 }
 /* ホバー時にアニメーションを一時停止 */
 .group-hover-pause:hover .animate-scroll-left,
 .group-hover-pause:hover .animate-scroll-right {
   animation-play-state: paused;
 }
-/* 両端をフェードアウトさせるマスク */
+
+/* 両端をフェードアウトさせるマスク*/
 .mask-horizontal-fade {
-  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 15%, black 85%, transparent 100%);
 }
