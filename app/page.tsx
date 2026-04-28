@@ -9,7 +9,8 @@ import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import HackingEffect from './components/HackingEffect';
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiVisualstudiocode } from 'react-icons/si';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, } from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
 
 type SkillType = {
   name: string;
@@ -173,7 +174,7 @@ export default function Home() {
     { name: "Blender", icon: <SiBlender />, exp: "3年", level: 4, color: "text-orange-500", category: "CREATIVE", description: "ポートフォリオの3Dオブジェクト制作や、プログラミングスクールでの指導経験もある、得意なクリエイティブツールです。", url: "https://www.blender.org/" },
     { name: "GitHub", icon: <FaGithub />, exp: "3年", level: 4, color: "text-slate-800", category: "TOOLS", description: "バージョン管理はもちろん、白鷺祭実行委員会などのチーム開発におけるタスク管理やコラボレーションフローを実践しています。", url: "https://github.com/" },
     { name: "Vercel", icon: <SiVercel />, exp: "1.5年", level: 4, color: "text-slate-900", category: "TOOLS", description: "フロントエンドアプリケーションの迅速なホスティングと、GitHubと連携したデプロイパイプラインとして活用中です。", url: "https://vercel.com/" },
-    { name: "VS Code", icon: <SiVisualstudiocode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "メインの開発エディタとして使用。各種拡張機能やスニペットを活用し、生産性の高いコーディング環境を構築しています。", url: "https://code.visualstudio.com/" },
+    { name: "VS Code", icon: <VscVscode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "メインの開発エディタとして使用。各種拡張機能やスニペットを活用し、生産性の高いコーディング環境を構築しています。", url: "https://code.visualstudio.com/" },
     { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 3, color: "text-slate-700", category: "CREATIVE", description: "Webサイトや動画の素材となる画像加工、ロゴ作成などに活用しているオープンソースの画像編集ソフトウェアです。", url: "https://www.gimp.org/" },
     { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "3年", level: 4, color: "text-red-400", category: "CREATIVE", description: "映像編集やカラーグレーディングに活用し、クリエイティブな表現の幅を広げつつ、講師としての指導も行っています。", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
   ], []);
