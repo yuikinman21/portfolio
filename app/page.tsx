@@ -19,6 +19,7 @@ type SkillType = {
   color: string;
   category: 'LANGUAGE & FRAMEWORKS' | 'TOOLS & CREATIVE';
   description: string;
+  url?: string;
 };
 
 // 3Dコンポーネントを動的インポート（SSR無効化）
@@ -152,27 +153,27 @@ export default function Home() {
 
   const [hoveredSkill, setHoveredSkill] = useState<any>(null);
 
-const skillLanguages: SkillType[] = useMemo(() => [
-    { name: "Python", icon: <FaPython />, exp: "3年", level: 4, color: "text-blue-500", category: "LANGUAGE & FRAMEWORKS", description: "データ解析、マルウェア通信の機械学習分類（ランダムフォレスト等）、IoT制御など、最も使用歴が長く得意とする言語です。" },
-    { name: "TypeScript", icon: <SiTypescript />, exp: "2年", level: 3, color: "text-blue-600", category: "LANGUAGE & FRAMEWORKS", description: "型安全な開発基盤として、ReactやNext.jsと組み合わせて堅牢なフロントエンド開発に活用しています。" },
-    { name: "Next.js", icon: <SiNextdotjs />, exp: "1.5年", level: 3, color: "text-slate-800", category: "LANGUAGE & FRAMEWORKS", description: "このポートフォリオや「白鷺祭用語集」などのWebアプリケーション構築に使用している、現在のメインフレームワークです。" },
-    { name: "React", icon: <FaReact />, exp: "2年", level: 4, color: "text-cyan-400", category: "LANGUAGE & FRAMEWORKS", description: "コンポーネント指向を用いたUI構築に精通しており、Framer Motion等と連携したリッチな画面開発が可能です。" },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "2年", level: 4, color: "text-cyan-500", category: "LANGUAGE & FRAMEWORKS", description: "Bento GridのようなモダンなUIデザインやレスポンシブ対応を、迅速かつ美しく実装するための主軸スタイリングツールです。" },
-    { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE & FRAMEWORKS", description: "大学の講義やアルゴリズムの学習、パフォーマンスが要求される低レイヤの処理やハードウェア制御の理解に使用しています。" },
-    { name: "Java", icon: <FaJava />, exp: "2年", level: 3, color: "text-red-500", category: "LANGUAGE & FRAMEWORKS", description: "オブジェクト指向プログラミングの基礎として学習し、システム全体のアーキテクチャ設計の理解に役立てています。" },
-    { name: "GAS", icon: <SiGoogleappsscript />, exp: "2年", level: 4, color: "text-green-600", category: "LANGUAGE & FRAMEWORKS", description: "学園祭実行委員会でのシフト管理や業務自動化など、Google Workspaceと連携した組織の効率化システム構築に活用しました。" },
-    { name: "Dart", icon: <SiDart />, exp: "1年", level: 3, color: "text-blue-400", category: "LANGUAGE & FRAMEWORKS", description: "Home OS 2.0のフロントエンドロジック構築に使用し、非同期処理やAPI通信を用いた堅牢なシステムを実装しています。" },
-    { name: "Flutter", icon: <SiFlutter />, exp: "1年", level: 3, color: "text-cyan-400", category: "LANGUAGE & FRAMEWORKS", description: "従来のダッシュボードを進化させ、双方向の家電操作を可能にする「Home OS 2.0」のUI構築に採用したモバイル/Webフレームワークです。" },
+  const skillLanguages: SkillType[] = useMemo(() => [
+    { name: "Python", icon: <FaPython />, exp: "3年", level: 4, color: "text-blue-500", category: "LANGUAGE & FRAMEWORKS", description: "データ解析、マルウェア通信の機械学習分類（ランダムフォレスト等）、IoT制御など、最も使用歴が長く得意とする言語です。", url: "https://www.python.org/" },
+    { name: "TypeScript", icon: <SiTypescript />, exp: "2年", level: 3, color: "text-blue-600", category: "LANGUAGE & FRAMEWORKS", description: "型安全な開発基盤として、ReactやNext.jsと組み合わせて堅牢なフロントエンド開発に活用しています。", url: "https://www.typescriptlang.org/" },
+    { name: "Next.js", icon: <SiNextdotjs />, exp: "1.5年", level: 3, color: "text-slate-800", category: "LANGUAGE & FRAMEWORKS", description: "このポートフォリオや「白鷺祭用語集」などのWebアプリケーション構築に使用している、現在のメインフレームワークです。", url: "https://nextjs.org/" },
+    { name: "React", icon: <FaReact />, exp: "2年", level: 4, color: "text-cyan-400", category: "LANGUAGE & FRAMEWORKS", description: "コンポーネント指向を用いたUI構築に精通しており、Framer Motion等と連携したリッチな画面開発が可能です。", url: "https://react.dev/" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "2年", level: 4, color: "text-cyan-500", category: "LANGUAGE & FRAMEWORKS", description: "Bento GridのようなモダンなUIデザインやレスポンシブ対応を、迅速かつ美しく実装するための主軸スタイリングツールです。", url: "https://tailwindcss.com/" },
+    { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE & FRAMEWORKS", description: "大学の講義やアルゴリズムの学習、パフォーマンスが要求される低レイヤの処理やハードウェア制御の理解に使用しています。", url: "https://cplusplus.com/" },
+    { name: "Java", icon: <FaJava />, exp: "2年", level: 3, color: "text-red-500", category: "LANGUAGE & FRAMEWORKS", description: "オブジェクト指向プログラミングの基礎として学習し、システム全体のアーキテクチャ設計の理解に役立てています。", url: "https://dev.java/" },
+    { name: "GAS", icon: <SiGoogleappsscript />, exp: "2年", level: 4, color: "text-green-600", category: "LANGUAGE & FRAMEWORKS", description: "学園祭実行委員会でのシフト管理や業務自動化など、Google Workspaceと連携した組織の効率化システム構築に活用しました。", url: "https://developers.google.com/apps-script" },
+    { name: "Dart", icon: <SiDart />, exp: "1年", level: 3, color: "text-blue-400", category: "LANGUAGE & FRAMEWORKS", description: "Home OS 2.0のフロントエンドロジック構築に使用し、非同期処理やAPI通信を用いた堅牢なシステムを実装しています。", url: "https://dart.dev/" },
+    { name: "Flutter", icon: <SiFlutter />, exp: "1年", level: 3, color: "text-cyan-400", category: "LANGUAGE & FRAMEWORKS", description: "従来のダッシュボードを進化させ、双方向の家電操作を可能にする「Home OS 2.0」のUI構築に採用したモバイル/Webフレームワークです。", url: "https://flutter.dev/" },
   ], []);
 
   const skillTools: SkillType[] = useMemo(() => [
-    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "TOOLS & CREATIVE", description: "Home OSの各サービス（InfluxDBやNode-REDなど）をコンテナ化し、環境依存のないデプロイと運用を実現しています。" },
-    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 4, color: "text-orange-500", category: "TOOLS & CREATIVE", description: "ポートフォリオの3Dオブジェクト制作や、プログラミングスクールでの指導経験もある、得意なクリエイティブツールです。" },
-    { name: "GitHub", icon: <FaGithub />, exp: "3年", level: 4, color: "text-slate-800", category: "TOOLS & CREATIVE", description: "バージョン管理はもちろん、白鷺祭実行委員会などのチーム開発におけるタスク管理やコラボレーションフローを実践しています。" },
-    { name: "Vercel", icon: <SiVercel />, exp: "1.5年", level: 4, color: "text-slate-900", category: "TOOLS & CREATIVE", description: "フロントエンドアプリケーションの迅速なホスティングと、GitHubと連携したデプロイパイプラインとして活用中です。" },
+    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "TOOLS & CREATIVE", description: "Home OSの各サービス（InfluxDBやNode-REDなど）をコンテナ化し、環境依存のないデプロイと運用を実現しています。", url: "https://www.docker.com/" },
+    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 4, color: "text-orange-500", category: "TOOLS & CREATIVE", description: "ポートフォリオの3Dオブジェクト制作や、プログラミングスクールでの指導経験もある、得意なクリエイティブツールです。", url: "https://www.blender.org/" },
+    { name: "GitHub", icon: <FaGithub />, exp: "3年", level: 4, color: "text-slate-800", category: "TOOLS & CREATIVE", description: "バージョン管理はもちろん、白鷺祭実行委員会などのチーム開発におけるタスク管理やコラボレーションフローを実践しています。", url: "https://github.com/" },
+    { name: "Vercel", icon: <SiVercel />, exp: "1.5年", level: 4, color: "text-slate-900", category: "TOOLS & CREATIVE", description: "フロントエンドアプリケーションの迅速なホスティングと、GitHubと連携したデプロイパイプラインとして活用中です。", url: "https://vercel.com/" },
     { name: "IoT Devices", icon: <FaNetworkWired />, exp: "2年", level: 4, color: "text-emerald-600", category: "TOOLS & CREATIVE", description: "スマート家電の制御や、パケットキャプチャを用いたIoTマルウェアの通信分析など、研究・趣味の両面で扱っています。" },
-    { name: "NW / SC", icon: <FaShieldAlt />, exp: "勉強中", level: 2, color: "text-purple-600", category: "TOOLS & CREATIVE", description: "ネットワークインフラの深い知識と、情報処理安全確保支援士などのセキュリティ専門スキル習得に向けて日々学習しています。" },
-    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "3年", level: 4, color: "text-red-400", category: "TOOLS & CREATIVE", description: "映像編集やカラーグレーディングに活用し、クリエイティブな表現の幅を広げつつ、講師としての指導も行っています。" },
+    { name: "NW / SC", icon: <FaShieldAlt />, exp: "勉強中", level: 2, color: "text-purple-600", category: "TOOLS & CREATIVE", description: "ネットワークインフラの深い知識と、情報処理安全確保支援士などのセキュリティ専門スキル習得に向けて日々学習しています。", url: "https://www.ipa.go.jp/" },
+    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "3年", level: 4, color: "text-red-400", category: "TOOLS & CREATIVE", description: "映像編集やカラーグレーディングに活用し、クリエイティブな表現の幅を広げつつ、講師としての指導も行っています。", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
   ], []);
 
   const allSkills = useMemo(() => [...skillLanguages, ...skillTools], [skillLanguages, skillTools]);
@@ -474,12 +475,10 @@ const skillLanguages: SkillType[] = useMemo(() => [
 
         {/* 5. Tech Stack & Focus */}
         <AnimatedBentoCard delay={0.5} className="md:col-span-6 lg:col-span-1 p-6 flex flex-col bg-white overflow-hidden h-full">
-          
-          {/* ▼ 余分な <div className="flex flex-col h-full"> の囲みを削除して直接並べます ▼ */}
           <Label text="04. TECH STACK & FOCUS" color="blue" />
 
-          {/* インライン詳細情報エリア (shrink-0 で縮むのを防ぐ) */}
-          <div className="mt-6 h-[115px] relative shrink-0">
+          {/* ★ インライン詳細情報エリア (高さを130pxに拡大し、リンク機能を追加) */}
+          <div className="mt-5 h-[130px] relative shrink-0">
             <AnimatePresence mode="wait">
               {selectedSkill && (
                 <motion.div
@@ -488,7 +487,11 @@ const skillLanguages: SkillType[] = useMemo(() => [
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -5 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute inset-0 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200 flex gap-4 shadow-sm"
+                  // ★ クリックで公式URLへ飛ぶ処理
+                  onClick={() => {
+                    if (selectedSkill.url) window.open(selectedSkill.url, '_blank', 'noopener,noreferrer');
+                  }}
+                  className={`absolute inset-0 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200 flex gap-4 shadow-sm transition-all group/link ${selectedSkill.url ? 'cursor-pointer hover:shadow-md hover:border-blue-300' : ''}`}
                 >
                   <div className={`text-4xl ${selectedSkill.color} w-14 h-14 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0`}>
                     {selectedSkill.icon}
@@ -498,8 +501,14 @@ const skillLanguages: SkillType[] = useMemo(() => [
                     <div>
                       <div className="flex justify-between items-center mb-1">
                         <div className="flex items-center gap-2 overflow-hidden">
-                          <h3 className="font-bold text-slate-800 text-sm truncate">{selectedSkill.name}</h3>
-                          <span className="hidden sm:inline-block text-[8px] font-bold text-slate-500 bg-slate-200/50 px-1.5 py-0.5 rounded border border-slate-200 shrink-0">
+                          <h3 className={`font-bold text-slate-800 text-sm truncate ${selectedSkill.url ? 'group-hover/link:text-blue-600 transition-colors' : ''}`}>
+                            {selectedSkill.name}
+                          </h3>
+                          {/* ★ リンクアイコン（URLがある場合のみ表示） */}
+                          {selectedSkill.url && (
+                            <svg className="w-3 h-3 text-slate-400 group-hover/link:text-blue-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                          )}
+                          <span className="hidden sm:inline-block text-[8px] font-bold text-slate-500 bg-slate-200/50 px-1.5 py-0.5 rounded border border-slate-200 shrink-0 ml-1">
                             {selectedSkill.category}
                           </span>
                         </div>
@@ -507,12 +516,13 @@ const skillLanguages: SkillType[] = useMemo(() => [
                           経験年数: {selectedSkill.exp}
                         </span>
                       </div>
-                      <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-2">
+                      {/* ★ line-clamp-3 に変更して3行まで表示 */}
+                      <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-3 mt-0.5">
                         {selectedSkill.description}
                       </p>
                     </div>
                     
-                    <div className="flex items-center gap-2 mt-2">
+                    <div className="flex items-center gap-2 mt-1.5">
                       <span className="text-[9px] text-slate-400 font-bold w-6">Lv.{selectedSkill.level}</span>
                       <div className="flex-1 bg-slate-200 rounded-full h-1.5 overflow-hidden">
                         <motion.div
@@ -529,11 +539,11 @@ const skillLanguages: SkillType[] = useMemo(() => [
             </AnimatePresence>
           </div>
 
-          {/* 無限スクロール領域 (flex-1 と min-h-0 で余った空間を柔軟に埋める) */}
-          <div className="mt-4 flex-1 flex flex-col justify-center gap-4 group-hover-pause mask-horizontal-fade min-h-0">
+          {/* 無限スクロール領域 */}
+          <div className="mt-2 flex-1 flex flex-col justify-center gap-4 group-hover-pause mask-horizontal-fade min-h-0">
             
-            {/* 上段：LANGUAGE & FRAMEWORKS */}
-            <div className="w-full relative overflow-hidden py-2 -my-2">
+            {/* 上段：LANGUAGE & FRAMEWORKS (★ overflow-hiddenを削除し、見切れを防止) */}
+            <div className="w-full relative py-3 -my-3">
               <div className="animate-scroll-left flex gap-4 px-2">
                 {[...skillLanguages, ...skillLanguages].map((skill, idx) => (
                   <div
@@ -547,8 +557,8 @@ const skillLanguages: SkillType[] = useMemo(() => [
               </div>
             </div>
 
-            {/* 下段：TOOLS & CREATIVE */}
-            <div className="w-full relative overflow-hidden py-2 -my-2">
+            {/* 下段：TOOLS & CREATIVE (★ overflow-hiddenを削除し、見切れを防止) */}
+            <div className="w-full relative py-3 -my-3">
               <div className="animate-scroll-right flex gap-4 px-2">
                 {[...skillTools, ...skillTools].map((skill, idx) => (
                   <div
@@ -563,7 +573,7 @@ const skillLanguages: SkillType[] = useMemo(() => [
             </div>
           </div>
 
-          {/* FOCUS領域 (shrink-0 で下部に固定) */}
+          {/* FOCUS領域 */}
           <div className="mt-4 pt-4 border-t border-slate-100 shrink-0">
             <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider font-bold">Current Focus</p>
             <div className="flex flex-wrap gap-2">
