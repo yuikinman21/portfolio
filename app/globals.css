@@ -98,3 +98,31 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #e2e8f0 transparent;
 }
+
+/* 無限スクロール用アニメーション */
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.animate-scroll-left {
+  animation: scroll-left 25s linear infinite;
+  width: max-content;
+}
+.animate-scroll-right {
+  animation: scroll-right 25s linear infinite;
+  width: max-content;
+}
+/* ホバー時にアニメーションを一時停止 */
+.group-hover-pause:hover .animate-scroll-left,
+.group-hover-pause:hover .animate-scroll-right {
+  animation-play-state: paused;
+}
+/* 両端をフェードアウトさせるマスク */
+.mask-horizontal-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
