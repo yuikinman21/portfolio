@@ -376,7 +376,7 @@ export default function Home() {
                 org="日本FP協会"
                 type="cert"
               >
-                ITエンジニアとしてのスキルに加え、金融・税制などの知識を掛け合わせることで、将来のプロジェクトのコスト管理や自身のライフプランニングに活かすために取得を目指しています。
+                社会人として最低限の金融リテラシーを身につけるために取得しました。
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -385,7 +385,7 @@ export default function Home() {
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                基本情報技術者に続き、ストレートで合格を果たしました。セキュリティ、ネットワーク、システムアーキテクチャ等、より高度で実践的なIT知識を体系的に習得しています。
+                基本情報技術者に続き、ストレートで合格を果たしました。
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -395,7 +395,7 @@ export default function Home() {
                 type="edu"
                 isCurrent
               >
-                IoTセキュリティの研究に着手。Aposemat IoT-23データセットを活用し、ランダムフォレスト等を用いたマルウェア通信の高精度な分類モデル構築や、通信特性の統計的評価に取り組んでいます。
+                IoTや無線に関する研究を行なっています。
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -404,7 +404,7 @@ export default function Home() {
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                情報工学の基礎を固めるために取得しました。アルゴリズム、データベース、ソフトウェア設計など、エンジニアとして不可欠な土台となる知識を網羅的に身につけています。
+                大学の授業での学びを活かして、効率よく勉強することができました。
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -414,7 +414,7 @@ export default function Home() {
                 type="edu"
                 isCurrent
               >
-                プログラミングやネットワーク技術を専攻。白鷺祭実行委員会の副委員長・委員長代理としても活動し、組織運営のほか「白鷺祭用語集」等のシステム開発をリードしました。
+                情報工学の基礎から応用まで幅広く学びながら、ネットワークやセキュリティ、IoTに関する研究に取り組んでいます。
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -423,7 +423,7 @@ export default function Home() {
                 org="Kyoto Saikyo High School"
                 type="edu"
               >
-                探究活動やチームでの課題解決プロジェクトを通じて、現在の情報工学やシステム開発への興味に繋がる論理的思考力とプレゼンテーション能力の基礎を培いました。
+                探究活動や委員会活動を通じて、主体的に様々なことに挑戦しました。
               </ExpandableTimelineItem>
 
             </div>
