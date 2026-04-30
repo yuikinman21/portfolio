@@ -385,7 +385,7 @@ export default function Home() {
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                基本情報技術者に続き、ストレートで合格を果たしました。
+                基本情報技術者の次のステップとして勉強し、一発で合格することができました。
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
