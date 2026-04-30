@@ -375,7 +375,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -20px 0px" }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+                className="snap-start p-3 my-4 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-default border border-transparent hover:border-emerald-200"
               >
                 <TimelineItem
                   date="2026.04"
@@ -390,7 +390,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -20px 0px" }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-default border border-transparent hover:border-emerald-200"
               >
                 <TimelineItem
                   date="2025.10"
@@ -405,7 +405,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -20px 0px" }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-default border border-transparent hover:border-emerald-200"
               >
                 <TimelineItem
                   date="2025.09 - Present"
@@ -420,7 +420,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -20px 0px" }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-default border border-transparent hover:border-emerald-200"
               >
                 <TimelineItem
                   date="2025.07"
@@ -435,7 +435,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -20px 0px" }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-default border border-transparent hover:border-emerald-200"
               >
                 <TimelineItem
                   date="2023.04 - Present"
@@ -450,7 +450,7 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px 0px -20px 0px" }}
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+                className="snap-start p-3 mb-6 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-default border border-transparent hover:border-emerald-200"
               >
                 <TimelineItem
                   date="2020.04 - 2023.03"
