@@ -368,111 +368,66 @@ export default function Home() {
               WebkitMaskImage: 'linear-gradient(to bottom, black calc(100% - 40px), transparent 100%)'
             }}
           >
-            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden pl-4 pr-2 pb-6 custom-scrollbar snap-y snap-mandatory space-y-1">
+            <div className="absolute inset-0 overflow-y-auto overflow-x-hidden px-2 pt-6 pb-10 scroll-pt-6 custom-scrollbar snap-y snap-mandatory">
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              <ExpandableTimelineItem
+                date="2026.04"
+                title="ファイナンシャル・プランニング技能士3級 (FP3級)"
+                org="日本FP協会"
+                type="cert"
               >
-                <TimelineItem
-                  date="2026.04"
-                  title="ファイナンシャル・プランニング技能士3級 (FP3級)"
-                  org="日本FP協会"
-                  type="cert"
-                />
-              </motion.div>
+                社会人として最低限の金融リテラシーを身につけるために取得しました。
+              </ExpandableTimelineItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              <ExpandableTimelineItem
+                date="2025.10"
+                title="応用情報技術者 (AP)"
+                org="情報処理推進機構 (IPA)"
+                type="cert"
               >
-                <TimelineItem
-                  date="2025.10"
-                  title="応用情報技術者 (AP)"
-                  org="情報処理推進機構 (IPA)"
-                  type="cert"
-                />
-              </motion.div>
+                基本情報技術者の次のステップとして勉強し、一発で合格することができました。
+              </ExpandableTimelineItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              <ExpandableTimelineItem
+                date="2025.09 - Present"
+                title="研究室配属"
+                org="知的ネットワーキング研究グループ"
+                type="edu"
+                isCurrent
               >
-                <TimelineItem
-                  date="2025.09 - Present"
-                  title="研究室配属"
-                  org="知的ネットワーキング研究グループ"
-                  isCurrent type="edu"
-                />
-              </motion.div>
+                IoTや無線に関する研究を行なっています。
+              </ExpandableTimelineItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              <ExpandableTimelineItem
+                date="2025.07"
+                title="基本情報技術者 (FE)"
+                org="情報処理推進機構 (IPA)"
+                type="cert"
               >
-                <TimelineItem
-                  date="2025.07"
-                  title="基本情報技術者 (FE)"
-                  org="情報処理推進機構 (IPA)"
-                  type="cert"
-                />
-              </motion.div>
+                大学の授業での学びを活かして、効率よく勉強することができました。
+              </ExpandableTimelineItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              <ExpandableTimelineItem
+                date="2023.04 - Present"
+                title="大阪公立大学 工学部 情報工学科"
+                org="Osaka Metropolitan University"
+                type="edu"
+                isCurrent
               >
-                <TimelineItem
-                  date="2023.04 - Present"
-                  title="大阪公立大学 工学部 情報工学科"
-                  org="Osaka Metropolitan University"
-                  isCurrent type="edu"
-                />
-              </motion.div>
+                情報工学の基礎から応用まで幅広く学びながら、ネットワークやセキュリティ、IoTに関する研究に取り組んでいます。
+              </ExpandableTimelineItem>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -20px 0px" }}
-                transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                className="snap-start p-3 rounded-xl transition-all duration-300 hover:bg-green-50/50 hover:scale-[1.02] hover:shadow-[0_0_15px_rgba(168,85,247,0.3)] cursor-default border border-transparent hover:border-purple-200"
+              <ExpandableTimelineItem
+                date="2020.04 - 2023.03"
+                title="京都市立西京高等学校 エンタープライジング科"
+                org="Kyoto Saikyo High School"
+                type="edu"
               >
-                <TimelineItem
-                  date="2020.04 - 2023.03"
-                  title="京都市立西京高等学校 エンタープライジング科"
-                  org="Kyoto Saikyo High School"
-                  type="edu" />
-              </motion.div>
+                探究活動や委員会活動を通じて、主体的に様々なことに挑戦しました。
+              </ExpandableTimelineItem>
+
             </div>
           </div>
-
-          {/* <div className="pt-4 border-t border-slate-100">
-            <p className="text-[10px] text-slate-400 font-mono mb-2 uppercase tracking-wider">Focus</p>
-            <div className="flex flex-wrap gap-2">
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> TOEIC</span>
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> NW</span>
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> SC</span>
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Web Application</span>
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> 3D Modeling</span>
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> IoT</span>
-              <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-1 rounded"> Building-OS</span>
-            </div>
-          </div> */}
         </AnimatedBentoCard>
         
 
@@ -1123,6 +1078,58 @@ function SocialButton({ href, label }: { href: string; label: string }) {
     >
       {label}
     </a>
+  );
+}
+
+// アコーディオン機能を持たせたタイムラインのラッパーコンポーネント
+function ExpandableTimelineItem({ date, title, org, type, isCurrent, children }: { date: string, title: string, org?: string, type?: "cert" | "work" | "edu", isCurrent?: boolean, children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      className="snap-start my-4 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] border border-transparent hover:border-emerald-200 group/expand relative"
+    >
+      {/* クリック領域をカード全体に広げる透明ボタン */}
+      <button onClick={() => setIsOpen(!isOpen)} className="absolute inset-0 w-full h-full z-10 cursor-pointer focus:outline-none" aria-label="Toggle details"></button>
+
+      {/* コンテンツ領域 */}
+      <div className="relative z-0 p-3 pointer-events-none">
+        
+        {/* 右上の矢印アイコン (テキストなし) */}
+        <div className="absolute right-2 top-3 text-slate-300 group-hover/expand:text-emerald-500 transition-transform duration-300 z-20">
+          <motion.svg 
+            animate={{ rotate: isOpen ? 180 : 0 }} 
+            className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </motion.svg>
+        </div>
+
+        <TimelineItem date={date} title={title} org={org} type={type} isCurrent={isCurrent}>
+          {/* クリックで開く詳細コンテンツ */}
+          <AnimatePresence>
+            {isOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                {/* 開いたエリアに少し背景色をつけて「インナーカード」っぽくする */}
+                <div className="mt-3 pt-3 border-t border-emerald-100/50">
+                  {children}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </TimelineItem>
+      </div>
+    </motion.div>
   );
 }
 
