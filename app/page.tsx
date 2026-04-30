@@ -1126,6 +1126,55 @@ function SocialButton({ href, label }: { href: string; label: string }) {
   );
 }
 
+// アコーディオン機能を持たせたタイムラインのラッパーコンポーネント
+function ExpandableTimelineItem({ date, title, org, type, isCurrent, children }: { date: string, title: string, org?: string, type?: "cert" | "work" | "edu", isCurrent?: boolean, children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "0px 0px -20px 0px" }}
+      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      onClick={() => setIsOpen(!isOpen)}
+      className="snap-start p-3 my-4 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] cursor-pointer border border-transparent hover:border-emerald-200 group/expand"
+    >
+      <TimelineItem date={date} title={title} org={org} type={type} isCurrent={isCurrent}>
+        
+        {/* 開閉状態を示すヒントとアイコン */}
+        <div className="flex items-center gap-1 mt-1 text-[10px] font-bold text-emerald-600/60 group-hover/expand:text-emerald-500 transition-colors">
+          <motion.svg 
+            animate={{ rotate: isOpen ? 180 : 0 }} 
+            transition={{ duration: 0.3 }}
+            className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </motion.svg>
+          {isOpen ? "Close details" : "Click to details"}
+        </div>
+        
+        {/* クリックで開く詳細コンテンツ */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="pt-2 mt-2 border-t border-slate-200/60 text-[11px] text-slate-600 leading-relaxed">
+                {children}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+      </TimelineItem>
+    </motion.div>
+  );
+}
+
 function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { date: string, title: string, org?: string, children?: ReactNode, icon?: string, isCurrent?: boolean, type?: "cert" | "work" | "edu" }) {
   return (
     <div className="relative pl-6 pb-6 border-l-2 border-slate-100 last:border-0 last:pb-0 hover:border-green-200 transition-colors group/item">
