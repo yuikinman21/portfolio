@@ -962,7 +962,7 @@ export default function Home() {
             {/* アクションボタン */}
             <div className="mt-auto pt-6">
               <a 
-                href="https://shirasagi-sai-git-sample-yuikis-projects.vercel.app/" 
+                href="https://albus-glossary-demo.vercel.app/" 
                 target="_blank" 
                 rel="noreferrer" 
                 className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
