@@ -536,11 +536,11 @@ export default function Home() {
               <div className="flex-1 h-px bg-slate-100"></div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-blue-300 hover:shadow-sm transition-all cursor-default">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></span> TOEIC
-              </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-emerald-300 hover:shadow-sm transition-all cursor-default">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm"></span> NW / SC
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm"></span> SC
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-blue-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></span> DB
               </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-indigo-300 hover:shadow-sm transition-all cursor-default">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-sm"></span> Web Application
