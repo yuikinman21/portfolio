@@ -334,8 +334,8 @@ export default function Home() {
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、セキュリティからスマートホームに関する研究など幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
-            将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
-            現在は、アルバイトで中高生にPythonやBlenderなどを教えながら、家にIoT機器などを導入してスマートホームの構築をしたり、大学院進学に向けて勉強をしたりしています。
+            将来的にはシステム開発に関する仕事に携わりたいと考えています。<br />
+            現在は、本大学の情報基盤課学生スタッフTryAngleおよび大学発ベンチャー企業のバックエンドエンジニアとして勤務しながら、幅広く学び続けています。
           </p>
         </AnimatedBentoCard>
 
@@ -376,7 +376,7 @@ export default function Home() {
                 org="日本FP協会"
                 type="cert"
               >
-                社会人として最低限の金融リテラシーを身につけるために取得しました。
+                社会人として最低限のお金の知識を手に入れました！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -385,7 +385,7 @@ export default function Home() {
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                基本情報技術者の次のステップとして勉強し、一発で合格することができました。
+                基本情報技術者の次のステップとして勉強し、一発で合格することができました！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -395,7 +395,7 @@ export default function Home() {
                 type="edu"
                 isCurrent
               >
-                IoTや無線に関する研究を行なっています。
+                IoTや無線、機械学習に関する研究を行なっています！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -404,7 +404,7 @@ export default function Home() {
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                大学の授業での学びを活かして、効率よく勉強することができました。
+                大学の授業での学びを活かして、短期間で合格することができました！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -423,7 +423,7 @@ export default function Home() {
                 org="Kyoto Saikyo High School"
                 type="edu"
               >
-                探究活動や委員会活動を通じて、主体的に様々なことに挑戦しました。
+                探究活動や委員会活動を通じて、主体的に様々なことに挑戦しました。部活は競技かるた部で、全国大会にも出場しました！(初戦が全国ですが...)
               </ExpandableTimelineItem>
 
             </div>
