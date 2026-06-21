@@ -380,7 +380,7 @@ export default function Home() {
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
-                date="2025.10"
+                date="2025.12"
                 title="応用情報技術者 (AP)"
                 org="情報処理推進機構 (IPA)"
                 type="cert"
@@ -399,7 +399,7 @@ export default function Home() {
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
-                date="2025.07"
+                date="2025.08"
                 title="基本情報技術者 (FE)"
                 org="情報処理推進機構 (IPA)"
                 type="cert"
