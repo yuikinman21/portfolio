@@ -9,7 +9,7 @@ import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import HackingEffect from './components/HackingEffect';
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, } from 'react-icons/si';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
 type SkillType = {
@@ -157,6 +157,7 @@ export default function Home() {
   // 上段用データ（LANGUAGE / FRAMEWORK）
   const skillLanguages: SkillType[] = useMemo(() => [
     { name: "Python", icon: <FaPython />, exp: "3年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
+    { name: "Go", icon: <SiGo />, exp: "1年未満", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
     { name: "TypeScript", icon: <SiTypescript />, exp: "1年未満", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
     { name: "Next.js", icon: <SiNextdotjs />, exp: "1年未満", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
     { name: "React", icon: <FaReact />, exp: "1年未満", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
