@@ -643,27 +643,25 @@ export default function Home() {
                 NOW BUILDING
               </span>
             </div>
-            
-            <div>
-              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
-                白鷺祭用語集
-              </h3>
-              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                実行委員向けの用語まとめサイト<br/>
-                クリックして詳細を見ることができます。<br/>
-              </p>
-            </div>
-          </div>
 
-          <div className="w-full my-4 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none">
-            <div className="relative w-full aspect-video bg-pink-50 overflow-hidden">
-              <Image
-                src="/shirasagi-sai.png"
-                alt="白鷺祭用語集"
-                fill
-                className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-pink-900/20 to-transparent pointer-events-none"></div>
+            <div className="flex items-start gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
+                  白鷺祭用語集
+                </h3>
+                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                  実行委員向けの用語まとめサイト<br/>
+                  クリックして詳細を見ることができます。
+                </p>
+              </div>
+              <div className="relative w-70 aspect-video rounded-lg overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 shrink-0">
+                <Image
+                  src="/shirasagi-sai.png"
+                  alt="白鷺祭用語集"
+                  fill
+                  className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                />
+              </div>
             </div>
           </div>
 
