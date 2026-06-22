@@ -318,21 +318,18 @@ export default function Home() {
         <AnimatedBentoCard delay={0.1} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[350px] flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-50 to-white group relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
           
-          {/* ↓↓↓ className末尾に "mx-auto" を追加しました ↓↓↓ */}
-          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto">
-            <div 
+          <div
             onClick={() => setIsHacked(true)}
             className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto cursor-pointer"
           >
-              <Image
-                src="/サーキュラー8bit.jpg"
-                alt="YUIKI Profile Icon"
-                fill
-                className="object-cover"
-                // style={{objectPosition: '45% 50%'}}
-                priority
-              />
-            </div>
+            <Image
+              src="/サーキュラー8bit.jpg"
+              alt="YUIKI Profile Icon"
+              fill
+              className="object-cover"
+              // style={{objectPosition: '45% 50%'}}
+              priority
+            />
           </div>
           <div className="mt-8 text-center space-y-1 relative z-10">
             <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
@@ -516,30 +513,30 @@ export default function Home() {
           {/* 無限スクロール領域 */}
           <div className="mt-2 flex-1 flex flex-col justify-center gap-2 group-hover-pause mask-horizontal-fade min-h-0 py-2">
             {/* 上段：LANGUAGE & FRAMEWORKS */}
-            <div className="w-full relative py-3 -my-3">
+            <div className="w-full">
               <div className="animate-scroll-left flex gap-4 px-2">
                 {[...skillLanguages, ...skillLanguages, ...skillLanguages, ...skillLanguages].map((skill, idx) => (
                   <div
                     key={`lang-${idx}`}
                     onClick={() => handleSkillClick(skill)}
-                    className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer group/icon"
                   >
-                    <div className={`text-2xl ${skill.color}`}>{skill.icon}</div>
+                    <div className={`text-2xl ${skill.color} transition-transform duration-300 group-hover/icon:scale-125`}>{skill.icon}</div>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* 下段：TOOLS & CREATIVE */}
-            <div className="w-full relative py-3 -my-3">
+            <div className="w-full">
               <div className="animate-scroll-right flex gap-4 px-2">
                 {[...skillTools, ...skillTools, ...skillTools, ...skillTools].map((skill, idx) => (
                   <div
                     key={`tool-${idx}`}
                     onClick={() => handleSkillClick(skill)}
-                    className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer group/icon"
                   >
-                    <div className={`text-2xl ${skill.color}`}>{skill.icon}</div>
+                    <div className={`text-2xl ${skill.color} transition-transform duration-300 group-hover/icon:scale-125`}>{skill.icon}</div>
                   </div>
                 ))}
               </div>
