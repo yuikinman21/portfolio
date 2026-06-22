@@ -9,7 +9,7 @@ import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import HackingEffect from './components/HackingEffect';
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, } from 'react-icons/si';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
 type SkillType = {
@@ -157,6 +157,7 @@ export default function Home() {
   // 上段用データ（LANGUAGE / FRAMEWORK）
   const skillLanguages: SkillType[] = useMemo(() => [
     { name: "Python", icon: <FaPython />, exp: "3年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
+    { name: "Go", icon: <SiGo />, exp: "1年未満", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
     { name: "TypeScript", icon: <SiTypescript />, exp: "1年未満", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
     { name: "Next.js", icon: <SiNextdotjs />, exp: "1年未満", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
     { name: "React", icon: <FaReact />, exp: "1年未満", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
@@ -238,14 +239,30 @@ export default function Home() {
     setCurrentImageIndex((prev) => (prev - 1 + activeImages.length) % activeImages.length);
   };
 
-  // モーダルを閉じたときにインデックスをリセットしたければ追加（任意）
   useEffect(() => {
     setCurrentImageIndex(0);
     if (selectedProject === null) {
       setCurrentImageIndex(0);
       setHomeOsTab('v2');
+      setShirasagiImageIndex(0);
+      setShirasagiTab('v2');
     }
   }, [selectedProject, homeOsTab]);
+
+  const shirasagiImages = [
+    "/shirasagi-sai_1.png",
+    "/shirasagi-sai_2.png",
+    "/shirasagi-sai_3.png",
+    "/shirasagi-sai_4.png",
+  ];
+  const [shirasagiImageIndex, setShirasagiImageIndex] = useState(0);
+  const [shirasagiTab, setShirasagiTab] = useState<'v1' | 'v2'>('v2');
+  const nextShirasagiImage = () => setShirasagiImageIndex((prev) => (prev + 1) % shirasagiImages.length);
+  const prevShirasagiImage = () => setShirasagiImageIndex((prev) => (prev - 1 + shirasagiImages.length) % shirasagiImages.length);
+
+  useEffect(() => {
+    setShirasagiImageIndex(0);
+  }, [shirasagiTab]);
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
@@ -301,21 +318,18 @@ export default function Home() {
         <AnimatedBentoCard delay={0.1} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[350px] flex flex-col items-center justify-center p-8 bg-gradient-to-b from-slate-50 to-white group relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
           
-          {/* ↓↓↓ className末尾に "mx-auto" を追加しました ↓↓↓ */}
-          <div className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto">
-            <div 
+          <div
             onClick={() => setIsHacked(true)}
             className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto cursor-pointer"
           >
-              <Image
-                src="/サーキュラー8bit.jpg"
-                alt="YUIKI Profile Icon"
-                fill
-                className="object-cover"
-                // style={{objectPosition: '45% 50%'}}
-                priority
-              />
-            </div>
+            <Image
+              src="/サーキュラー8bit.jpg"
+              alt="YUIKI Profile Icon"
+              fill
+              className="object-cover"
+              // style={{objectPosition: '45% 50%'}}
+              priority
+            />
           </div>
           <div className="mt-8 text-center space-y-1 relative z-10">
             <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
@@ -334,8 +348,8 @@ export default function Home() {
           <p className="text-slate-600 leading-relaxed text-sm">
             フロントエンドからバックエンド、セキュリティからスマートホームに関する研究など幅広く挑戦中。<br/>
             新しい技術が大好きで、大阪関西万博にはボランティア活動のほか、来場者として合計30回会場に足を運びました。<br />
-            将来的にはIoTやMaaS関連の研究開発に携わりたいと考えています。<br />
-            現在は、アルバイトで中高生にPythonやBlenderなどを教えながら、家にIoT機器などを導入してスマートホームの構築をしたり、大学院進学に向けて勉強をしたりしています。
+            将来的にはシステム開発に関する仕事に携わりたいと考えています。<br />
+            現在は、本大学の情報基盤課学生スタッフTryAngleおよび大学発ベンチャー企業のバックエンドエンジニアとして勤務しながら、幅広く学び続けています。
           </p>
         </AnimatedBentoCard>
 
@@ -376,16 +390,16 @@ export default function Home() {
                 org="日本FP協会"
                 type="cert"
               >
-                社会人として最低限の金融リテラシーを身につけるために取得しました。
+                社会人として最低限のお金の知識を手に入れました！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
-                date="2025.10"
+                date="2025.12"
                 title="応用情報技術者 (AP)"
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                基本情報技術者の次のステップとして勉強し、一発で合格することができました。
+                基本情報技術者の次のステップとして勉強し、一発で合格することができました！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -395,16 +409,16 @@ export default function Home() {
                 type="edu"
                 isCurrent
               >
-                IoTや無線に関する研究を行なっています。
+                IoTや無線、機械学習に関する研究を行なっています！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
-                date="2025.07"
+                date="2025.08"
                 title="基本情報技術者 (FE)"
                 org="情報処理推進機構 (IPA)"
                 type="cert"
               >
-                大学の授業での学びを活かして、効率よく勉強することができました。
+                大学の授業での学びを活かして、短期間で合格することができました！
               </ExpandableTimelineItem>
 
               <ExpandableTimelineItem
@@ -423,7 +437,7 @@ export default function Home() {
                 org="Kyoto Saikyo High School"
                 type="edu"
               >
-                探究活動や委員会活動を通じて、主体的に様々なことに挑戦しました。
+                探究活動や委員会活動を通じて、主体的に様々なことに挑戦しました。部活は競技かるた部で、全国大会にも出場しました！(初戦が全国ですが...)
               </ExpandableTimelineItem>
 
             </div>
@@ -499,30 +513,30 @@ export default function Home() {
           {/* 無限スクロール領域 */}
           <div className="mt-2 flex-1 flex flex-col justify-center gap-2 group-hover-pause mask-horizontal-fade min-h-0 py-2">
             {/* 上段：LANGUAGE & FRAMEWORKS */}
-            <div className="w-full relative py-3 -my-3">
+            <div className="w-full">
               <div className="animate-scroll-left flex gap-4 px-2">
                 {[...skillLanguages, ...skillLanguages, ...skillLanguages, ...skillLanguages].map((skill, idx) => (
                   <div
                     key={`lang-${idx}`}
                     onClick={() => handleSkillClick(skill)}
-                    className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer group/icon"
                   >
-                    <div className={`text-2xl ${skill.color}`}>{skill.icon}</div>
+                    <div className={`text-2xl ${skill.color} transition-transform duration-300 group-hover/icon:scale-125`}>{skill.icon}</div>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* 下段：TOOLS & CREATIVE */}
-            <div className="w-full relative py-3 -my-3">
+            <div className="w-full">
               <div className="animate-scroll-right flex gap-4 px-2">
                 {[...skillTools, ...skillTools, ...skillTools, ...skillTools].map((skill, idx) => (
                   <div
                     key={`tool-${idx}`}
                     onClick={() => handleSkillClick(skill)}
-                    className="w-12 h-12 flex items-center justify-center bg-slate-50 border border-slate-200 rounded-xl hover:bg-white hover:scale-110 hover:border-blue-300 hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer"
+                    className="w-12 h-12 flex items-center justify-center rounded-xl hover:bg-white hover:shadow-md transition-all duration-300 shrink-0 cursor-pointer group/icon"
                   >
-                    <div className={`text-2xl ${skill.color}`}>{skill.icon}</div>
+                    <div className={`text-2xl ${skill.color} transition-transform duration-300 group-hover/icon:scale-125`}>{skill.icon}</div>
                   </div>
                 ))}
               </div>
@@ -536,11 +550,11 @@ export default function Home() {
               <div className="flex-1 h-px bg-slate-100"></div>
             </div>
             <div className="flex flex-wrap gap-2">
-              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-blue-300 hover:shadow-sm transition-all cursor-default">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></span> TOEIC
-              </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-emerald-300 hover:shadow-sm transition-all cursor-default">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm"></span> NW / SC
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-sm"></span> SC
+              </div>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-blue-300 hover:shadow-sm transition-all cursor-default">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-sm"></span> DB
               </div>
               <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-slate-200 rounded-md text-[10px] font-bold text-slate-600 hover:border-indigo-300 hover:shadow-sm transition-all cursor-default">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shadow-sm"></span> Web Application
@@ -626,19 +640,29 @@ export default function Home() {
                 NOW BUILDING
               </span>
             </div>
-            
-            <div>
-              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
-                白鷺祭用語集
-              </h3>
-              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                実行委員向けの用語まとめサイト<br/>
-                クリックして詳細やスライドを見ることができます。<br/>
-              </p>
+
+            <div className="flex items-start gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
+                  白鷺祭用語集
+                </h3>
+                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                  実行委員向けの用語まとめサイト<br/>
+                  クリックして詳細を見ることができます。
+                </p>
+              </div>
+              <div className="relative w-70 aspect-video rounded-lg overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 shrink-0">
+                <Image
+                  src="/shirasagi-sai.png"
+                  alt="白鷺祭用語集"
+                  fill
+                  className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-pink-100/50 pt-4 pointer-events-none">
+          <div className="flex items-center justify-between border-t border-pink-100/50 pt-4 pointer-events-none">
             <div className="flex gap-2">
                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Next.js</span>
                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Vercel</span>
@@ -884,92 +908,195 @@ export default function Home() {
       {/* 2. 白鷺祭用語集のモーダル */}
       <Modal
         title="白鷺祭用語集"
-        isOpen={selectedProject === 'shirasagisai'} 
-        onClose={() => setSelectedProject(null)} 
+        isOpen={selectedProject === 'shirasagisai'}
+        onClose={() => setSelectedProject(null)}
       >
-        {/* レイアウト修正: gridではなくflexを使用し、md以上で横並び、それ以下で縦並びにする */}
         <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
-          
-          {/* 左側: メインビジュアルエリア (幅: md以上で60%) */}
-          <div className="w-full md:w-3/5 bg-slate-100 flex flex-col items-center justify-center p-6 lg:p-10 relative gap-6">
-              {/* Canva埋め込み */}
-            <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
-              <iframe 
-                loading="lazy" 
-                className="w-full h-full border-none"
-                src="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?embed" 
-                allowFullScreen 
-                allow="fullscreen"
-              ></iframe>
-            </div>
 
-            <a 
-              href="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=embeds&utm_source=link" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-pink-600 hover:border-pink-200 hover:shadow-md transition-all duration-300"
-            >
-              <span>別のタブで開く</span>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
+          {/* 左側: v1→Canva / v2→画像スライダー */}
+          <div className="w-full md:w-3/5 bg-slate-100 relative min-h-[300px] flex flex-col items-center justify-center p-4 md:p-8 overflow-hidden gap-4">
+            <AnimatePresence mode="wait">
+              {shirasagiTab === 'v1' ? (
+                <motion.div
+                  key="canva"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
+                  className="w-full flex flex-col items-center gap-4"
+                >
+                  <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
+                    <iframe
+                      loading="lazy"
+                      className="w-full h-full border-none"
+                      src="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?embed"
+                      allowFullScreen
+                      allow="fullscreen"
+                    ></iframe>
+                  </div>
+                  <a
+                    href="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-pink-600 hover:border-pink-200 hover:shadow-md transition-all duration-300"
+                  >
+                    <span>別のタブで開く</span>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="slider"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
+                  className="relative w-full flex items-center justify-center"
+                >
+                  <div className="relative w-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={shirasagiImages[shirasagiImageIndex]}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="relative w-full h-full"
+                      >
+                        <Image
+                          src={shirasagiImages[shirasagiImageIndex]}
+                          alt={`白鷺祭用語集 ${shirasagiImageIndex + 1}`}
+                          fill
+                          className="object-contain p-1"
+                          priority
+                        />
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
 
+                  <button
+                    onClick={(e) => { e.stopPropagation(); prevShirasagiImage(); }}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); nextShirasagiImage(); }}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </button>
+
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                    {shirasagiImages.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setShirasagiImageIndex(idx)}
+                        className={`w-2 h-2 rounded-full transition-all shadow-sm ${
+                          idx === shirasagiImageIndex ? "bg-pink-500 w-4" : "bg-white/60 hover:bg-white"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* 右側: 詳細情報エリア (幅: md以上で40%) */}
-          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
-             
-            {/* タイトルエリア */}
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide">NOW BUILDING</span>
-                <span className="text-slate-400 text-xs font-mono">2025.11-Current</span>
-              </div>
-              <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
-                白鷺祭用語集
-              </h2>
-            </div>
+          {/* 右側: タブ切り替え + 詳細情報 */}
+          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col overflow-y-auto relative">
 
-            {/* 概要 Section */}
-            <div>
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                大学祭実行委員のための用語まとめサイトです。<br/>
-                白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。
-                リンク先はサンプルサイトですが、実際の運用ではVercel上にデプロイされた本番環境で使用されています。<br/>
-              </p>
-            </div>
-
-            {/* 担当 Section (新規追加) */}
-            <div>
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
-              <p className="text-sm text-slate-800 font-medium">
-                リードエンジニア / UIデザイン
-              </p>
-              <p className="text-xs text-slate-500 mt-1">
-                要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。
-              </p>
-            </div>
-
-            {/* 使用技術 Section */}
-            <div>
-              <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">使用技術</h3>
-              <div className="flex flex-wrap gap-2">
-                <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
-                <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
-              </div>
-            </div>
-
-            {/* アクションボタン */}
-            <div className="mt-auto pt-6">
-              <a 
-                href="https://albus-glossary-demo.vercel.app/" 
-                target="_blank" 
-                rel="noreferrer" 
-                className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
+            {/* タブトグル */}
+            <div className="flex bg-slate-100 p-1 rounded-full mb-4 w-full max-w-[280px] relative isolate">
+              <button
+                onClick={() => setShirasagiTab('v1')}
+                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 z-10 ${shirasagiTab === 'v1' ? 'text-slate-700' : 'text-slate-400 hover:text-slate-600'}`}
               >
-                <span>サンプルサイトを見る</span>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              </a>
+                {shirasagiTab === 'v1' && (
+                  <motion.div layoutId="shirasagiTabBg" className="absolute inset-0 bg-white rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
+                )}
+                v1.0 Overview
+              </button>
+              <button
+                onClick={() => setShirasagiTab('v2')}
+                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 flex items-center justify-center gap-1 z-10 ${shirasagiTab === 'v2' ? 'text-white' : 'text-slate-400 hover:text-slate-600'}`}
+              >
+                {shirasagiTab === 'v2' && (
+                  <motion.div layoutId="shirasagiTabBg" className="absolute inset-0 bg-pink-500 rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
+                )}
+                v2.0 Update <span className="text-yellow-300">✨</span>
+              </button>
+            </div>
+
+            {/* アニメーション付きコンテンツエリア */}
+            <div className="relative flex-1">
+              <AnimatePresence mode="wait">
+                {shirasagiTab === 'v1' ? (
+                  <motion.div
+                    key="v1"
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
+                    className="flex flex-col gap-6"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">INITIAL RELEASE</span>
+                        <span className="text-slate-400 text-xs font-mono">2025.11</span>
+                      </div>
+                      <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
+                        白鷺祭用語集 <span className="text-lg font-bold text-slate-400">v1.0</span>
+                      </h2>
+                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                        大学祭実行委員のための用語まとめサイトです。<br/>
+                        白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
+                      <p className="text-sm text-slate-800 font-medium">リードエンジニア / UIデザイン</p>
+                      <p className="text-xs text-slate-500 mt-1">要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。</p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
+                      <div className="flex flex-wrap gap-2">
+                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
+                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
+                      </div>
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="v2"
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
+                    className="flex flex-col gap-6"
+                  >
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
+                        <span className="text-slate-400 text-xs font-mono">2026.04-Current</span>
+                      </div>
+                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
+                        白鷺祭用語集 <span className="text-lg font-bold text-pink-400">v2.0</span>
+                      </h2>
+                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
+                        新しく地図検索機能を追加しました。<br/><br/>
+                        新しいメンバーと共に安全性を見直しながらアップデートを行いました。
+                      </p>
+                    </div>
+                    <div>
+                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v2.0 Stack</h3>
+                      <div className="flex flex-wrap gap-2">
+                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
+                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
+                      </div>
+                    </div>
+                    <div className="mt-auto pt-2">
+                      <a
+                        href="https://albus-glossary-demo.vercel.app/"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
+                      >
+                        <span>サンプルサイトを見る</span>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
