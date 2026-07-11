@@ -632,7 +632,8 @@ export default function Home() {
         <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('shirasagisai')}
         >
-          {/* 上部: 説明文 */}
+          {/* 上部: ヘッダー + 説明文 + 画像
+              スマホ: 縦積み（説明 → 画像） / PC: 左に説明・右に画像 */}
           <div className="space-y-3 pointer-events-none">
             <div className="flex items-center justify-between">
               <Label text="06. PROJECT" color="pink" />
@@ -642,31 +643,34 @@ export default function Home() {
               </span>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
-                白鷺祭用語集
-              </h3>
-              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                実行委員向けの用語まとめサイト<br/>
-                クリックして詳細を見ることができます。<br/>
-              </p>
-            </div>
-          </div>
+            <div className="flex flex-col md:flex-row md:items-start md:gap-5">
+              {/* 説明文（PC: 左） */}
+              <div className="md:flex-1 md:min-w-0">
+                <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
+                  白鷺祭用語集
+                </h3>
+                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                  実行委員向けの用語まとめサイト<br/>
+                  クリックして詳細を見ることができます。<br/>
+                </p>
+              </div>
 
-          {/* 真ん中: 画像 */}
-          <div className="w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col">
-            <div className="relative w-full aspect-video bg-pink-50 overflow-hidden">
-              <Image
-                src="/shirasagi-sai.png"
-                alt="白鷺祭用語集"
-                fill
-                className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-              />
+              {/* 画像（スマホ: 説明の下 / PC: 右） */}
+              <div className="w-full md:w-1/2 md:shrink-0 mt-4 md:mt-0 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 flex flex-col">
+                <div className="relative w-full aspect-video bg-pink-50 overflow-hidden">
+                  <Image
+                    src="/shirasagi-sai.png"
+                    alt="白鷺祭用語集"
+                    fill
+                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
           {/* 下部: 使用技術スタック */}
-          <div className="mt-2 relative z-10 pointer-events-none">
+          <div className="mt-6 md:mt-2 relative z-10 pointer-events-none">
             <div className="flex items-center justify-between border-t border-pink-100/50 pt-4">
               <div className="flex flex-wrap gap-2">
                 <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded font-mono">Next.js</span>
