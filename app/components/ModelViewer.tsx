@@ -1,8 +1,8 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, useGLTF, Environment, Float, Center } from '@react-three/drei';
-import { Suspense, useEffect, useRef, useMemo, useState } from 'react';
+import { Suspense, useEffect, useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
 type PupilData = {
@@ -12,41 +12,36 @@ type PupilData = {
 
 function SceneContent() {
   const { scene } = useGLTF('/EXPO2025_eye.glb');
-  
+
   // useMemoでクローンを作成
   const clone = useMemo(() => scene.clone(), [scene]);
-  
+
   const pupilsRef = useRef<PupilData[]>([]);
 
-  // ★画面サイズ判定用のState
-  const [isMobile, setIsMobile] = useState(false);
+  // Canvasの実DOM要素（gl.domElement）を取得
+  const gl = useThree((s) => s.gl);
 
-  // ★画面サイズを監視するEffect
+  // マウス座標(-1〜1)を保持。R3Fの state.pointer はマウント時に取得した
+  // 親要素の矩形(size.left/top)に依存しており、カードが後からレイアウト移動すると
+  // 値がズレて稼働中心が左に寄る。そのため Canvas の「現在の」矩形から毎回計算する。
+  const mouseRef = useRef({ x: 0, y: 0 });
+
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 768px)');
-    
-    // 初期値をセット
-    setIsMobile(mediaQuery.matches);
-
-    // リスナー定義
-    const handleResize = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
+    const handlePointerMove = (event: PointerEvent) => {
+      const rect = gl.domElement.getBoundingClientRect();
+      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      // Canvas外も追従するが、稼働範囲は[-1,1]にクランプ
+      mouseRef.current.x = THREE.MathUtils.clamp(x, -1, 1);
+      mouseRef.current.y = THREE.MathUtils.clamp(y, -1, 1);
     };
 
-    // イベントリスナー登録
-    mediaQuery.addEventListener('change', handleResize);
-
-    // クリーンアップ
-    return () => mediaQuery.removeEventListener('change', handleResize);
-  }, []);
+    window.addEventListener('pointermove', handlePointerMove);
+    return () => window.removeEventListener('pointermove', handlePointerMove);
+  }, [gl]);
 
   useEffect(() => {
     pupilsRef.current = [];
-
-    // ★ここで画面サイズに応じて補正値を切り替える
-    // isMobile(768px未満)なら 0.0、それ以外(PC等)なら 0.3
-    const shiftX = isMobile ? 0.0 : 0.4; 
-    const shiftY = isMobile ? 0.1 : 0.0; 
 
     clone.traverse((child) => {
       if ((child as THREE.Mesh).isMesh && child.name.includes('Hitomi_Blue')) {
@@ -56,31 +51,25 @@ function SceneContent() {
         if (!mesh.userData.initialQuaternion) {
           mesh.userData.initialQuaternion = mesh.quaternion.clone();
         }
-        
-        // 現在の mesh.quaternion ではなく、保存しておいた初期値を使う
-        const initialQuaternion = mesh.userData.initialQuaternion.clone();
 
-        const qx = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), shiftX);
-        const qy = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), shiftY);
-        const offsetRotation = qy.multiply(qx);
-        
-        const centeredQuaternion = initialQuaternion.premultiply(offsetRotation);
+        // 休止位置はモデル本来の瞳の向き（白目の中央）そのもの。
+        // 余計なオフセットを加えないことで、マウス無操作時は常に中央を向く。
+        const initialQuaternion = mesh.userData.initialQuaternion.clone();
 
         pupilsRef.current.push({
           mesh: mesh,
-          baseQuaternion: centeredQuaternion
+          baseQuaternion: initialQuaternion
         });
       }
     });
-    // ★依存配列に isMobile を追加し、画面サイズが変わるたびに再計算させる
-  }, [clone, isMobile]);
+  }, [clone]);
 
   useFrame((state) => {
     if (pupilsRef.current.length === 0) return;
 
-    const mouseX = state.pointer.x; 
-    const mouseY = state.pointer.y; 
-    
+    const mouseX = mouseRef.current.x;
+    const mouseY = mouseRef.current.y;
+
     const intensity = 0.2;
     const camera = state.camera;
 
