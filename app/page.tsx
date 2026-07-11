@@ -354,7 +354,7 @@ export default function Home() {
         </AnimatedBentoCard>
 
         {/* 3. 3D Showcase (02. 3D WORKS) */}
-        <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
+        <AnimatedBentoCard delay={0.3} className="md:col-span-3 lg:col-span-2 md:row-span-2 min-h-[420px] md:min-h-[300px] relative group bg-slate-900 overflow-hidden border-slate-800">
           <div className="absolute top-6 left-6 z-20 pointer-events-none">
             <Label text="02. 3D WORKS" color="purple" />
             <p className="text-slate-400 text-xs mt-1">Interactive 3D Demo with React Three Fiber</p>
@@ -632,6 +632,7 @@ export default function Home() {
         <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
           onClick={() => setSelectedProject('shirasagisai')}
         >
+          {/* 上部: 説明文 */}
           <div className="space-y-3 pointer-events-none">
             <div className="flex items-center justify-between">
               <Label text="06. PROJECT" color="pink" />
@@ -641,34 +642,40 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="flex items-start gap-4">
-              <div className="flex-1 min-w-0">
-                <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
-                  白鷺祭用語集
-                </h3>
-                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                  実行委員向けの用語まとめサイト<br/>
-                  クリックして詳細を見ることができます。
-                </p>
-              </div>
-              <div className="relative w-70 aspect-video rounded-lg overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 shrink-0">
-                <Image
-                  src="/shirasagi-sai.png"
-                  alt="白鷺祭用語集"
-                  fill
-                  className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                />
-              </div>
+            <div>
+              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
+                白鷺祭用語集
+              </h3>
+              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+                実行委員向けの用語まとめサイト<br/>
+                クリックして詳細を見ることができます。<br/>
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center justify-between border-t border-pink-100/50 pt-4 pointer-events-none">
-            <div className="flex gap-2">
-               <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Next.js</span>
-               <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded">Vercel</span>
+          {/* 真ん中: 画像 */}
+          <div className="w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col">
+            <div className="relative w-full aspect-video bg-pink-50 overflow-hidden">
+              <Image
+                src="/shirasagi-sai.png"
+                alt="白鷺祭用語集"
+                fill
+                className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+              />
             </div>
-            <div className="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-400 group-hover:text-pink-600 group-hover:scale-110 transition-all shadow-sm">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+          </div>
+
+          {/* 下部: 使用技術スタック */}
+          <div className="mt-2 relative z-10 pointer-events-none">
+            <div className="flex items-center justify-between border-t border-pink-100/50 pt-4">
+              <div className="flex flex-wrap gap-2">
+                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded font-mono">Next.js</span>
+                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded font-mono">Vercel</span>
+              </div>
+
+              <div className="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-400 group-hover:text-pink-600 group-hover:scale-110 transition-all shadow-sm">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
+              </div>
             </div>
           </div>
         </AnimatedBentoCard>
