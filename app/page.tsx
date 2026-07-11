@@ -462,7 +462,7 @@ export default function Home() {
                   onClick={() => {
                     if (selectedSkill.url) window.open(selectedSkill.url, '_blank', 'noopener,noreferrer');
                   }}
-                  className={`absolute inset-0 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200 flex gap-4 shadow-sm transition-all group/link ${selectedSkill.url ? 'cursor-pointer hover:shadow-md hover:border-blue-300' : ''}`}
+                  className={`absolute inset-0 p-4 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200 flex gap-4 shadow-sm transition-[box-shadow,border-color] group/link ${selectedSkill.url ? 'cursor-pointer hover:shadow-md hover:border-blue-300' : ''}`}
                 >
                   {/* 左: アイコン */}
                   <div className={`text-4xl ${selectedSkill.color} w-14 h-14 bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0`}>
@@ -1229,7 +1229,7 @@ function ExpandableTimelineItem({ date, title, org, type, isCurrent, children }:
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -20px 0px" }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
-      className="snap-start my-4 mx-2 rounded-xl transition-all duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] border border-transparent hover:border-emerald-200 group/expand relative"
+      className="snap-start my-4 mx-2 rounded-xl transition-[background-color,transform,box-shadow,border-color] duration-300 hover:bg-emerald-50/40 hover:translate-x-1 hover:shadow-[0_0_15px_rgba(16,185,129,0.15)] border border-transparent hover:border-emerald-200 group/expand relative"
     >
       {/* クリック領域をカード全体に広げる透明ボタン */}
       <button onClick={() => setIsOpen(!isOpen)} className="absolute inset-0 w-full h-full z-10 cursor-pointer focus:outline-none" aria-label="Toggle details"></button>
