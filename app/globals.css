@@ -30,7 +30,12 @@ body {
   border-radius: 1.5rem; /* rounded-3xl */
   border: 1px solid #f3f4f6; /* border-gray-100 */
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* framer-motion が entrance で opacity / transform を駆動するため、
+     ここに transition: all を置くと二重制御になりモバイルで一瞬消えるフラッシュが出る。
+     ホバー演出に必要なプロパティだけに限定する（opacity は含めない）。 */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
   position: relative;
 }
