@@ -9,7 +9,7 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio-yuikinman21.vercel.app'), 
+  metadataBase: new URL('https://yuiki.dev'),
   title: "Yuikinman21",
   description: "Engineering logic, crafting future. IoTやWeb開発のプロジェクトをまとめたポートフォリオサイト",
   keywords: ["ポートフォリオ", "エンジニア", "情報工学", "IoT", "スマートホーム", "Yuikinman21", "YUIKI", "Web開発", "プロジェクト"],
