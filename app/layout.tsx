@@ -26,8 +26,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/ogp.png',
-        width: 1200,
-        height: 630,
+        width: 1920,
+        height: 1008,
         type: 'image/png',
         alt: 'Yuikinman21 Portfolio - Engineering logic, crafting future.',
       },
