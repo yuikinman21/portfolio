@@ -25,10 +25,11 @@ export const metadata: Metadata = {
     siteName: 'Yuikinman21 Portfolio',
     images: [
       {
-        url: '/サーキュラー8bit.jpg',
-        width: 800,
-        height: 600,
-        alt: 'Yuikinman21 Portfolio Profile Image',
+        url: '/ogp.png',
+        width: 1200,
+        height: 630,
+        type: 'image/png',
+        alt: 'Yuikinman21 Portfolio - Engineering logic, crafting future.',
       },
     ],
     locale: 'ja_JP',
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Yuikinman21",
     description: "Engineering logic, crafting future.",
-    images: ['/サーキュラー8bit.jpg'],
+    images: ['/ogp.png'],
   },
   verification: {
     google: 'kK-fS0ZwkpLXOm-a3oHAUkpCibUHAlD2w5_h9rBwcy0',
