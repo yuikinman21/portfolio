@@ -319,7 +319,7 @@ export default function Home() {
           >
             <Image
               src="/サーキュラー8bit.jpg"
-              alt="YUIKI Profile Icon"
+              alt="MAKINO YUIKI Profile Icon"
               fill
               className="object-cover"
               // style={{objectPosition: '45% 50%'}}
@@ -327,7 +327,7 @@ export default function Home() {
             />
           </div>
           <div className="mt-8 text-center space-y-1 relative z-10">
-            <h2 className="text-3xl font-bold text-slate-800">YUIKI MAKINO</h2>
+            <h2 className="text-3xl font-bold text-slate-800">MAKINO YUIKI</h2>
             <p className="text-slate-500 font-mono text-sm bg-slate-100 px-3 py-1 rounded-full inline-block">
               Osaka Metropolitan Univ. Student B4
             </p>
@@ -1173,7 +1173,7 @@ export default function Home() {
 
       <footer className="py-12 text-center">
         <p className="text-slate-400 text-xs font-mono">
-          &copy; {new Date().getFullYear()} YUIKI. All rights reserved. <br/>
+          &copy; {new Date().getFullYear()} MAKINO YUIKI. All rights reserved. <br/>
           Built with Next.js, Tailwind CSS & React Three Fiber.
         </p>
       </footer>

@@ -12,7 +12,7 @@ export default function NotFound() {
         <div className="relative z-10 w-40 h-40 md:w-48 md:h-48 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white">
           <Image
             src="/サーキュラー8bit.jpg"
-            alt="YUIKI Profile Icon"
+            alt="MAKINO YUIKI Profile Icon"
             fill
             className="object-cover"
             priority
