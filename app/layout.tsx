@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://yuiki.dev'),
   title: "Yuikinman21",
   description: "Engineering logic, crafting future. IoTやWeb開発のプロジェクトをまとめたポートフォリオサイト",
-  keywords: ["ポートフォリオ", "エンジニア", "情報工学", "IoT", "スマートホーム", "Yuikinman21", "YUIKI", "Web開発", "プロジェクト"],
-  authors: [{ name: "YUIKI MAKINO" }],
+  keywords: ["ポートフォリオ", "エンジニア", "情報工学", "IoT", "スマートホーム", "Yuikinman21", "MAKINO YUIKI", "Web開発", "プロジェクト"],
+  authors: [{ name: "MAKINO YUIKI" }],
   icons: {
     icon: '/サーキュラー8bit.png',
     apple: '/サーキュラー8bit.jpg',
@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <body
         className={`${notoSansJP.variable} antialiased`}
         suppressHydrationWarning={true}
