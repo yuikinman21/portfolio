@@ -722,7 +722,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 w-full h-full">
             {/* 左側：テキスト情報 */}
             <div className="relative z-10 w-full md:w-auto md:flex-1 min-w-[200px]">
-              <Label text="07. REPOSITORY" color="orange" />
+              <Label text="08. REPOSITORY" color="orange" />
               <h3 className="text-3xl font-bold text-slate-800 mt-2 group-hover:text-orange-600 transition-colors">
                 @yuikinman21
               </h3>
