@@ -7,7 +7,6 @@ import { useState, useEffect, useRef, useMemo, MouseEvent } from 'react';
 import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
-import HackingEffect from './components/HackingEffect';
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
@@ -150,7 +149,6 @@ function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: a
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
-  const [isHacked, setIsHacked] = useState(false);
 
   const [hoveredSkill, setHoveredSkill] = useState<any>(null);
 
@@ -266,8 +264,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
-      <HackingEffect isActive={isHacked} onComplete={() => setIsHacked(false)} />
-      
       {/* --- Header Area --- */}
       <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4">
         <div className="space-y-3">
@@ -319,8 +315,7 @@ export default function Home() {
           <div className="absolute top-0 inset-x-0 h-32 bg-gradient-to-b from-indigo-50/50 to-transparent pointer-events-none" />
           
           <div
-            onClick={() => setIsHacked(true)}
-            className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto cursor-pointer"
+            className="relative z-10 w-56 h-56 md:w-64 md:h-64 shadow-2xl shadow-indigo-100 rounded-full overflow-hidden border-[6px] border-white transition-transform duration-500 group-hover:scale-105 group-hover:rotate-2 mx-auto"
           >
             <Image
               src="/サーキュラー8bit.jpg"
