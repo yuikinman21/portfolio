@@ -221,7 +221,7 @@ export default function Home() {
     "/Home_OS_2.0.1_mobile_1.png",
     "/Home_OS_2.0.1_mobile_2.png",
     "/Home_OS_2.0.1_mobile_3.png",
-    "/Home_OS_2.0.2.png",
+    "/Home_OS_2.0_architecture.png",
   ];
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -585,6 +585,7 @@ export default function Home() {
               </h3>
               <p className="text-slate-500 text-sm mt-2 leading-relaxed">
                 自宅環境を統合管理するシステムの構築<br/>
+                Docker / MQTT 基盤 + Flutter ダッシュボード<br/>
                 クリックして詳細を見ることができます。<br/>
               </p>
             </div>
@@ -609,12 +610,14 @@ export default function Home() {
             <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
               <div className="flex flex-wrap gap-2">
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Traefik</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Tailscale</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">MQTT</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">InfluxDB</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Node-RED</span>
+                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
                 <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Flutter</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Dart</span>
               </div>
 
               <div className="w-10 h-10 rounded-full bg-white border border-cyan-200 flex items-center justify-center text-cyan-400 group-hover:text-cyan-600 group-hover:scale-110 transition-all shadow-sm">
@@ -888,9 +891,10 @@ export default function Home() {
                       </div>
                       <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
                       <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        フロントエンドを<b>Flutter</b>で完全再構築。<br/><br/>
-                        これにより、従来の<b>Grafana</b>による「表示」から、ダッシュボード上での「操作」へと進化。<br/>
-                        操作性豊かなUIへの変更により、さらに直感的に分かりやすく理解できるようになった。<br/>
+                        フロントエンドを<b>Flutter</b>で完全再構築し、<b>Grafana</b>による「表示」から
+                        ダッシュボード上での「操作」へ進化。<br/>
+                        基盤側も<b>Traefik</b>でサービスをサブドメイン分離し、<b>Tailscale</b>により
+                        外部公開せず自宅外からアクセスできる構成に再設計している。
                       </p>
                     </div>
                     <div>
@@ -898,7 +902,11 @@ export default function Home() {
                       <div className="flex flex-wrap gap-2">
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Flutter</TechTag>
                         <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Dart</TechTag>
-                        
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Traefik</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Tailscale</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">NGINX</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">MQTT</TechTag>
+                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">InfluxDB</TechTag>
                       </div>
                     </div>
                   </motion.div>

@@ -19,7 +19,7 @@ Next.js (App Router) の単一ページ構成で、Bento Grid 上に9枚のカ�
 | 02 | 3D WORKS | React Three Fiber による視線追従3Dモデル |
 | 03 | TIMELINE | 学歴・資格・研究の時系列（スクロール／展開式） |
 | 04 | TECH STACK & FOCUS | 18種の技術スタックと習熟度、現在の注力分野 |
-| 05 | Home LAB | Home OS 2.0 — 自宅環境の統合管理システム（モーダル） |
+| 05 | Home LAB | Home OS 2.0 — 自宅環境の統合管理システム（構成図・v1/v2 切替モーダル） |
 | 06 | PROJECT | 白鷺祭用語集 — 実行委員向け用語まとめサイト（モーダル） |
 | 07 | PRE-RESEARCH | IoTマルウェアの通信分析（モーダル） |
 | 08 | REPOSITORY | GitHub プロフィールと Contributions グラフ |
@@ -50,6 +50,23 @@ R3F の `state.pointer` はマウント時点の親要素矩形に依存する�
 4秒ごとに選択スキルが自動で切り替わり、ユーザーが操作した場合は 10 秒間自動巡回を停止します
 (`lastInteraction`)。カード下部のロゴ列は `globals.css` の `scroll-left` / `scroll-right`
 アニメーションによる無限マーキーで、ホバー中は `animation-play-state: paused` で停止します。
+
+### Home LAB モーダルの v1/v2 切替
+
+`homeOsTab` で v1.0 / v2.0 を切り替え、スライダーの画像配列 (`homeOsImagesV1` / `homeOsImagesV2`) と
+右ペインの本文を同時に差し替えます。トグルの背景は `layoutId="homeOsTabBg"` を共有した
+`motion.div` で、タブ間をスプリングで移動します。モーダルを閉じると v2.0 とインデックス 0 に復帰します。
+
+v2.0 のスライダー最終ページにはシステム構成図 (`Home_OS_2.0_architecture.png`) を配置し、
+右ペインの **v2.0 Architecture** / **External API** と対応させています。構成の要点は以下の通りです。
+
+| レイヤ | 構成 |
+|---|---|
+| Client & Network | Cloudflare (DNS Only) → Tailscale VPN → Traefik (SSL終端 / サブドメイン振り分け) |
+| Web UI | Flutter Web を静的ビルドし NGINX で配信 (`home-os`)、Grafana (`grafana`) |
+| API & DB | Node-RED (`node-red`) / Telegraf → InfluxDB (`influxdb`)、Mosquitto で Pub/Sub |
+| Bridge | `switchbot-bridge` / `irobot-bridge` / `github-sync` を Python コンテナで個別実装 |
+| Host | WSL2 (Ubuntu) 上の Docker、今後 Raspberry Pi へ移行予定 |
 
 ## 技術スタック
 
@@ -120,6 +137,7 @@ npm run dev
 ├── public/
 │   ├── EXPO2025_eye.glb         # 3Dモデル（視線追従対象）
 │   ├── Home_OS_2.0.1*.png       # Home OS ダッシュボード（PC / モバイル）
+│   ├── Home_OS_2.0_architecture.png  # Home OS v2.0 システム構成図
 │   ├── shirasagi-sai*.png       # 白鷺祭用語集スクリーンショット
 │   ├── ogp.png                  # OGP 画像 (1200x630)
 │   └── サーキュラー8bit.jpg     # プロフィールアイコン
