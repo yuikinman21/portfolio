@@ -125,13 +125,29 @@ npm run dev
 ```text
 .
 ├── app/
+│   ├── content/
+│   │   ├── works.ts             # 作品のメタデータ定義（作品追加はここに1エントリ）
+│   │   └── accents.ts           # アクセントカラーのクラス名テーブル
+│   ├── hooks/
+│   │   └── useImageSlider.ts    # モーダル内スライダーの共通ロジック
 │   ├── components/
+│   │   ├── works/
+│   │   │   ├── index.ts         # slug → 詳細コンポーネント（slot）の対応表
+│   │   │   ├── WorkCard.tsx     # メタデータ駆動の作品カード（3バリアント）
+│   │   │   ├── WorkModalLayout.tsx  # モーダルの2ペイン骨格
+│   │   │   ├── ImageSlider.tsx  # 画像スライダー
+│   │   │   ├── VersionTabs.tsx  # v1.0 / v2.0 トグル
+│   │   │   ├── CanvaEmbed.tsx   # Canva 埋め込み + 外部リンク
+│   │   │   └── *Detail.tsx      # 作品ごとの固有UI（slot の実体）
+│   │   ├── AnimatedBentoCard.tsx  # スポットライト付きカード
+│   │   ├── ContributionGraph.tsx  # GitHub Contributions グラフ
+│   │   ├── Label.tsx / TechTag.tsx
 │   │   ├── Modal.tsx            # 共通モーダル（スクロールロック / 100dvh 対応）
 │   │   └── ModelViewer.tsx      # 3Dモデル表示と視線追従ロジック
 │   ├── globals.css              # Tailwind テーマ / マーキー / カスタムスクロールバー
 │   ├── layout.tsx               # ルートレイアウト・メタデータ (OGP, Twitter Card)
 │   ├── not-found.tsx            # 404 ページ
-│   ├── page.tsx                 # メインページ（Bento Grid・全カード・モーダル）
+│   ├── page.tsx                 # メインページ（Bento Grid の配置とモーダルの開閉）
 │   ├── robots.ts                # robots.txt 生成
 │   └── sitemap.ts               # sitemap.xml 生成
 ├── public/
@@ -145,8 +161,22 @@ npm run dev
 └── vercel.json                  # installCommand (--legacy-peer-deps)
 ```
 
-`page.tsx` に UI コンポーネント（`AnimatedBentoCard` / `Label` / `SocialButton` /
-`ExpandableTimelineItem` / `TechTag` / `ContactButton`）を同居させています。
+`page.tsx` にはページ固有の UI（`ScrambleText` / `SocialButton` /
+`ExpandableTimelineItem` / `ContactButton`）のみを残し、再利用するものは `components/` に切り出しています。
+
+### 作品（Works）の追加方法
+
+作品ごとに表現が異なる（v1/v2 タブ・Canva 埋め込み・画像スライダー）ため、
+**共通なのはメタデータだけ**という前提で分離しています。
+
+1. `app/content/works.ts` に 1 エントリ追加（タイトル・期間・ステータス・タグ・カード画像・カードの `variant`）
+2. `app/components/works/` に詳細コンポーネントを 1 つ作成（固有UIはここに閉じ込める）
+3. `app/components/works/index.ts` の対応表に 1 行登録
+4. `page.tsx` に `<WorkCard work={works[n]} ... />` を 1 行足す（Bento のマス割りだけ指定）
+
+カードの `variant` は `feature`（大きな画像が主役） / `split`（左テキスト・右画像） /
+`text`（画像なし）の 3 種類。配色は `accent`（cyan / pink / purple）で切り替わります。
+`categories` はフィルタ UI 用に定義だけ先に持っていますが、UI は未実装です。
 
 ## SEO / セキュリティ
 
