@@ -16,12 +16,14 @@ const activeBg: Record<WorkAccent, string> = {
   cyan: 'bg-cyan-600',
   pink: 'bg-pink-500',
   purple: 'bg-purple-500',
+  indigo: 'bg-indigo-500',
 };
 
 const activeText: Record<WorkAccent, string> = {
   cyan: 'text-cyan-800',
   pink: 'text-slate-700',
   purple: 'text-slate-700',
+  indigo: 'text-slate-700',
 };
 
 /**

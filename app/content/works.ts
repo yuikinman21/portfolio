@@ -11,7 +11,7 @@
  */
 
 /** カードとモーダルの配色テーマ。Tailwind の purge 対策でクラス名は静的に持つ。 */
-export type WorkAccent = 'cyan' | 'pink' | 'purple';
+export type WorkAccent = 'cyan' | 'pink' | 'purple' | 'indigo';
 
 /** カードのレイアウト種別。作品ごとに情報量が違うため 3 種類を用意している。 */
 export type WorkCardVariant =
@@ -46,6 +46,13 @@ export type Work = {
   period: string;
   /** 分類タグ。フィルタ UI は作品が増えるまで作らないが、定義だけ先に持つ。 */
   categories: string[];
+  /**
+   * トップに常時表示する代表作かどうか。
+   * false（未指定）の作品は「もっと見る」を押したときに展開される。
+   */
+  featured?: boolean;
+  /** Bento Grid でのマス割り。page.tsx を触らずに作品を追加できるようここに持つ。 */
+  span: string;
 };
 
 export const works: Work[] = [
@@ -71,6 +78,8 @@ export const works: Work[] = [
     cardTags: ['Docker', 'Traefik', 'Tailscale', 'MQTT', 'InfluxDB', 'Grafana', 'Node-RED', 'Python', 'Flutter'],
     period: '2025.11-Current',
     categories: ['IoT', 'Infrastructure'],
+    featured: true,
+    span: 'md:col-span-6 lg:col-span-2 lg:row-span-2',
   },
   {
     slug: 'shirasagisai',
@@ -93,6 +102,8 @@ export const works: Work[] = [
     cardTags: ['Next.js', 'Vercel'],
     period: '2025.11-Current',
     categories: ['Web'],
+    featured: true,
+    span: 'md:col-span-3 lg:col-span-2',
   },
   {
     slug: 'iot',
@@ -109,6 +120,33 @@ export const works: Work[] = [
     cardTags: ['Python', 'Network Security', 'Machine Learning', 'Packet Analysis'],
     period: '2025.09-2026.01',
     categories: ['Research', 'Security'],
+    featured: true,
+    span: 'md:col-span-3 lg:col-span-2',
+  },
+  {
+    slug: 'findsagisai',
+    label: '09. PROJECT',
+    accent: 'indigo',
+    variant: 'split',
+    status: { text: 'NOW BUILDING', pulse: 'badge' },
+    title: '迷子・落とし物サイト',
+    modalTitle: '迷子・落とし物サイト',
+    summary: [
+      '大学祭の迷子・落とし物をWeb上で検索できるサービス',
+      '立て看板を削減し、掲示物の経費を圧縮',
+      'クリックして詳細を見ることができます。',
+    ],
+    cardImage: {
+      src: '/find-sagisai.png',
+      alt: '迷子・落とし物サイト',
+      fit: 'cover',
+      bg: 'bg-indigo-50',
+    },
+    cardTags: ['Next.js', 'Cloudflare Workers', 'Cloudflare D1', 'Cloudflare R2'],
+    period: '2026.08-Current',
+    categories: ['Web'],
+    // featured は付けない → 「もっと見る」で展開される
+    span: 'md:col-span-6 lg:col-span-4',
   },
 ];
 
@@ -125,6 +163,9 @@ export const workImages: Record<string, Record<string, string[]>> = {
       '/Home_OS_2.0_architecture.png',
     ],
   },
+  findsagisai: {
+    v1: ['/find-sagisai.png'],
+  },
   shirasagisai: {
     v2: [
       '/shirasagi-sai_1.png',
@@ -134,3 +175,9 @@ export const workImages: Record<string, Record<string, string[]>> = {
     ],
   },
 };
+
+/** トップに常時表示する代表作 */
+export const featuredWorks = works.filter((w) => w.featured);
+
+/** 「もっと見る」で展開される作品 */
+export const moreWorks = works.filter((w) => !w.featured);

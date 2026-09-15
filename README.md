@@ -21,6 +21,7 @@ Next.js (App Router) の単一ページ構成で、Bento Grid 上に9枚のカ�
 | 04 | TECH STACK & FOCUS | 18種の技術スタックと習熟度、現在の注力分野 |
 | 05 | Home LAB | Home OS 2.0 — 自宅環境の統合管理システム（構成図・v1/v2 切替モーダル） |
 | 06 | PROJECT | 白鷺祭用語集 — 実行委員向け用語まとめサイト（モーダル） |
+| 09 | PROJECT | 迷子・落とし物サイト — 大学祭の迷子・落とし物検索（「もっと見る」で展開） |
 | 07 | PRE-RESEARCH | IoTマルウェアの通信分析（モーダル） |
 | 08 | REPOSITORY | GitHub プロフィールと Contributions グラフ |
 
@@ -137,6 +138,7 @@ npm run dev
 │   │   │   ├── WorkModalLayout.tsx  # モーダルの2ペイン骨格
 │   │   │   ├── ImageSlider.tsx  # 画像スライダー
 │   │   │   ├── VersionTabs.tsx  # v1.0 / v2.0 トグル
+│   │   │   ├── ShowMoreCard.tsx # 「もっと見る」トグル
 │   │   │   ├── CanvaEmbed.tsx   # Canva 埋め込み + 外部リンク
 │   │   │   └── *Detail.tsx      # 作品ごとの固有UI（slot の実体）
 │   │   ├── AnimatedBentoCard.tsx  # スポットライト付きカード
@@ -154,6 +156,7 @@ npm run dev
 │   ├── EXPO2025_eye.glb         # 3Dモデル（視線追従対象）
 │   ├── Home_OS_2.0.1*.png       # Home OS ダッシュボード（PC / モバイル）
 │   ├── Home_OS_2.0_architecture.png  # Home OS v2.0 システム構成図
+│   ├── find-sagisai.png         # 迷子・落とし物サイト スクリーンショット
 │   ├── shirasagi-sai*.png       # 白鷺祭用語集スクリーンショット
 │   ├── ogp.png                  # OGP 画像 (1200x630)
 │   └── サーキュラー8bit.jpg     # プロフィールアイコン
@@ -169,14 +172,28 @@ npm run dev
 作品ごとに表現が異なる（v1/v2 タブ・Canva 埋め込み・画像スライダー）ため、
 **共通なのはメタデータだけ**という前提で分離しています。
 
-1. `app/content/works.ts` に 1 エントリ追加（タイトル・期間・ステータス・タグ・カード画像・カードの `variant`）
+1. `app/content/works.ts` に 1 エントリ追加（タイトル・期間・ステータス・タグ・カード画像・`variant`・`span`）
 2. `app/components/works/` に詳細コンポーネントを 1 つ作成（固有UIはここに閉じ込める）
 3. `app/components/works/index.ts` の対応表に 1 行登録
-4. `page.tsx` に `<WorkCard work={works[n]} ... />` を 1 行足す（Bento のマス割りだけ指定）
+
+**`page.tsx` の編集は不要です。** カードは `works.ts` の内容から自動で並びます。
 
 カードの `variant` は `feature`（大きな画像が主役） / `split`（左テキスト・右画像） /
-`text`（画像なし）の 3 種類。配色は `accent`（cyan / pink / purple）で切り替わります。
+`text`（画像なし）の 3 種類。配色は `accent`（cyan / pink / purple）、
+Bento のマス割りは `span` で指定します。配色は cyan / pink / purple / indigo の 4 色。
 `categories` はフィルタ UI 用に定義だけ先に持っていますが、UI は未実装です。
+
+### 「もっと見る」による展開
+
+トップに常時表示するのは `featured: true` の作品だけで、残りは作品グリッドの下にある
+トグルを押すと**同じ画面に展開**されます（別ページに遷移しないため、スクロール位置も
+ブラウザの戻る操作も壊れません）。`featured` を省略した作品は展開側に入るので、
+新しく追加した作品はまず展開側に置かれ、代表作として出すときに `featured: true` を付けます。
+
+展開する作品が 0 件のときはトグル自体を描画しません。トグルは Bento の最小行高
+(180px) を受けないよう、グリッドの外に置いて細いバーにしています。
+展開・収納は Framer Motion の `layout` / `AnimatePresence` で、周囲のカードが
+押し下げられる動きも含めて補間されます。
 
 ## SEO / セキュリティ
 

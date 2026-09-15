@@ -5,7 +5,7 @@ import type { WorkAccent } from './works';
  * Tailwind は文字列連結したクラスを検出できないため、完全な形で静的に列挙する。
  */
 export const accentStyles: Record<WorkAccent, {
-  label: 'cyan' | 'pink' | 'purple';
+  label: 'cyan' | 'pink' | 'purple' | 'indigo';
   card: string;
   titleHover: string;
   statusBadge: string;
@@ -39,6 +39,18 @@ export const accentStyles: Record<WorkAccent, {
     arrowButton: 'text-pink-400 border-pink-200 group-hover:text-pink-600',
     sliderDot: 'bg-pink-500',
     techTag: 'bg-pink-100 text-pink-600 border-pink-200',
+  },
+  indigo: {
+    label: 'indigo',
+    card: 'hover:border-indigo-300 bg-gradient-to-br from-indigo-50/50 to-white',
+    titleHover: 'group-hover:text-indigo-600',
+    statusBadge: 'bg-indigo-100 text-indigo-600',
+    statusDot: 'bg-indigo-500',
+    divider: 'border-indigo-100/50',
+    cardTag: 'border-indigo-100 text-indigo-500 font-mono',
+    arrowButton: 'text-indigo-400 border-indigo-200 group-hover:text-indigo-600',
+    sliderDot: 'bg-indigo-500',
+    techTag: 'bg-indigo-100 text-indigo-600 border-indigo-200',
   },
   purple: {
     label: 'purple',

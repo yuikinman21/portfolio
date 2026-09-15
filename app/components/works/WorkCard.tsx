@@ -9,9 +9,11 @@ import { accentStyles } from '@/app/content/accents';
 type Props = {
   work: Work;
   onOpen: (slug: string) => void;
-  /** Bento のマス割りは呼び出し側（page.tsx）が決める */
+  /** マス割りは work.span を使う。上書きしたい場合のみ指定する。 */
   className?: string;
   delay?: number;
+  /** 「もっと見る」で後から現れるカードは layout アニメーションの対象にする */
+  animateLayout?: boolean;
 };
 
 const ExpandIcon = () => (
@@ -22,7 +24,7 @@ const ExpandIcon = () => (
  * 作品カード。メタデータ（Work）から描画し、情報量の差は `variant` で吸収する。
  * 作品が増えてもこのコンポーネントは変更せず、works.ts にエントリを足すだけでよい。
  */
-export default function WorkCard({ work, onOpen, className = '', delay = 0 }: Props) {
+export default function WorkCard({ work, onOpen, className, delay = 0, animateLayout = false }: Props) {
   const s = accentStyles[work.accent];
   const badgePulse = work.status.pulse === 'badge' ? ' animate-pulse' : '';
   const dotPulse = work.status.pulse === 'dot' ? ' animate-pulse' : '';
@@ -78,9 +80,10 @@ export default function WorkCard({ work, onOpen, className = '', delay = 0 }: Pr
     <>
       <div className="space-y-3 pointer-events-none">
         {header}
-        <div className="flex flex-col md:flex-row md:items-start md:gap-5">
+        <div className="flex flex-col md:flex-row md:items-center md:gap-5">
           <div className="md:flex-1 md:min-w-0">{heading}</div>
-          <div className="w-full md:w-1/2 md:shrink-0 mt-4 md:mt-0">{thumbnail}</div>
+          {/* 横長カードでは画像が支配的にならないよう、幅広時は少し絞る */}
+          <div className="w-full md:w-1/2 lg:w-[42%] md:shrink-0 mt-4 md:mt-0">{thumbnail}</div>
         </div>
       </div>
       <div className="mt-6 md:mt-2 relative z-10 pointer-events-none">{footer}</div>
@@ -107,7 +110,9 @@ export default function WorkCard({ work, onOpen, className = '', delay = 0 }: Pr
   return (
     <AnimatedBentoCard
       delay={delay}
-      className={`p-8 flex flex-col justify-between group ${s.card} transition-colors cursor-pointer ${className}`}
+      layout={animateLayout}
+      exit={animateLayout ? { opacity: 0, y: -12, scale: 0.97 } : undefined}
+      className={`p-8 flex flex-col justify-between group ${s.card} transition-colors cursor-pointer ${className ?? work.span}`}
       onClick={() => onOpen(work.slug)}
     >
       {body}

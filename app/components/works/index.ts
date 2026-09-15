@@ -2,6 +2,7 @@ import type { ComponentType } from 'react';
 import HomeOsDetail from './HomeOsDetail';
 import ShirasagiDetail from './ShirasagiDetail';
 import IotDetail from './IotDetail';
+import FindSagisaiDetail from './FindSagisaiDetail';
 
 /**
  * slug → 詳細コンポーネント（slot）の対応表。
@@ -12,4 +13,5 @@ export const workDetails: Record<string, ComponentType> = {
   homeos: HomeOsDetail,
   shirasagisai: ShirasagiDetail,
   iot: IotDetail,
+  findsagisai: FindSagisaiDetail,
 };

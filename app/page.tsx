@@ -12,7 +12,8 @@ import AnimatedBentoCard from './components/AnimatedBentoCard';
 import Label from './components/Label';
 import TechTag from './components/TechTag';
 import WorkCard from './components/works/WorkCard';
-import { works } from './content/works';
+import ShowMoreCard from './components/works/ShowMoreCard';
+import { works, featuredWorks, moreWorks } from './content/works';
 import { workDetails } from './components/works';
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, } from 'react-icons/si';
@@ -153,6 +154,21 @@ export default function Home() {
   // 作品モーダルの開閉のみを page が持つ。スライダー・タブの状態は
   // 各詳細コンポーネント（app/components/works/）が自分で持ち、モーダルを閉じると
   // アンマウントされて初期状態に戻る。
+
+  // 「もっと見る」の展開状態。別ページへ遷移せず同じ画面で開くため、
+  // スクロール位置もブラウザの戻る操作も壊れない。
+  const [worksExpanded, setWorksExpanded] = useState(false);
+
+  const toggleWorks = () => {
+    const willCollapse = worksExpanded;
+    setWorksExpanded((prev) => !prev);
+    // 閉じたときにページ下部へ取り残されないよう、トグル自体を画面内に戻す
+    if (willCollapse) {
+      requestAnimationFrame(() => {
+        document.getElementById('works-toggle')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
@@ -457,11 +473,31 @@ export default function Home() {
           
         </AnimatedBentoCard>
 
-        {/* 作品カード: works.ts のメタデータから描画する。追加は works.ts への 1 エントリで完結。 */}
-        <WorkCard work={works[0]} onOpen={setSelectedProject} delay={0.6} className="md:col-span-6 lg:col-span-2 lg:row-span-2" />
-        <WorkCard work={works[1]} onOpen={setSelectedProject} delay={0.7} className="md:col-span-3 lg:col-span-2" />
-        <WorkCard work={works[2]} onOpen={setSelectedProject} delay={0.8} className="md:col-span-3 lg:col-span-2" />
+        {/* 作品カード: works.ts のメタデータから描画する。追加は works.ts への 1 エントリで完結。
+            featured の作品を常時表示し、残りは「もっと見る」で同じ画面に展開する。 */}
+        {featuredWorks.map((work, i) => (
+          <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={0.6 + i * 0.1} animateLayout />
+        ))}
 
+        <AnimatePresence initial={false}>
+          {worksExpanded && moreWorks.map((work, i) => (
+            <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={i * 0.06} animateLayout />
+          ))}
+        </AnimatePresence>
+
+      </main>
+
+      {/* 「もっと見る」トグル。Bento の最小行高(180px)を受けないよう、グリッドの外に置く。 */}
+      {moreWorks.length > 0 && (
+        <ShowMoreCard
+          expanded={worksExpanded}
+          hiddenCount={moreWorks.length}
+          onToggle={toggleWorks}
+          className="w-full"
+        />
+      )}
+
+      <main className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         {/* 8. GitHub Link */}
         <AnimatedBentoCard delay={0.9} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-6 md:p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
 

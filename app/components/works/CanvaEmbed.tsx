@@ -4,6 +4,7 @@ const linkHover: Record<WorkAccent, string> = {
   cyan: 'hover:text-cyan-600 hover:border-cyan-200',
   pink: 'hover:text-pink-600 hover:border-pink-200',
   purple: 'hover:text-purple-600 hover:border-purple-200',
+  indigo: 'hover:text-indigo-600 hover:border-indigo-200',
 };
 
 /** Canva スライドの埋め込みと「別のタブで開く」リンク。白鷺祭 v1 と IoT 研究で共用。 */
