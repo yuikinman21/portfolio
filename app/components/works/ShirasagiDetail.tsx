@@ -130,7 +130,7 @@ export default function ShirasagiDetail() {
                   </div>
                   <div className="mt-auto pt-2">
                     <a
-                      href="https://albus-glossary-demo.vercel.app/"
+                      href="https://glossary.albus-tech.org"
                       target="_blank"
                       rel="noreferrer"
                       className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
