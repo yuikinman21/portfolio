@@ -42,6 +42,8 @@ export type Work = {
   cardImage?: { src: string; alt: string; fit: 'contain' | 'cover'; bg: string };
   /** カード下部に出す技術スタック */
   cardTags: string[];
+  /** チーム開発の場合のチーム名。指定するとカード・モーダルにバッジが出る。 */
+  team?: string;
   /** 期間（モーダル側の表示は詳細コンポーネントが持つ。一覧・並び替え用） */
   period: string;
   /** 分類タグ。フィルタ UI は作品が増えるまで作らないが、定義だけ先に持つ。 */
@@ -100,6 +102,7 @@ export const works: Work[] = [
       bg: 'bg-pink-50',
     },
     cardTags: ['Next.js', 'Vercel'],
+    team: 'Albus',
     period: '2025.11-Current',
     categories: ['Web'],
     featured: true,
@@ -143,6 +146,7 @@ export const works: Work[] = [
       bg: 'bg-indigo-50',
     },
     cardTags: ['Next.js', 'Cloudflare Workers', 'Cloudflare D1', 'Cloudflare R2'],
+    team: 'Albus',
     period: '2026.08-Current',
     categories: ['Web'],
     // featured は付けない → 「もっと見る」で展開される

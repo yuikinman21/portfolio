@@ -6,6 +6,7 @@ import TechTag from '../TechTag';
 import CanvaEmbed from './CanvaEmbed';
 import ImageSlider from './ImageSlider';
 import VersionTabs from './VersionTabs';
+import TeamBadge from './TeamBadge';
 import WorkModalLayout from './WorkModalLayout';
 import { useImageSlider } from '@/app/hooks/useImageSlider';
 import { workImages } from '@/app/content/works';
@@ -77,9 +78,10 @@ export default function ShirasagiDetail() {
                   className="flex flex-col gap-6"
                 >
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">INITIAL RELEASE</span>
                       <span className="text-slate-400 text-xs font-mono">2025.11</span>
+                      <TeamBadge name="Albus" />
                     </div>
                     <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
                       白鷺祭用語集 <span className="text-lg font-bold text-slate-400">v1.0</span>
@@ -92,7 +94,6 @@ export default function ShirasagiDetail() {
                   <div>
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
                     <p className="text-sm text-slate-800 font-medium">リードエンジニア / UIデザイン</p>
-                    <p className="text-xs text-slate-500 mt-1">要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。</p>
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
@@ -108,9 +109,10 @@ export default function ShirasagiDetail() {
                   className="flex flex-col gap-6"
                 >
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
                       <span className="text-slate-400 text-xs font-mono">2026.04-Current</span>
+                      <TeamBadge name="Albus" />
                     </div>
                     <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
                       白鷺祭用語集 <span className="text-lg font-bold text-pink-400">v2.0</span>

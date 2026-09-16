@@ -2,6 +2,7 @@
 
 import TechTag from '../TechTag';
 import ImageSlider from './ImageSlider';
+import TeamBadge from './TeamBadge';
 import WorkModalLayout from './WorkModalLayout';
 import { useImageSlider } from '@/app/hooks/useImageSlider';
 import { workImages } from '@/app/content/works';
@@ -33,17 +34,17 @@ export default function FindSagisaiDetail() {
       info={
         <div className="flex flex-col gap-6">
           <div>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex flex-wrap items-center gap-2 mb-2">
               <span className="text-[10px] font-bold bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">NOW BUILDING</span>
               <span className="text-slate-400 text-xs font-mono">2026.08-Current</span>
+              <TeamBadge name="Albus" />
             </div>
             <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600 tracking-tight leading-tight">
               迷子・落とし物サイト
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed mt-4">
               大学祭の<b>迷子・落とし物情報</b>を、来場者がその場で検索できるサービス。<br/>
-              品名・色・場所から検索でき、保護中の人数と引き渡し場所も常時掲示する。<br/>
-              Albus で開発中。
+              品名・色・場所から検索でき、迷子情報も常時掲示する。本祭典で運用する際に1万人以上のアクセスに耐えるように設計。<br/>
             </p>
           </div>
 

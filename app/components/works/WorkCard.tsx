@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import AnimatedBentoCard from '../AnimatedBentoCard';
 import Label from '../Label';
+import TeamBadge from './TeamBadge';
 import type { Work } from '@/app/content/works';
 import { accentStyles } from '@/app/content/accents';
 
@@ -30,12 +31,16 @@ export default function WorkCard({ work, onOpen, className, delay = 0, animateLa
   const dotPulse = work.status.pulse === 'dot' ? ' animate-pulse' : '';
 
   const header = (
-    <div className="flex items-center justify-between">
+    <div className="flex items-start justify-between gap-2">
       <Label text={work.label} color={s.label} />
-      <span className={`inline-flex items-center gap-1.5 ${s.statusBadge} px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide${badgePulse}`}>
-        <span className={`w-1.5 h-1.5 rounded-full ${s.statusDot}${dotPulse}`} />
-        {work.status.text}
-      </span>
+      {/* 狭い幅ではバッジが折り返せるようにしておく */}
+      <div className="flex flex-wrap items-center justify-end gap-1.5">
+        {work.team && <TeamBadge name={work.team} />}
+        <span className={`inline-flex items-center gap-1.5 ${s.statusBadge} px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide whitespace-nowrap${badgePulse}`}>
+          <span className={`w-1.5 h-1.5 rounded-full ${s.statusDot}${dotPulse}`} />
+          {work.status.text}
+        </span>
+      </div>
     </div>
   );
 
