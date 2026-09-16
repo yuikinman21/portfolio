@@ -32,7 +32,8 @@ export default function WorkCard({ work, onOpen, className, delay = 0, animateLa
 
   const header = (
     <div className="flex items-start justify-between gap-2">
-      <Label text={work.label} color={s.label} />
+      {/* 番号は常時表示のカードだけに付ける。展開側に番号を振ると収納時に欠番が見えるため。 */}
+      <Label text={work.featured && work.number ? `${work.number}. ${work.label}` : work.label} color={s.label} />
       {/* 狭い幅ではバッジが折り返せるようにしておく */}
       <div className="flex flex-wrap items-center justify-end gap-1.5">
         {work.team && <TeamBadge name={work.team} />}

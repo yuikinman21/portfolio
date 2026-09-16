@@ -21,7 +21,7 @@ Next.js (App Router) の単一ページ構成で、Bento Grid 上に9枚のカ�
 | 04 | TECH STACK & FOCUS | 18種の技術スタックと習熟度、現在の注力分野 |
 | 05 | Home LAB | Home OS 2.0 — 自宅環境の統合管理システム（構成図・v1/v2 切替モーダル） |
 | 06 | PROJECT | 白鷺祭用語集 — 実行委員向け用語まとめサイト（モーダル） |
-| 09 | PROJECT | 迷子・落とし物サイト — 大学祭の迷子・落とし物検索（「もっと見る」で展開） |
+| — | PROJECT | 迷子・落とし物サイト — 大学祭の迷子・落とし物検索（「もっと見る」で展開） |
 | 07 | PRE-RESEARCH | IoTマルウェアの通信分析（モーダル） |
 | 08 | REPOSITORY | GitHub プロフィールと Contributions グラフ |
 
@@ -182,6 +182,10 @@ npm run dev
 `text`（画像なし）の 3 種類。配色は `accent`（cyan / pink / purple）、
 Bento のマス割りは `span` で指定します。配色は cyan / pink / purple / indigo の 4 色。
 `categories` はフィルタ UI 用に定義だけ先に持っていますが、UI は未実装です。
+
+カード左上の通し番号は `number` に持たせますが、**表示されるのは `featured: true` の作品だけ**です。
+「もっと見る」で展開される作品に番号を振ると、収納時に欠番が見えてしまうため、
+`featured` でない作品では `number` を指定しても無視されます。
 
 ### 「もっと見る」による展開
 

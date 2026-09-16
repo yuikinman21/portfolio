@@ -27,8 +27,17 @@ export type WorkStatus = {
 
 export type Work = {
   slug: string;
-  /** Bento カード左上のラベル（例: "05. Home LAB"） */
+  /**
+   * Bento カード左上のラベル（例: "Home LAB"）。番号は含めない。
+   * 通し番号は featured の作品にだけ `number` から自動で付く。
+   */
   label: string;
+  /**
+   * 常時表示するカードの通し番号（例: "05"）。
+   * 「もっと見る」で展開される作品には振らない。収納時に番号が欠番になるのを避け、
+   * 01-08 の連番を常に保つため。featured でない作品では指定しても無視される。
+   */
+  number?: string;
   accent: WorkAccent;
   variant: WorkCardVariant;
   status: WorkStatus;
@@ -60,7 +69,8 @@ export type Work = {
 export const works: Work[] = [
   {
     slug: 'homeos',
-    label: '05. Home LAB',
+    label: 'Home LAB',
+    number: '05',
     accent: 'cyan',
     variant: 'feature',
     status: { text: 'NOW STUDYING', pulse: 'dot' },
@@ -85,7 +95,8 @@ export const works: Work[] = [
   },
   {
     slug: 'shirasagisai',
-    label: '06. PROJECT',
+    label: 'PROJECT',
+    number: '06',
     accent: 'pink',
     variant: 'split',
     status: { text: 'NOW BUILDING', pulse: 'badge' },
@@ -110,7 +121,8 @@ export const works: Work[] = [
   },
   {
     slug: 'iot',
-    label: '07. PRE-RESEARCH',
+    label: 'PRE-RESEARCH',
+    number: '07',
     accent: 'purple',
     variant: 'text',
     status: { text: 'NOW RESEARCHING', pulse: 'none' },
@@ -128,7 +140,7 @@ export const works: Work[] = [
   },
   {
     slug: 'findsagisai',
-    label: '09. PROJECT',
+    label: 'PROJECT',
     accent: 'indigo',
     variant: 'split',
     status: { text: 'NOW BUILDING', pulse: 'badge' },
