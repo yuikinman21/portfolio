@@ -8,8 +8,8 @@ import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'fram
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import ContributionGraph from './components/ContributionGraph';
-import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, } from 'react-icons/si';
+import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
 type SkillType = {
@@ -299,11 +299,12 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="flex gap-3"
+          className="flex items-center gap-2"
         >
-          <SocialButton href="https://github.com/yuikinman21" label="GitHub" />
-          <SocialButton href="https://qiita.com/yuikinman21" label="Qiita" />
-          <SocialButton href="https://note.com/yuikinman21" label="Note" />
+          <SocialButton href="https://github.com/yuikinman21" label="GitHub" icon={<FaGithub />} />
+          <SocialButton href="https://zenn.dev/yuikinman21" label="Zenn" icon={<SiZenn />} />
+          <SocialButton href="https://qiita.com/yuikinman21" label="Qiita" icon={<SiQiita />} />
+          <SocialButton href="https://note.com/yuikinman21" label="Note" icon={<SiNote />} />
           <ContactButton user="yuikinman21" domain="gmail.com" label="Contact" />
         </motion.div>
       </header>
@@ -1207,15 +1208,17 @@ function Label({ text, color }: { text: string; color: "purple" | "blue" | "cyan
   );
 }
 
-function SocialButton({ href, label }: { href: string; label: string }) {
+function SocialButton({ href, label, icon }: { href: string; label: string; icon: ReactNode }) {
   return (
     <a 
       href={href} 
       target="_blank" 
       rel="noopener noreferrer"
-      className="px-5 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow active:scale-95"
+      aria-label={label}
+      title={label}
+      className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-200 text-slate-600 text-lg hover:text-slate-900 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow active:scale-95"
     >
-      {label}
+      {icon}
     </a>
   );
 }
@@ -1335,8 +1338,9 @@ function ContactButton({ user, domain, label }: { user: string; domain: string; 
   return (
     <button 
       onClick={() => { window.location.href = `mailto:${user}@${domain}`; }}
-      className="px-5 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow active:scale-95"
+      className="ml-1 h-10 px-5 flex items-center gap-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-indigo-600 transition-all shadow-sm hover:shadow active:scale-95"
     >
+      <FaEnvelope />
       {label}
     </button>
   );
