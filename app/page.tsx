@@ -225,7 +225,9 @@ export default function Home() {
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
       {/* --- Header Area --- */}
-      <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4">
+      {/* 横並びは lg から。md(768-1023px) では左のテキスト(max-w-lg)と
+          右のボタン列(313px)が収まらず、Contact が画面外へはみ出していた。 */}
+      <header className="flex flex-col lg:flex-row justify-between items-end gap-6 py-4">
         <div className="space-y-3">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -258,7 +260,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="flex items-center gap-2"
+          className="flex flex-wrap items-center justify-end gap-2"
         >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" icon={<FaGithub />} />
           <SocialButton href="https://zenn.dev/yuikinman21" label="Zenn" icon={<SiZenn />} />
