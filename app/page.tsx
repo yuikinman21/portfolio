@@ -531,6 +531,7 @@ export default function Home() {
           expanded={worksExpanded}
           hiddenCount={moreWorks.length}
           onToggle={toggleWorks}
+          delay={0.85}
           className="w-full"
         />
       )}

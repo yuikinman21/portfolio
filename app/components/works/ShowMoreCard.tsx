@@ -8,6 +8,8 @@ type Props = {
   hiddenCount: number;
   onToggle: () => void;
   className?: string;
+  /** 他の Bento カードと同じく、スクロールで入ってきたときに現れる際の遅延(秒) */
+  delay?: number;
 };
 
 /**
@@ -18,9 +20,17 @@ type Props = {
  * 細い罫線の上にピルを置く「区切り線 + ボタン」の形にしている。
  * 隠れている作品が 0 件のときは page.tsx 側で描画しない。
  */
-export default function ShowMoreCard({ expanded, hiddenCount, onToggle, className = '' }: Props) {
+export default function ShowMoreCard({ expanded, hiddenCount, onToggle, className = '', delay = 0.85 }: Props) {
   return (
-    <motion.div className={`relative flex items-center justify-center py-1 ${className}`}>
+    // 登場は他の Bento カード（AnimatedBentoCard）と同じ条件・同じカーブに揃える。
+    // ホバー/タップはボタン側が持つため、親子で役割を分けている。
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
+      className={`relative flex items-center justify-center py-1 ${className}`}
+    >
       {/* 中央が濃く、両端に向かって消える罫線 */}
       <motion.span
         aria-hidden
