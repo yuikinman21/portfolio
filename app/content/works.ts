@@ -192,7 +192,11 @@ export const workImages: Record<string, Record<string, string[]>> = {
     ],
   },
   findsagisai: {
-    v1: ['/find-sagisai.png', '/find-sagisai-2.png'],
+    v1: [
+      '/find-sagisai.png',
+      '/find-sagisai-2.png',
+      '/find-sagisai-3.png',
+    ],
   },
   shirasagisai: {
     v2: [
