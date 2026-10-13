@@ -160,7 +160,7 @@ npm run dev
 │   ├── EXPO2025_eye.glb         # 3Dモデル（視線追従対象）
 │   ├── Home_OS_2.0.1*.png       # Home OS ダッシュボード（PC / モバイル）
 │   ├── Home_OS_2.0_architecture.png  # Home OS v2.0 システム構成図
-│   ├── find-sagisai.png         # 迷子・落とし物サイト スクリーンショット
+│   ├── find-sagisai-*.png       # 迷子・落とし物サイト スクリーンショット（3枚）
 │   ├── shirasagi-sai*.png       # 白鷺祭用語集スクリーンショット
 │   ├── ogp.png                  # OGP 画像 (1200x630)
 │   └── サーキュラー8bit.jpg     # プロフィールアイコン

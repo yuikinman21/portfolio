@@ -159,12 +159,13 @@ export const works: Work[] = [
     title: '迷子・落とし物サイト',
     modalTitle: '迷子・落とし物サイト',
     summary: [
-      '大学祭の迷子・落とし物をWeb上で検索できるサービス',
+      '来場者も委員も使える、大学祭の迷子・落とし物の検索サービス',
       '立て看板を削減し、掲示物の経費を圧縮',
+      '今年の大学祭で実際に運用予定',
       'クリックして詳細を見ることができます。',
     ],
     cardImage: {
-      src: '/find-sagisai.png',
+      src: '/find-sagisai-1.png',
       alt: '迷子・落とし物サイト',
       fit: 'cover',
       bg: 'bg-indigo-50',
@@ -193,7 +194,7 @@ export const workImages: Record<string, Record<string, string[]>> = {
   },
   findsagisai: {
     v1: [
-      '/find-sagisai.png',
+      '/find-sagisai-1.png',
       '/find-sagisai-2.png',
       '/find-sagisai-3.png',
     ],
