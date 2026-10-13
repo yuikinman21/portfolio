@@ -42,16 +42,19 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
                             className="bg-white w-full max-w-5xl max-h-[90vh] rounded-2xl shadow-2xl overflow-hidden flex flex-col pointer-events-auto"
                         >
                         
-                            <div className="flex items-center justify-between p-4 border-b border-slate-100 bg-white/50 sticky top-0 z-10">
-                                <h2 className="text-xl font-bold text-slate-800">{title}</h2>
+                            <div className="flex items-center justify-between gap-3 p-4 border-b border-slate-100 bg-white/50 sticky top-0 z-10">
+                                <h2 className="text-lg md:text-xl font-bold text-slate-800 leading-tight">{title}</h2>
                                 <button
                                     onClick={onClose}
-                                    className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors text-slate-500"
+                                    aria-label="閉じる"
+                                    className="shrink-0 p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors text-slate-500"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin='round' strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                 </button>
                             </div>
-                            <div className="p-6 overflow-y-auto">
+                            {/* 余白は中身（WorkModalLayout）側が持つ。ここで付けると
+                                モバイルで左右の padding が二重になり、本文幅が極端に狭くなる。 */}
+                            <div className="overflow-y-auto">
                                 {children}
                             </div>
                         </motion.div>

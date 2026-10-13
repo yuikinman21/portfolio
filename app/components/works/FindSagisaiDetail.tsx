@@ -40,7 +40,7 @@ export default function FindSagisaiDetail() {
               <span className="text-slate-400 text-xs font-mono">2026.08-Current</span>
               <TeamBadge name={ALBUS.name} href={ALBUS.url} />
             </div>
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600 tracking-tight leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600 tracking-tight leading-tight">
               迷子・落とし物サイト
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed mt-4">
