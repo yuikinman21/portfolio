@@ -10,6 +10,7 @@
 ## 概要
 
 Next.js (App Router) の単一ページ構成で、Bento Grid 上に9枚のカードを配置しています。
+作品が増えてもトップが肥大しないよう、代表作以外は「もっと見る」で展開します。
 プロジェクト詳細はモーダルで展開し、ページ遷移を伴わずに情報量を確保する構成です。
 
 | # | カード | 内容 |
@@ -19,9 +20,10 @@ Next.js (App Router) の単一ページ構成で、Bento Grid 上に9枚のカ�
 | 02 | 3D WORKS | React Three Fiber による視線追従3Dモデル |
 | 03 | TIMELINE | 学歴・資格・研究の時系列（スクロール／展開式） |
 | 04 | TECH STACK & FOCUS | 18種の技術スタックと習熟度、現在の注力分野 |
-| 05 | Home LAB | Home OS 2.0 — 自宅環境の統合管理システム（モーダル） |
+| 05 | Home LAB | Home OS 2.0 — 自宅環境の統合管理システム（構成図・v1/v2 切替モーダル） |
 | 06 | PROJECT | 白鷺祭用語集 — 実行委員向け用語まとめサイト（モーダル） |
 | 07 | PRE-RESEARCH | IoTマルウェアの通信分析（モーダル） |
+| — | PROJECT | 迷子・落とし物サイト — 大学祭の迷子・落とし物検索（「もっと見る」で展開） |
 | 08 | REPOSITORY | GitHub プロフィールと Contributions グラフ |
 
 ## 主な実装
@@ -50,6 +52,23 @@ R3F の `state.pointer` はマウント時点の親要素矩形に依存する�
 4秒ごとに選択スキルが自動で切り替わり、ユーザーが操作した場合は 10 秒間自動巡回を停止します
 (`lastInteraction`)。カード下部のロゴ列は `globals.css` の `scroll-left` / `scroll-right`
 アニメーションによる無限マーキーで、ホバー中は `animation-play-state: paused` で停止します。
+
+### Home LAB モーダルの v1/v2 切替
+
+`homeOsTab` で v1.0 / v2.0 を切り替え、スライダーの画像配列 (`homeOsImagesV1` / `homeOsImagesV2`) と
+右ペインの本文を同時に差し替えます。トグルの背景は `layoutId="homeOsTabBg"` を共有した
+`motion.div` で、タブ間をスプリングで移動します。モーダルを閉じると v2.0 とインデックス 0 に復帰します。
+
+v2.0 のスライダー最終ページにはシステム構成図 (`Home_OS_2.0_architecture.png`) を配置し、
+右ペインの **v2.0 Architecture** / **External API** と対応させています。構成の要点は以下の通りです。
+
+| レイヤ | 構成 |
+|---|---|
+| Client & Network | Cloudflare (DNS Only) → Tailscale VPN → Traefik (SSL終端 / サブドメイン振り分け) |
+| Web UI | Flutter Web を静的ビルドし NGINX で配信 (`home-os`)、Grafana (`grafana`) |
+| API & DB | Node-RED (`node-red`) / Telegraf → InfluxDB (`influxdb`)、Mosquitto で Pub/Sub |
+| Bridge | `switchbot-bridge` / `irobot-bridge` / `github-sync` を Python コンテナで個別実装 |
+| Host | WSL2 (Ubuntu) 上の Docker、今後 Raspberry Pi へ移行予定 |
 
 ## 技術スタック
 
@@ -108,18 +127,40 @@ npm run dev
 ```text
 .
 ├── app/
+│   ├── content/
+│   │   ├── works.ts             # 作品のメタデータ定義（作品追加はここに1エントリ）
+│   │   └── accents.ts           # アクセントカラーのクラス名テーブル
+│   ├── hooks/
+│   │   └── useImageSlider.ts    # モーダル内スライダーの共通ロジック
+│   ├── lib/
+│   │   └── easing.ts            # cubic-bezier の JS 実装（高さとスクロールで共有）
 │   ├── components/
+│   │   ├── works/
+│   │   │   ├── index.ts         # slug → 詳細コンポーネント（slot）の対応表
+│   │   │   ├── WorkCard.tsx     # メタデータ駆動の作品カード（3バリアント）
+│   │   │   ├── WorkModalLayout.tsx  # モーダルの2ペイン骨格
+│   │   │   ├── ImageSlider.tsx  # 画像スライダー
+│   │   │   ├── VersionTabs.tsx  # v1.0 / v2.0 トグル
+│   │   │   ├── ShowMoreCard.tsx # 「もっと見る」トグル
+│   │   │   ├── TeamBadge.tsx    # チーム開発バッジ（モーダルでは公式サイトへのリンク）
+│   │   │   ├── CanvaEmbed.tsx   # Canva 埋め込み + 外部リンク
+│   │   │   └── *Detail.tsx      # 作品ごとの固有UI（slot の実体）
+│   │   ├── AnimatedBentoCard.tsx  # スポットライト付きカード
+│   │   ├── ContributionGraph.tsx  # GitHub Contributions グラフ
+│   │   ├── Label.tsx / TechTag.tsx
 │   │   ├── Modal.tsx            # 共通モーダル（スクロールロック / 100dvh 対応）
 │   │   └── ModelViewer.tsx      # 3Dモデル表示と視線追従ロジック
 │   ├── globals.css              # Tailwind テーマ / マーキー / カスタムスクロールバー
 │   ├── layout.tsx               # ルートレイアウト・メタデータ (OGP, Twitter Card)
 │   ├── not-found.tsx            # 404 ページ
-│   ├── page.tsx                 # メインページ（Bento Grid・全カード・モーダル）
+│   ├── page.tsx                 # メインページ（Bento Grid の配置とモーダルの開閉）
 │   ├── robots.ts                # robots.txt 生成
 │   └── sitemap.ts               # sitemap.xml 生成
 ├── public/
 │   ├── EXPO2025_eye.glb         # 3Dモデル（視線追従対象）
 │   ├── Home_OS_2.0.1*.png       # Home OS ダッシュボード（PC / モバイル）
+│   ├── Home_OS_2.0_architecture.png  # Home OS v2.0 システム構成図
+│   ├── find-sagisai-*.png       # 迷子・落とし物サイト スクリーンショット（3枚）
 │   ├── shirasagi-sai*.png       # 白鷺祭用語集スクリーンショット
 │   ├── ogp.png                  # OGP 画像 (1200x630)
 │   └── サーキュラー8bit.jpg     # プロフィールアイコン
@@ -127,8 +168,67 @@ npm run dev
 └── vercel.json                  # installCommand (--legacy-peer-deps)
 ```
 
-`page.tsx` に UI コンポーネント（`AnimatedBentoCard` / `Label` / `SocialButton` /
-`ExpandableTimelineItem` / `TechTag` / `ContactButton`）を同居させています。
+`page.tsx` にはページ固有の UI（`ScrambleText` / `SocialButton` /
+`ExpandableTimelineItem` / `ContactButton`）のみを残し、再利用するものは `components/` に切り出しています。
+
+### 作品（Works）の追加方法
+
+作品ごとに表現が異なる（v1/v2 タブ・Canva 埋め込み・画像スライダー）ため、
+**共通なのはメタデータだけ**という前提で分離しています。
+
+1. `app/content/works.ts` に 1 エントリ追加（タイトル・期間・ステータス・タグ・カード画像・`variant`・`span`）
+2. `app/components/works/` に詳細コンポーネントを 1 つ作成（固有UIはここに閉じ込める）
+3. `app/components/works/index.ts` の対応表に 1 行登録
+
+**`page.tsx` の編集は不要です。** カードは `works.ts` の内容から自動で並びます。
+
+カードの `variant` は `feature`（大きな画像が主役） / `split`（左テキスト・右画像） /
+`text`（画像なし）の 3 種類。配色は `accent`（cyan / pink / purple / indigo の 4 色）、
+Bento のマス割りは `span` で指定します。
+`categories` はフィルタ UI 用に定義だけ先に持っていますが、UI は未実装です。
+
+共同開発の作品は `team` にチーム情報を持たせると、カードとモーダルに `TeamBadge` が出ます。
+本文に「〇〇で開発」と書くより表記がぶれません。`url` を持つチーム（`ALBUS` など）は
+**モーダル側だけ**公式サイトへのリンクになります。カードは全体がモーダルを開くクリック領域で
+中身が `pointer-events-none` のため、入れ子のリンクは機能しないためです。
+
+カード左上の通し番号は `number` に持たせますが、**表示されるのは `featured: true` の作品だけ**です。
+「もっと見る」で展開される作品に番号を振ると、収納時に欠番が見えてしまうため、
+`featured` でない作品では `number` を指定しても無視されます。
+
+### 「もっと見る」による展開
+
+トップに常時表示するのは `featured: true` の作品だけで、残りはトグルを押すと
+**同じ画面に展開**されます（別ページに遷移しないため、スクロール位置もブラウザの
+戻る操作も壊れません）。`featured` を省略した作品は展開側に入るので、新しく追加した
+作品はまず展開側に置かれ、代表作として出すときに `featured: true` を付けます。
+展開する作品が 0 件のときはトグル自体を描画しません。
+
+**トグルは展開セクションより「上」**に置いています。下に置くと、閉じたときにトグル自身が
+セクションの高さぶん上へ飛び、それを埋めるスクロール補正と高さアニメーションが競合して
+視点がずれます。上に置けばトグルは一切動きません（計測上 0px）。
+Bento の最小行高(180px)を受けないよう、グリッドの外に出した「罫線 + ピル」の形です。
+
+展開分は本体グリッドではなく独立したセクションに置き、**高さを補間**します。
+グリッド内に直接差し込むと行が一瞬で増え、下のカードが飛んだり重なったりするためです。
+開くときはばね、閉じるときは尾を引かせないよう短いイージング、カードは開くとき上から順・
+閉じるとき下から順にずらしています。
+
+### ページ下部での収納とスクロールクランプ — `app/lib/easing.ts`
+
+ページ下部にいる状態で閉じると文書が短くなり、ブラウザがスクロール位置を毎フレーム
+強制的に切り詰めます（クランプ）。この強制移動は高さアニメーションと独立して走るため、
+放置するとカクつきます。
+
+そこでクランプに先回りし、**高さアニメーションとスクロール補正で同一の曲線・同一の時間**を
+共有しています。`easing.ts` の `cubicBezier` が CSS と同じ曲線を JS 側で再現し、
+`COLLAPSE_EASE` / `COLLAPSE_MS` を両者で使います。これにより自前のスクロール位置が
+常にクランプ上限以下に保たれ、ブラウザの強制移動は発生しません。曲線がずれると
+途中でクランプが割り込むため、ここを共有することが要点です。
+
+なお `space-y-10` は（Tailwind v4 では）`margin-bottom` として効くため、セクションの
+アンマウント時に余白ぶんだけ別枠で消えて最後に段差が出ます。余白も高さと一緒に
+補間して解消しています。
 
 ## SEO / セキュリティ
 

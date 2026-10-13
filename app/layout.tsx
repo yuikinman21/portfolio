@@ -52,9 +52,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    // globals.css の @theme は :root で解決されるため、フォント変数も :root(<html>) に置く。
+    // body に付けると --font-noto-sans-jp が未定義のまま --font-sans が組み立てられ、
+    // Noto Sans JP が font-family から抜け落ちて OS 標準フォントで描画されてしまう。
+    <html lang="ja" className={notoSansJP.variable}>
       <body
-        className={`${notoSansJP.variable} antialiased`}
+        className="antialiased"
         suppressHydrationWarning={true}
       >
         {children}

@@ -8,9 +8,20 @@ import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'fram
 import { ReactNode } from 'react';
 import Modal from './components/Modal';
 import ContributionGraph from './components/ContributionGraph';
-import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, } from 'react-icons/si';
-import { VscVscode } from 'react-icons/vsc';
+import AnimatedBentoCard from './components/AnimatedBentoCard';
+import Label from './components/Label';
+import TechTag from './components/TechTag';
+import WorkCard from './components/works/WorkCard';
+import ShowMoreCard from './components/works/ShowMoreCard';
+import { works, featuredWorks, moreWorks } from './content/works';
+import { workDetails } from './components/works';
+import { cubicBezier, COLLAPSE_EASE, COLLAPSE_MS } from './lib/easing';
+
+/** 展開セクションの下に空ける余白(px)。root の space-y-10 と揃えている。 */
+const MORE_SECTION_GAP = 40;
+import { FaPython, FaReact, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiFlutter, SiGimp, SiGo, SiCloudflare, SiLinux, SiPostgresql, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
+
 
 type SkillType = {
   name: string;
@@ -81,105 +92,52 @@ function ScrambleText({ text, className }: { text: string; className?: string })
 
 // --- スポットライト付きBentoカード ---
 // マウス位置に合わせて光るエフェクトを追加
-function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: any) {
-  const Component = href ? motion.a : motion.div;
-  
-  // マウス座標の管理
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
-  }
-
-  return (
-    <Component
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
-      className={`bento-card group relative overflow-hidden ${className}`}
-      href={href}
-      onMouseMove={handleMouseMove}
-      {...props}
-    >
-      {/* スポットライトエフェクト (背景) */}
-      <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(99, 102, 241, 0.1),
-              transparent 80%
-            )
-          `,
-        }}
-      />
-      {/* コンテンツ（w-fullがないと横並びカードの中身が縮んでしまう） */}
-      <div className="relative h-full w-full">
-        {children}
-      </div>
-      
-      {/* ボーダーを光らせるエフェクト */}
-      <motion.div
-         className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-300"
-         style={{
-           border: "1px solid rgba(99, 102, 241, 0.2)",
-           maskImage: useMotionTemplate`
-             radial-gradient(
-               300px circle at ${mouseX}px ${mouseY}px,
-               black,
-               transparent
-             )
-           `,
-           WebkitMaskImage: useMotionTemplate`
-             radial-gradient(
-               300px circle at ${mouseX}px ${mouseY}px,
-               black,
-               transparent
-             )
-           `,
-         }}
-      />
-    </Component>
-  );
-}
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   const [hoveredSkill, setHoveredSkill] = useState<any>(null);
 
-  // 上段用データ（LANGUAGE / FRAMEWORK）
-  const skillLanguages: SkillType[] = useMemo(() => [
-    { name: "Python", icon: <FaPython />, exp: "3年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
-    { name: "Go", icon: <SiGo />, exp: "1年未満", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
-    { name: "TypeScript", icon: <SiTypescript />, exp: "1年未満", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
-    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年未満", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
-    { name: "React", icon: <FaReact />, exp: "1年未満", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年未満", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+  // スキルは 1 本の配列を唯一の定義とし、表示する行はカテゴリから導出する。
+  // 以前は上段/下段で配列を分けており、GAS(TOOLS) が「上段用（LANGUAGE / FRAMEWORK）」に
+  // 入るなど、変数名・コメントと中身がずれていた。
+  const allSkills: SkillType[] = useMemo(() => [
+    // --- LANGUAGE ---
+    { name: "Python", icon: <FaPython />, exp: "4年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
     { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE", description: "CもC#も触ったことあります！", url: "https://cplusplus.com/" },
-    { name: "Java", icon: <FaJava />, exp: "2年", level: 1, color: "text-red-500", category: "LANGUAGE", description: "大学の授業で少しだけ触りました！", url: "https://dev.java/" },
-    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "高校でのゼミ活動から使っています！JavaScriptとほぼ一緒なので少し慣れてます！", url: "https://developers.google.com/apps-script" },
-    { name: "Dart", icon: <SiDart />, exp: "1年未満", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
-    { name: "Flutter", icon: <SiFlutter />, exp: "1年未満", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "今一番触っています！研究でも開発でも活躍中！", url: "https://flutter.dev/" },
+    { name: "Go", icon: <SiGo />, exp: "1年", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
+    { name: "TypeScript", icon: <SiTypescript />, exp: "1年", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
+    { name: "Dart", icon: <SiDart />, exp: "1年", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
+
+    // --- FRAMEWORK ---
+    { name: "Flutter", icon: <SiFlutter />, exp: "1年", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "クロスプラットフォーム最高！！", url: "https://flutter.dev/" },
+    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
+    { name: "React", icon: <FaReact />, exp: "1年", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+
+    // --- TOOLS ---
+    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "迷子・落とし物サイトなどで活躍中！高校から使い続けています！", url: "https://developers.google.com/apps-script" },
+    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
+    { name: "GitHub", icon: <FaGithub />, exp: "1年", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
+    { name: "Vercel", icon: <SiVercel />, exp: "1年", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
+    { name: "Cloudflare", icon: <SiCloudflare />, exp: "1年未満", level: 2, color: "text-orange-500", category: "TOOLS", description: "Workers / D1 / R2 で迷子・落とし物サイトを構築しています！", url: "https://www.cloudflare.com/" },
+    { name: "Linux", icon: <SiLinux />, exp: "1年", level: 2, color: "text-slate-800", category: "TOOLS", description: "Home OSのサーバー(Ubuntu)などで常用しています！", url: "https://www.kernel.org/" },
+    { name: "PostgreSQL", icon: <SiPostgresql />, exp: "1年未満", level: 2, color: "text-sky-700", category: "TOOLS", description: "バックエンド開発でデータベースとして使用しています！", url: "https://www.postgresql.org/" },
+
+    // --- CREATIVE ---
+    { name: "Blender", icon: <SiBlender />, exp: "4年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
+    { name: "GIMP", icon: <SiGimp />, exp: "3年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
   ], []);
 
-  // 下段用データ（TOOLS / CREATIVE）
-  const skillTools: SkillType[] = useMemo(() => [
-    { name: "Docker", icon: <FaDocker />, exp: "1年未満", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
-    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
-    { name: "GitHub", icon: <FaGithub />, exp: "1年未満", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
-    { name: "Vercel", icon: <SiVercel />, exp: "1年未満", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
-    { name: "VS Code", icon: <VscVscode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "Atomがサービス終了してからはこれを使ってます！", url: "https://code.visualstudio.com/" },
-    { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
-    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "2年", level: 2, color: "text-red-400", category: "CREATIVE", description: "映像編集をする時に使っています！", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
-  ], []);
-
-  const allSkills = useMemo(() => [...skillLanguages, ...skillTools], [skillLanguages, skillTools]);
+  // マーキーの行はカテゴリから導出する（上段: 書く技術 / 下段: 使う技術）
+  const topRowSkills = useMemo(
+    () => allSkills.filter((s) => s.category === 'LANGUAGE' || s.category === 'FRAMEWORK'),
+    [allSkills],
+  );
+  const bottomRowSkills = useMemo(
+    () => allSkills.filter((s) => s.category === 'TOOLS' || s.category === 'CREATIVE'),
+    [allSkills],
+  );
   const [selectedSkill, setSelectedSkill] = useState<SkillType | null>(null);
   const [lastInteraction, setLastInteraction] = useState<number>(0);
 
@@ -210,63 +168,66 @@ export default function Home() {
     setLastInteraction(Date.now());
   };
 
-  const homeOsImagesV1 = [
-    "/My_Room_OS4.jpg", 
-    "/My_Room_OS3.jpg",
-  ];
-  
-  const homeOsImagesV2 = [
-    "/Home_OS_2.0.1_0.png",
-    "/Home_OS_2.0.1.png",
-    "/Home_OS_2.0.1_mobile_1.png",
-    "/Home_OS_2.0.1_mobile_2.png",
-    "/Home_OS_2.0.1_mobile_3.png",
-    "/Home_OS_2.0.2.png",
-  ];
-  
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [homeOsTab, setHomeOsTab] = useState<'v1' | 'v2'>('v1');
+  // 作品モーダルの開閉のみを page が持つ。スライダー・タブの状態は
+  // 各詳細コンポーネント（app/components/works/）が自分で持ち、モーダルを閉じると
+  // アンマウントされて初期状態に戻る。
 
-  const activeImages = homeOsTab === 'v1' ? homeOsImagesV1 : homeOsImagesV2;
-  // 次の画像へ
-  const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % activeImages.length);
+  // 「もっと見る」の展開状態。別ページへ遷移せず同じ画面で開くため、
+  // スクロール位置もブラウザの戻る操作も壊れない。
+  const [worksExpanded, setWorksExpanded] = useState(false);
+  // 高さアニメーション中だけ overflow を切る（終わったらカードの影を出す）
+  const [moreClipped, setMoreClipped] = useState(true);
+  const moreSectionRef = useRef<HTMLElement>(null);
+  const scrollRafRef = useRef<number | null>(null);
+  const collapseEase = useMemo(() => cubicBezier(...COLLAPSE_EASE), []);
+
+  /**
+   * ページ下部にいるときに閉じると、文書が短くなってブラウザがスクロール位置を
+   * 毎フレーム強制的に切り詰める（クランプ）。これが高さアニメーションと競合して
+   * カクつく原因なので、クランプが働く前に同じ曲線で自前にスクロールを動かす。
+   * 高さと同一の曲線・同一の時間を使うため、こちらの位置は常にクランプ上限以下に保たれる。
+   */
+  const smoothScrollUp = (distance: number) => {
+    if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    const start = window.scrollY;
+    const t0 = performance.now();
+    const step = () => {
+      const t = Math.min(1, (performance.now() - t0) / COLLAPSE_MS);
+      window.scrollTo(0, start - distance * collapseEase(t));
+      scrollRafRef.current = t < 1 ? requestAnimationFrame(step) : null;
+    };
+    scrollRafRef.current = requestAnimationFrame(step);
   };
 
-  // 前の画像へ
-  const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + activeImages.length) % activeImages.length);
-  };
+  const toggleWorks = () => {
+    // 高さが動き出す前に必ずクリップしておく。onAnimationStart に任せると
+    // 再描画が 1 フレーム遅れ、畳み始めに中身がはみ出して見える。
+    setMoreClipped(true);
 
-  useEffect(() => {
-    setCurrentImageIndex(0);
-    if (selectedProject === null) {
-      setCurrentImageIndex(0);
-      setHomeOsTab('v2');
-      setShirasagiImageIndex(0);
-      setShirasagiTab('v2');
+    if (worksExpanded) {
+      // 閉じると文書が section の高さぶん縮む。現在位置がその新しい下端を
+      // 超えている分だけ、クランプに先回りして自前でスクロールを上げる。
+      const section = moreSectionRef.current;
+      if (section) {
+        // space-y-10 は margin-bottom として効くため、余白ぶんも文書から消える
+        const cs = getComputedStyle(section);
+        const removed =
+          section.offsetHeight + parseFloat(cs.marginTop || '0') + parseFloat(cs.marginBottom || '0');
+        const overshoot =
+          window.scrollY + window.innerHeight - (document.documentElement.scrollHeight - removed);
+        if (overshoot > 0) smoothScrollUp(Math.min(overshoot, window.scrollY));
+      }
     }
-  }, [selectedProject, homeOsTab]);
 
-  const shirasagiImages = [
-    "/shirasagi-sai_1.png",
-    "/shirasagi-sai_2.png",
-    "/shirasagi-sai_3.png",
-    "/shirasagi-sai_4.png",
-  ];
-  const [shirasagiImageIndex, setShirasagiImageIndex] = useState(0);
-  const [shirasagiTab, setShirasagiTab] = useState<'v1' | 'v2'>('v2');
-  const nextShirasagiImage = () => setShirasagiImageIndex((prev) => (prev + 1) % shirasagiImages.length);
-  const prevShirasagiImage = () => setShirasagiImageIndex((prev) => (prev - 1 + shirasagiImages.length) % shirasagiImages.length);
-
-  useEffect(() => {
-    setShirasagiImageIndex(0);
-  }, [shirasagiTab]);
+    setWorksExpanded((prev) => !prev);
+  };
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
       {/* --- Header Area --- */}
-      <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4">
+      {/* 横並びは lg から。md(768-1023px) では左のテキスト(max-w-lg)と
+          右のボタン列(313px)が収まらず、Contact が画面外へはみ出していた。 */}
+      <header className="flex flex-col lg:flex-row justify-between items-end gap-6 py-4">
         <div className="space-y-3">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -299,11 +260,12 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="flex gap-3"
+          className="flex flex-wrap items-center justify-end gap-2"
         >
-          <SocialButton href="https://github.com/yuikinman21" label="GitHub" />
-          <SocialButton href="https://qiita.com/yuikinman21" label="Qiita" />
-          <SocialButton href="https://note.com/yuikinman21" label="Note" />
+          <SocialButton href="https://github.com/yuikinman21" label="GitHub" icon={<FaGithub />} />
+          <SocialButton href="https://zenn.dev/yuikinman21" label="Zenn" icon={<SiZenn />} />
+          <SocialButton href="https://qiita.com/yuikinman21" label="Qiita" icon={<SiQiita />} />
+          <SocialButton href="https://note.com/yuikinman21" label="Note" icon={<SiNote />} />
           <ContactButton user="yuikinman21" domain="gmail.com" label="Contact" />
         </motion.div>
       </header>
@@ -511,7 +473,7 @@ export default function Home() {
             {/* 上段：LANGUAGE & FRAMEWORKS */}
             <div className="w-full">
               <div className="animate-scroll-left flex gap-4 px-2">
-                {[...skillLanguages, ...skillLanguages, ...skillLanguages, ...skillLanguages].map((skill, idx) => (
+                {[...topRowSkills, ...topRowSkills, ...topRowSkills, ...topRowSkills].map((skill, idx) => (
                   <div
                     key={`lang-${idx}`}
                     onClick={() => handleSkillClick(skill)}
@@ -526,7 +488,7 @@ export default function Home() {
             {/* 下段：TOOLS & CREATIVE */}
             <div className="w-full">
               <div className="animate-scroll-right flex gap-4 px-2">
-                {[...skillTools, ...skillTools, ...skillTools, ...skillTools].map((skill, idx) => (
+                {[...bottomRowSkills, ...bottomRowSkills, ...bottomRowSkills, ...bottomRowSkills].map((skill, idx) => (
                   <div
                     key={`tool-${idx}`}
                     onClick={() => handleSkillClick(skill)}
@@ -566,157 +528,79 @@ export default function Home() {
           
         </AnimatedBentoCard>
 
-        {/* 6. Home OS */}
-        <AnimatedBentoCard delay={0.6} className="md:col-span-6 lg:col-span-2 lg:row-span-2 p-8 flex flex-col justify-between group hover:border-cyan-300 bg-gradient-to-br from-cyan-50/50 to-white transition-colors cursor-pointer"
-          onClick={() => setSelectedProject('homeos')}
-        >
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label text="05. Home LAB" color="cyan" /> {/* 色はLabelコンポーネントの定義に合わせて調整してください */}
-              <span className="inline-flex items-center gap-1.5 bg-cyan-100 text-cyan-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span>
-                NOW STUDYING
-              </span>
+        {/* 作品カード: works.ts のメタデータから描画する。追加は works.ts への 1 エントリで完結。
+            featured の作品を常時表示し、残りは「もっと見る」で同じ画面に展開する。 */}
+        {featuredWorks.map((work, i) => (
+          <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={0.6 + i * 0.1} />
+        ))}
+
+      </main>
+
+      {/* トグルは展開セクションより「上」に置く。下に置くと、閉じたときに
+          セクションの高さぶんトグル自身が上へ飛び、スクロール補正と高さアニメが
+          競合して視点がずれる。上に置けばトグルは一切動かない。
+          Bento の最小行高(180px)を受けないよう、グリッドの外に出している。 */}
+      {moreWorks.length > 0 && (
+        <ShowMoreCard
+          expanded={worksExpanded}
+          hiddenCount={moreWorks.length}
+          onToggle={toggleWorks}
+          delay={0.85}
+          className="w-full"
+        />
+      )}
+
+      {/* 展開分は本体グリッドの外に独立したセクションとして置き、高さを補間する。
+          グリッド内に直接差し込むと、行が一瞬で増えて下のカードが飛ぶ・重なるため。 */}
+      <AnimatePresence initial={false}>
+        {worksExpanded && (
+          <motion.section
+            key="more-works"
+            ref={moreSectionRef}
+            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
+            // space-y-10 由来の margin も一緒に補間する。これをしないと
+            // unmount の瞬間に 40px が消えて最後だけ段差になる。
+            initial={{ height: 0, opacity: 0, marginBottom: 0 }}
+            animate={{
+              height: 'auto',
+              opacity: 1,
+              marginBottom: MORE_SECTION_GAP,
+              transition: {
+                height: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+                marginBottom: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+                opacity: { duration: 0.25 },
+              },
+            }}
+            // 閉じるときはばねの尾を引かせず、短いイージングで畳む
+            exit={{
+              height: 0,
+              opacity: 0,
+              marginBottom: 0,
+              transition: {
+                height: { duration: COLLAPSE_MS / 1000, ease: COLLAPSE_EASE },
+                marginBottom: { duration: COLLAPSE_MS / 1000, ease: COLLAPSE_EASE },
+                opacity: { duration: 0.18, ease: 'easeIn' },
+              },
+            }}
+            onAnimationComplete={() => setMoreClipped(false)}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)] pt-6 md:pt-10">
+              {moreWorks.map((work, i) => (
+                <WorkCard
+                  key={work.slug}
+                  work={work}
+                  onOpen={setSelectedProject}
+                  index={i}
+                  total={moreWorks.length}
+                  reveal
+                />
+              ))}
             </div>
-            
-            <div>
-              <h3 className="text-2xl font-bold text-slate-800 group-hover:text-cyan-600 transition-colors">
-                Home OS 2.0
-              </h3>
-              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                自宅環境を統合管理するシステムの構築<br/>
-                クリックして詳細を見ることができます。<br/>
-              </p>
-            </div>
-          </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
-          <div className="w-full my-6 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 pointer-events-none flex flex-col">
-            {/* 画像*/}
-            <div className="relative w-full aspect-video bg-slate-900 overflow-hidden">
-              <Image 
-                src="/Home_OS_2.0.1.png"
-                alt="Home OS Dashboard Mockup"
-                fill
-                className="object-contain opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-cyan-900/20 to-transparent pointer-events-none"></div>
-            </div>
-          </div>
-
-          <div className="mt-2 relative z-10 pointer-events-none">
-            {/* 使用技術スタック */}
-
-            <div className="flex items-center justify-between border-t border-cyan-100/50 pt-4">
-              <div className="flex flex-wrap gap-2">
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Docker</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Grafana</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Ubuntu</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Python</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Node-RED</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Flutter</span>
-                <span className="text-[10px] bg-white border border-cyan-100 text-cyan-600 px-2 py-1 rounded font-mono">Dart</span>
-              </div>
-
-              <div className="w-10 h-10 rounded-full bg-white border border-cyan-200 flex items-center justify-center text-cyan-400 group-hover:text-cyan-600 group-hover:scale-110 transition-all shadow-sm">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
-              </div>
-            </div>
-          </div>
-        </AnimatedBentoCard>
-
-        {/* 7. New Project Card (白鷺祭用語集) */}
-        <AnimatedBentoCard delay={0.7} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-pink-300 bg-gradient-to-br from-pink-50/50 to-white transition-colors cursor-pointer"
-          onClick={() => setSelectedProject('shirasagisai')}
-        >
-          {/* 上部: ヘッダー + 説明文 + 画像
-              スマホ: 縦積み（説明 → 画像） / PC: 左に説明・右に画像 */}
-          <div className="space-y-3 pointer-events-none">
-            <div className="flex items-center justify-between">
-              <Label text="06. PROJECT" color="pink" />
-              <span className="inline-flex items-center gap-1.5 bg-pink-100 text-pink-600 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide animate-pulse">
-                <span className="w-1.5 h-1.5 rounded-full bg-pink-500"></span>
-                NOW BUILDING
-              </span>
-            </div>
-
-            <div className="flex flex-col md:flex-row md:items-start md:gap-5">
-              {/* 説明文（PC: 左） */}
-              <div className="md:flex-1 md:min-w-0">
-                <h3 className="text-2xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
-                  白鷺祭用語集
-                </h3>
-                <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                  実行委員向けの用語まとめサイト<br/>
-                  クリックして詳細を見ることができます。<br/>
-                </p>
-              </div>
-
-              {/* 画像（スマホ: 説明の下 / PC: 右） */}
-              <div className="w-full md:w-1/2 md:shrink-0 mt-4 md:mt-0 relative rounded-xl overflow-hidden border border-slate-200/60 shadow-sm group-hover:shadow-md transition-shadow duration-500 flex flex-col">
-                <div className="relative w-full aspect-video bg-pink-50 overflow-hidden">
-                  <Image
-                    src="/shirasagi-sai.png"
-                    alt="白鷺祭用語集"
-                    fill
-                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* 下部: 使用技術スタック */}
-          <div className="mt-6 md:mt-2 relative z-10 pointer-events-none">
-            <div className="flex items-center justify-between border-t border-pink-100/50 pt-4">
-              <div className="flex flex-wrap gap-2">
-                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded font-mono">Next.js</span>
-                <span className="text-[10px] bg-white border border-pink-100 text-pink-500 px-2 py-1 rounded font-mono">Vercel</span>
-              </div>
-
-              <div className="w-10 h-10 rounded-full bg-white border border-pink-200 flex items-center justify-center text-pink-400 group-hover:text-pink-600 group-hover:scale-110 transition-all shadow-sm">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
-              </div>
-            </div>
-          </div>
-        </AnimatedBentoCard>
-
-        {/* 8. IoTセキュリティ研究 (右下: 1マス分配置) - 新規追加 */}
-        <AnimatedBentoCard delay={0.8} className="md:col-span-3 lg:col-span-2 p-8 flex flex-col justify-between group hover:border-purple-300 bg-gradient-to-br from-purple-50/50 to-white transition-colors cursor-pointer"
-          onClick={() => setSelectedProject('iot')}
-        >
-          <div className="space-y-2 pointer-events-none">
-            <div className="flex items-center justify-between">
-              <Label text="07. PRE-RESEARCH" color="purple" />
-              <span className="inline-flex items-center gap-1.5 bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide">
-                <span className="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                NOW RESEARCHING
-              </span>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-slate-800 group-hover:text-purple-600 transition-colors">
-                IoTマルウェアの通信分析
-              </h3>
-              <p className="text-slate-500 text-sm mt-2 leading-relaxed">
-                機械学習を用いたスマートホームデバイスの脅威検知<br/>
-                各マルウェアの通信特徴を分析し、異常検知・マルウェア識別モデルを構築<br/>
-              </p>
-            </div>
-          </div>
-          <div className="mt-6 flex items-center justify-between border-t border-purple-100/50 pt-4 pointer-events-none">
-            <div className="flex gap-2">
-              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Python</span>
-              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Network Security</span>
-              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Machine Learning</span>
-              <span className="text-[10px] bg-white border border-purple-100 text-purple-500 px-2 py-1 rounded">Packet Analysis</span>
-
-            </div>
-            <div className="w-10 h-10 rounded-full bg-white border border-purple-200 flex items-center justify-center text-purple-400 group-hover:text-purple-600 group-hover:scale-110 transition-all shadow-sm">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" /></svg>
-            </div>
-          </div>
-        </AnimatedBentoCard>
-
-
+      <main className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         {/* 8. GitHub Link */}
         <AnimatedBentoCard delay={0.9} href="https://github.com/yuikinman21" target="_blank" rel="noopener noreferrer" className="md:col-span-6 lg:col-span-4 p-6 md:p-8 flex items-center group hover:border-slate-300 bg-slate-50 transition-colors cursor-pointer">
 
@@ -748,426 +632,23 @@ export default function Home() {
         </AnimatedBentoCard>
       </main>
 
-      {/* --- プロジェクト詳細モーダル --- */}
-      
-
-      {/* 1. Home OSのモーダル*/}
-      <Modal 
-        title="Home OS 2.0"
-        isOpen={selectedProject === 'homeos'} 
-        onClose={() => setSelectedProject(null)} 
-      >
-        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
-          {/* 左側: 画像 */}
-        <div className="w-full md:w-3/5 bg-slate-100 relative min-h-[300px] flex items-center justify-center p-4 md:p-8 overflow-hidden">
-           
-          {/* 画像表示部分 (AnimatePresenceでフェード切替) */}
-          <div className="relative w-full h-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeImages[currentImageIndex]}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="relative w-full h-full"
-              >
-                <Image 
-                  src={activeImages[currentImageIndex]}
-                  alt={`Home OS Slide ${currentImageIndex + 1}`}
-                  fill 
-                  className="object-contain p-1" 
-                  priority
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* --- ナビゲーションボタン (画像が2枚以上ある時のみ表示) --- */}
-          {activeImages.length > 1 && (
-            <>
-              {/* 左ボタン */}
-              <button 
-                onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-              </button>
-
-              {/* 右ボタン */}
-              <button 
-                onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-              </button>
-
-              {/* インジケーター (下部の点) */}
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                {activeImages.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentImageIndex(idx)}
-                    className={`w-2 h-2 rounded-full transition-all shadow-sm ${
-                      idx === currentImageIndex ? "bg-indigo-600 w-4" : "bg-white/60 hover:bg-white"
-                    }`}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-
-          {/* 右側: 詳細情報 */}
-          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col overflow-y-auto relative">
-             
-            {/* ★ タブ切り替えトグルUI ★ */}
-            <div className="flex bg-slate-100 p-1 rounded-full mb-2 w-full max-w-[280px] relative isolate">
-              <button 
-                onClick={() => setHomeOsTab('v1')}
-                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 z-10 ${homeOsTab === 'v1' ? 'text-cyan-800' : 'text-slate-400 hover:text-slate-600'}`}
-              >
-                {homeOsTab === 'v1' && (
-                  <motion.div layoutId="homeOsTabBg" className="absolute inset-0 bg-white rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
-                )}
-                v1.0 Overview
-              </button>
-
-              <button 
-                onClick={() => setHomeOsTab('v2')}
-                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 flex items-center justify-center gap-1 z-10 ${homeOsTab === 'v2' ? 'text-white' : 'text-slate-400 hover:text-slate-600'}`}
-              >
-                {homeOsTab === 'v2' && (
-                  <motion.div layoutId="homeOsTabBg" className="absolute inset-0 bg-cyan-600 rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
-                )}
-                v2.0 Update <span className="text-yellow-300">✨</span>
-              </button>
-            </div>
-
-            {/* ★ アニメーション付きコンテンツエリア ★ */}
-            <div className="relative flex-1">
-              <AnimatePresence mode="wait">
-                {homeOsTab === 'v1' ? (
-                  <motion.div 
-                    key="v1"
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                    className="flex flex-col gap-6"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">PAST VERSION</span>
-                        <span className="text-slate-400 text-xs font-mono">2025.11-2026.02</span>
-                      </div>
-                      <h2 className="text-3xl font-black text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
-                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォーム。<br/>
-                        InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基礎基盤として構築。
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
-                      <div className="flex flex-wrap gap-2">
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Docker</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Ubuntu</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Grafana</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Python</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Node-RED</TechTag>
-                      </div>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div 
-                    key="v2"
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                    className="flex flex-col gap-6"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
-                        <span className="text-slate-400 text-xs font-mono">2026.02-Current</span>
-                      </div>
-                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
-                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        フロントエンドを<b>Flutter</b>で完全再構築。<br/><br/>
-                        これにより、従来の<b>Grafana</b>による「表示」から、ダッシュボード上での「操作」へと進化。<br/>
-                        操作性豊かなUIへの変更により、さらに直感的に分かりやすく理解できるようになった。<br/>
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v2.0 New Stack</h3>
-                      <div className="flex flex-wrap gap-2">
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Flutter</TechTag>
-                        <TechTag color="bg-cyan-100 text-cyan-600 border-cyan-200">Dart</TechTag>
-                        
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </Modal>
-
-      {/* 2. 白鷺祭用語集のモーダル */}
-      <Modal
-        title="白鷺祭用語集"
-        isOpen={selectedProject === 'shirasagisai'}
-        onClose={() => setSelectedProject(null)}
-      >
-        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
-
-          {/* 左側: v1→Canva / v2→画像スライダー */}
-          <div className="w-full md:w-3/5 bg-slate-100 relative min-h-[300px] flex flex-col items-center justify-center p-4 md:p-8 overflow-hidden gap-4">
-            <AnimatePresence mode="wait">
-              {shirasagiTab === 'v1' ? (
-                <motion.div
-                  key="canva"
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
-                  className="w-full flex flex-col items-center gap-4"
-                >
-                  <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
-                    <iframe
-                      loading="lazy"
-                      className="w-full h-full border-none"
-                      src="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?embed"
-                      allowFullScreen
-                      allow="fullscreen"
-                    ></iframe>
-                  </div>
-                  <a
-                    href="https://www.canva.com/design/DAG7xpWBnqk/UCJfIcK7AX7x_E11GjpSkw/view?utm_content=DAG7xpWBnqk&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-pink-600 hover:border-pink-200 hover:shadow-md transition-all duration-300"
-                  >
-                    <span>別のタブで開く</span>
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                  </a>
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="slider"
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
-                  className="relative w-full flex items-center justify-center"
-                >
-                  <div className="relative w-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={shirasagiImages[shirasagiImageIndex]}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="relative w-full h-full"
-                      >
-                        <Image
-                          src={shirasagiImages[shirasagiImageIndex]}
-                          alt={`白鷺祭用語集 ${shirasagiImageIndex + 1}`}
-                          fill
-                          className="object-contain p-1"
-                          priority
-                        />
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-
-                  <button
-                    onClick={(e) => { e.stopPropagation(); prevShirasagiImage(); }}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                  </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); nextShirasagiImage(); }}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 p-2 rounded-full bg-white/80 hover:bg-white text-slate-800 shadow-md backdrop-blur-sm transition-transform hover:scale-110 z-10"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                  </button>
-
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-                    {shirasagiImages.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setShirasagiImageIndex(idx)}
-                        className={`w-2 h-2 rounded-full transition-all shadow-sm ${
-                          idx === shirasagiImageIndex ? "bg-pink-500 w-4" : "bg-white/60 hover:bg-white"
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* 右側: タブ切り替え + 詳細情報 */}
-          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col overflow-y-auto relative">
-
-            {/* タブトグル */}
-            <div className="flex bg-slate-100 p-1 rounded-full mb-4 w-full max-w-[280px] relative isolate">
-              <button
-                onClick={() => setShirasagiTab('v1')}
-                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 z-10 ${shirasagiTab === 'v1' ? 'text-slate-700' : 'text-slate-400 hover:text-slate-600'}`}
-              >
-                {shirasagiTab === 'v1' && (
-                  <motion.div layoutId="shirasagiTabBg" className="absolute inset-0 bg-white rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
-                )}
-                v1.0 Overview
-              </button>
-              <button
-                onClick={() => setShirasagiTab('v2')}
-                className={`relative flex-1 text-[11px] font-bold py-2.5 px-4 rounded-full transition-colors duration-300 flex items-center justify-center gap-1 z-10 ${shirasagiTab === 'v2' ? 'text-white' : 'text-slate-400 hover:text-slate-600'}`}
-              >
-                {shirasagiTab === 'v2' && (
-                  <motion.div layoutId="shirasagiTabBg" className="absolute inset-0 bg-pink-500 rounded-full shadow-sm -z-10" transition={{ type: "spring", bounce: 0.2, duration: 0.5 }} />
-                )}
-                v2.0 Update <span className="text-yellow-300">✨</span>
-              </button>
-            </div>
-
-            {/* アニメーション付きコンテンツエリア */}
-            <div className="relative flex-1">
-              <AnimatePresence mode="wait">
-                {shirasagiTab === 'v1' ? (
-                  <motion.div
-                    key="v1"
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                    className="flex flex-col gap-6"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">INITIAL RELEASE</span>
-                        <span className="text-slate-400 text-xs font-mono">2025.11</span>
-                      </div>
-                      <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
-                        白鷺祭用語集 <span className="text-lg font-bold text-slate-400">v1.0</span>
-                      </h2>
-                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        大学祭実行委員のための用語まとめサイトです。<br/>
-                        白鷺祭の準備や運営を円滑にするためのリソースを提供することを目的に、実行委員会のメンバーと共同開発を行いました。
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">担当</h3>
-                      <p className="text-sm text-slate-800 font-medium">リードエンジニア / UIデザイン</p>
-                      <p className="text-xs text-slate-500 mt-1">要件定義から実装、Vercelへのデプロイまでを一貫して担当。実行委員会のメンバーと連携し、使いやすさを重視したUIを設計しました。</p>
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v1.0 Stack</h3>
-                      <div className="flex flex-wrap gap-2">
-                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
-                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
-                      </div>
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="v2"
-                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.2 }}
-                    className="flex flex-col gap-6"
-                  >
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
-                        <span className="text-slate-400 text-xs font-mono">2026.04-Current</span>
-                      </div>
-                      <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
-                        白鷺祭用語集 <span className="text-lg font-bold text-pink-400">v2.0</span>
-                      </h2>
-                      <p className="text-sm text-slate-600 leading-relaxed mt-4">
-                        新しく地図検索機能を追加しました。<br/><br/>
-                        新しいメンバーと共に安全性を見直しながらアップデートを行いました。
-                      </p>
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">v2.0 Stack</h3>
-                      <div className="flex flex-wrap gap-2">
-                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Next.js</TechTag>
-                        <TechTag color="bg-pink-100 text-pink-600 border-pink-200">Vercel</TechTag>
-                      </div>
-                    </div>
-                    <div className="mt-auto pt-2">
-                      <a
-                        href="https://albus-glossary-demo.vercel.app/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-pink-600 transition-colors text-sm shadow-md"
-                      >
-                        <span>サンプルサイトを見る</span>
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                      </a>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </Modal>
-
-      {/* 3. IoTセキュリティ研究のモーダル*/}
-      <Modal 
-        title="IoTマルウェアの通信分析"
-        isOpen={selectedProject === 'iot'} 
-        onClose={() => setSelectedProject(null)} 
-      >
-        <div className="flex flex-col md:flex-row w-full h-full min-h-[60vh]">
-          {/* 左側: ビジュアルエリア */}
-          <div className="w-full md:w-3/5 bg-slate-100 flex flex-col items-center justify-center p-6 lg:p-10 relative gap-6">
-              {/* Canva埋め込み */}
-            <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
-              <iframe 
-                loading="lazy" 
-                className="w-full h-full border-none"
-                src="https://www.canva.com/design/DAHCJZi458Y/mzojWOXa0asjUIGbfKOOcw/view?embed" 
-                allowFullScreen 
-                allow="fullscreen"
-              ></iframe>
-            </div>
-
-            <a 
-              href="https://www.canva.com/design/DAHCJZi458Y/D5pKPXqx5wr8eBM6YmTShg/view?utm_content=DAHCJZi458Y&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h0f81bba7c7" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-2.5 bg-white text-slate-600 rounded-full text-xs font-bold shadow-sm border border-slate-200 hover:text-purple-600 hover:border-purple-200 hover:shadow-md transition-all duration-300"
-            >
-              <span>別のタブで開く</span>
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
-
-          </div>
-
-          {/* 右側: 詳細情報 */}
-          <div className="w-full md:w-2/5 bg-white p-6 lg:p-8 flex flex-col gap-6 overflow-y-auto">
-             <div>
-               <div className="flex items-center gap-2 mb-2">
-                 <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full tracking-wide">ACADEMIC RESEARCH</span>
-                 <span className="text-slate-400 text-xs font-mono">2025.09-2026.01</span>
-               </div>
-               <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
-             </div>
-             <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>
-               <p className="text-sm text-slate-600 leading-relaxed">
-                 スマート家電等のIoTデバイスを標的としたマルウェアの挙動解析と分類手法の研究（プレ卒論）に取り組んでいました。<br/><br/>
-                 実環境に近いデータセット（Aposemat IoT-23）を活用し、パケットキャプチャ（pcap）データからフロー単位の特徴量を抽出・変換する手法を構築しました。機械学習アルゴリズムに<b>ランダムフォレスト</b>を採用し、マルウェアファミリーの統合を行うことで<b>99.9%以上の高精度な多値分類</b>を達成しています。<br/><br/>
-                 箱ひげ図を用いた統計的評価により、MiraiのDDoS攻撃特性やHide and Seekの探索挙動など、各マルウェアの機能的な違いを解明するアプローチを行っています。
-               </p>
-             </div>
-              <div>
-               <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">キーワード</h3>
-               <div className="flex flex-wrap gap-2">
-                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Network Security</TechTag>
-                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Machine Learning</TechTag>
-                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Packet Analysis</TechTag>
-                 <TechTag color="bg-purple-50 text-purple-700 border-purple-200">Python</TechTag>
-               </div>
-             </div>
-          </div>
-        </div>
-      </Modal>
-      
+      {/* --- プロジェクト詳細モーダル ---
+          中身は slug ごとの詳細コンポーネント（slot）に委譲する。
+          作品ごとに表現が違うため、共通テンプレートには押し込めていない。 */}
+      {works.map((work) => {
+        const Detail = workDetails[work.slug];
+        if (!Detail) return null;
+        return (
+          <Modal
+            key={work.slug}
+            title={work.modalTitle}
+            isOpen={selectedProject === work.slug}
+            onClose={() => setSelectedProject(null)}
+          >
+            <Detail />
+          </Modal>
+        );
+      })}
 
       <footer className="py-12 text-center">
         <p className="text-slate-400 text-xs font-mono">
@@ -1181,33 +662,18 @@ export default function Home() {
 
 // --- Helper Components ---
 
-function Label({ text, color }: { text: string; color: "purple" | "blue" | "cyan" | "green" | "orange" | "indigo" | "white" | "pink" }) {
-  const colors = {
-    purple: "text-purple-600",
-    blue: "text-blue-600",
-    cyan: "text-cyan-600",
-    green: "text-emerald-600",
-    orange: "text-orange-600",
-    indigo: "text-indigo-600",
-    pink: "text-pink-600",
-    white: "text-white/80",
-  };
-  return (
-    <span className={`font-mono text-[10px] font-bold tracking-widest ${colors[color]} mb-2 block uppercase`}>
-      {text}
-    </span>
-  );
-}
 
-function SocialButton({ href, label }: { href: string; label: string }) {
+function SocialButton({ href, label, icon }: { href: string; label: string; icon: ReactNode }) {
   return (
     <a 
       href={href} 
       target="_blank" 
       rel="noopener noreferrer"
-      className="px-5 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow active:scale-95"
+      aria-label={label}
+      title={label}
+      className="w-10 h-10 flex items-center justify-center rounded-full bg-white border border-slate-200 text-slate-600 text-lg hover:text-slate-900 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow active:scale-95"
     >
-      {label}
+      {icon}
     </a>
   );
 }
@@ -1314,21 +780,15 @@ function TimelineItem({ date, title, org, children, icon, isCurrent, type }: { d
   );
 }
 
-function TechTag({ children, color }: { children: React.ReactNode; color: string }) {
-  return (
-    <span className={`px-2.5 py-1 rounded text-[11px] font-bold border ${color} transition-transform hover:-translate-y-0.5 cursor-default`}>
-      {children}
-    </span>
-  );
-}
 
 //メールアドレススパム対策のため、ユーザ名とドメインを分割して渡すコンポーネント
 function ContactButton({ user, domain, label }: { user: string; domain: string; label: string }) {
   return (
     <button 
       onClick={() => { window.location.href = `mailto:${user}@${domain}`; }}
-      className="px-5 py-2 rounded-full bg-white border border-slate-200 text-slate-600 text-sm font-bold hover:bg-slate-50 hover:border-slate-300 transition-all shadow-sm hover:shadow active:scale-95"
+      className="ml-1 h-10 px-5 flex items-center gap-2 rounded-full bg-slate-900 text-white text-sm font-bold hover:bg-indigo-600 transition-all shadow-sm hover:shadow active:scale-95"
     >
+      <FaEnvelope />
       {label}
     </button>
   );
