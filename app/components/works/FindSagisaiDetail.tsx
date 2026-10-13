@@ -5,7 +5,7 @@ import ImageSlider from './ImageSlider';
 import TeamBadge from './TeamBadge';
 import WorkModalLayout from './WorkModalLayout';
 import { useImageSlider } from '@/app/hooks/useImageSlider';
-import { workImages } from '@/app/content/works';
+import { workImages, ALBUS } from '@/app/content/works';
 import { accentStyles } from '@/app/content/accents';
 
 const ACCENT = 'indigo' as const;
@@ -37,7 +37,7 @@ export default function FindSagisaiDetail() {
             <div className="flex flex-wrap items-center gap-2 mb-2">
               <span className="text-[10px] font-bold bg-indigo-100 text-indigo-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">NOW BUILDING</span>
               <span className="text-slate-400 text-xs font-mono">2026.08-Current</span>
-              <TeamBadge name="Albus" />
+              <TeamBadge name={ALBUS.name} href={ALBUS.url} />
             </div>
             <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-600 tracking-tight leading-tight">
               迷子・落とし物サイト

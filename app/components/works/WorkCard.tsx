@@ -36,7 +36,7 @@ export default function WorkCard({ work, onOpen, className, delay = 0, animateLa
       <Label text={work.featured && work.number ? `${work.number}. ${work.label}` : work.label} color={s.label} />
       {/* 狭い幅ではバッジが折り返せるようにしておく */}
       <div className="flex flex-wrap items-center justify-end gap-1.5">
-        {work.team && <TeamBadge name={work.team} />}
+        {work.team && <TeamBadge name={work.team.name} />}
         <span className={`inline-flex items-center gap-1.5 ${s.statusBadge} px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide whitespace-nowrap${badgePulse}`}>
           <span className={`w-1.5 h-1.5 rounded-full ${s.statusDot}${dotPulse}`} />
           {work.status.text}
