@@ -165,7 +165,7 @@ export const works: Work[] = [
       'クリックして詳細を見ることができます。',
     ],
     cardImage: {
-      src: '/find-sagisai-1.png',
+      src: '/find-sagisai-1-v2.png',
       alt: '迷子・落とし物サイト',
       fit: 'cover',
       bg: 'bg-indigo-50',
@@ -194,7 +194,7 @@ export const workImages: Record<string, Record<string, string[]>> = {
   },
   findsagisai: {
     v1: [
-      '/find-sagisai-1.png',
+      '/find-sagisai-1-v2.png',
       '/find-sagisai-2.png',
       '/find-sagisai-3.png',
     ],
