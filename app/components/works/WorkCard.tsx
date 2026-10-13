@@ -17,6 +17,8 @@ type Props = {
   reveal?: boolean;
   /** reveal 時のずらし順。0 から順に少しずつ遅れて出る。 */
   index?: number;
+  /** 同時に出る枚数。閉じるときは逆順（下から）に畳むために使う。 */
+  total?: number;
 };
 
 const ExpandIcon = () => (
@@ -27,7 +29,7 @@ const ExpandIcon = () => (
  * 作品カード。メタデータ（Work）から描画し、情報量の差は `variant` で吸収する。
  * 作品が増えてもこのコンポーネントは変更せず、works.ts にエントリを足すだけでよい。
  */
-export default function WorkCard({ work, onOpen, className, delay = 0, reveal = false, index = 0 }: Props) {
+export default function WorkCard({ work, onOpen, className, delay = 0, reveal = false, index = 0, total = 1 }: Props) {
   const s = accentStyles[work.accent];
   const badgePulse = work.status.pulse === 'badge' ? ' animate-pulse' : '';
   const dotPulse = work.status.pulse === 'dot' ? ' animate-pulse' : '';
@@ -119,11 +121,16 @@ export default function WorkCard({ work, onOpen, className, delay = 0, reveal = 
     <AnimatedBentoCard
       delay={reveal ? 0.05 + index * 0.08 : delay}
       reveal={reveal}
+      // 閉じるときは逆順（下のカードから）に、高さが縮み切る前に素早く消す
       exit={reveal ? {
         opacity: 0,
-        y: -16,
-        scale: 0.96,
-        transition: { duration: 0.22, ease: [0.4, 0, 1, 1], delay: index * 0.04 },
+        y: -10,
+        scale: 0.97,
+        transition: {
+          duration: 0.16,
+          ease: 'easeIn',
+          delay: (total - 1 - index) * 0.035,
+        },
       } : undefined}
       className={`p-8 flex flex-col justify-between group ${s.card} transition-colors cursor-pointer ${className ?? work.span}`}
       onClick={() => onOpen(work.slug)}

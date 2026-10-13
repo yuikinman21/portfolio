@@ -163,14 +163,12 @@ export default function Home() {
   const [moreClipped, setMoreClipped] = useState(true);
 
   const toggleWorks = () => {
-    const willCollapse = worksExpanded;
+    // 高さが動き出す前に必ずクリップしておく。onAnimationStart に任せると
+    // 再描画が 1 フレーム遅れ、畳み始めに中身がはみ出して見える。
+    setMoreClipped(true);
     setWorksExpanded((prev) => !prev);
-    // 閉じたときにページ下部へ取り残されないよう、トグル自体を画面内に戻す
-    if (willCollapse) {
-      requestAnimationFrame(() => {
-        document.getElementById('works-toggle')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-    }
+    // スクロール補正は入れない。トグルがセクションより上にあるため、
+    // 開閉してもトグルの画面上の位置は変わらない。
   };
 
   return (
@@ -485,34 +483,10 @@ export default function Home() {
 
       </main>
 
-      {/* 展開分は本体グリッドの外に独立したセクションとして置き、高さを補間する。
-          グリッド内に直接差し込むと、行が一瞬で増えて下のカードが飛ぶ・重なるため。 */}
-      <AnimatePresence initial={false}>
-        {worksExpanded && (
-          <motion.section
-            key="more-works"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{
-              height: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
-              opacity: { duration: 0.25 },
-            }}
-            onAnimationStart={() => setMoreClipped(true)}
-            onAnimationComplete={() => setMoreClipped(false)}
-            // 高さを変えている間だけ切り取る。終わったらカードの影がはみ出せるよう解除する。
-            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
-              {moreWorks.map((work, i) => (
-                <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} index={i} reveal />
-              ))}
-            </div>
-          </motion.section>
-        )}
-      </AnimatePresence>
-
-      {/* 「もっと見る」トグル。Bento の最小行高(180px)を受けないよう、グリッドの外に置く。 */}
+      {/* トグルは展開セクションより「上」に置く。下に置くと、閉じたときに
+          セクションの高さぶんトグル自身が上へ飛び、スクロール補正と高さアニメが
+          競合して視点がずれる。上に置けばトグルは一切動かない。
+          Bento の最小行高(180px)を受けないよう、グリッドの外に出している。 */}
       {moreWorks.length > 0 && (
         <ShowMoreCard
           expanded={worksExpanded}
@@ -521,6 +495,50 @@ export default function Home() {
           className="w-full"
         />
       )}
+
+      {/* 展開分は本体グリッドの外に独立したセクションとして置き、高さを補間する。
+          グリッド内に直接差し込むと、行が一瞬で増えて下のカードが飛ぶ・重なるため。 */}
+      <AnimatePresence initial={false}>
+        {worksExpanded && (
+          <motion.section
+            key="more-works"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{
+              height: 'auto',
+              opacity: 1,
+              transition: {
+                height: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+                opacity: { duration: 0.25 },
+              },
+            }}
+            // 閉じるときはばねの尾を引かせず、短いイージングで畳む
+            exit={{
+              height: 0,
+              opacity: 0,
+              transition: {
+                height: { duration: 0.34, ease: [0.4, 0, 0.2, 1] },
+                opacity: { duration: 0.18, ease: 'easeIn' },
+              },
+            }}
+            onAnimationComplete={() => setMoreClipped(false)}
+            // 高さを変えている間だけ切り取る。終わったらカードの影がはみ出せるよう解除する。
+            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)] pt-4 md:pt-6">
+              {moreWorks.map((work, i) => (
+                <WorkCard
+                  key={work.slug}
+                  work={work}
+                  onOpen={setSelectedProject}
+                  index={i}
+                  total={moreWorks.length}
+                  reveal
+                />
+              ))}
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       <main className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         {/* 8. GitHub Link */}
