@@ -159,6 +159,8 @@ export default function Home() {
   // 「もっと見る」の展開状態。別ページへ遷移せず同じ画面で開くため、
   // スクロール位置もブラウザの戻る操作も壊れない。
   const [worksExpanded, setWorksExpanded] = useState(false);
+  // 高さアニメーション中だけ overflow を切る（終わったらカードの影を出す）
+  const [moreClipped, setMoreClipped] = useState(true);
 
   const toggleWorks = () => {
     const willCollapse = worksExpanded;
@@ -478,16 +480,37 @@ export default function Home() {
         {/* 作品カード: works.ts のメタデータから描画する。追加は works.ts への 1 エントリで完結。
             featured の作品を常時表示し、残りは「もっと見る」で同じ画面に展開する。 */}
         {featuredWorks.map((work, i) => (
-          <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={0.6 + i * 0.1} animateLayout />
+          <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={0.6 + i * 0.1} />
         ))}
 
-        <AnimatePresence initial={false}>
-          {worksExpanded && moreWorks.map((work, i) => (
-            <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={i * 0.06} animateLayout />
-          ))}
-        </AnimatePresence>
-
       </main>
+
+      {/* 展開分は本体グリッドの外に独立したセクションとして置き、高さを補間する。
+          グリッド内に直接差し込むと、行が一瞬で増えて下のカードが飛ぶ・重なるため。 */}
+      <AnimatePresence initial={false}>
+        {worksExpanded && (
+          <motion.section
+            key="more-works"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{
+              height: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+              opacity: { duration: 0.25 },
+            }}
+            onAnimationStart={() => setMoreClipped(true)}
+            onAnimationComplete={() => setMoreClipped(false)}
+            // 高さを変えている間だけ切り取る。終わったらカードの影がはみ出せるよう解除する。
+            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
+              {moreWorks.map((work, i) => (
+                <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} index={i} reveal />
+              ))}
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       {/* 「もっと見る」トグル。Bento の最小行高(180px)を受けないよう、グリッドの外に置く。 */}
       {moreWorks.length > 0 && (
