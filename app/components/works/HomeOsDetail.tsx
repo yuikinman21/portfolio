@@ -58,7 +58,7 @@ export default function HomeOsDetail() {
                       <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">PAST VERSION</span>
                       <span className="text-slate-400 text-xs font-mono">2025.11-2026.02</span>
                     </div>
-                    <h2 className="text-3xl font-bold text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">Home OS <span className="text-lg font-bold text-slate-400">v1.0</span></h2>
                     <p className="text-sm text-slate-600 leading-relaxed mt-4">
                       自宅サーバー(Ubuntu)上でDockerコンテナ群を運用し、室温・電力使用量の可視化を行うIoTプラットフォーム。<br/>
                       InfluxDBへのデータ蓄積とGrafanaによる可視化を実現しており、スマートホーム化の基礎基盤として構築。
@@ -84,7 +84,7 @@ export default function HomeOsDetail() {
                       <span className="text-[10px] font-bold bg-cyan-100 text-cyan-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
                       <span className="text-slate-400 text-xs font-mono">2026.02-Current</span>
                     </div>
-                    <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
+                    <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-600 tracking-tight">Home OS <span className="text-lg font-bold text-cyan-700">v2.0</span></h2>
                     <p className="text-sm text-slate-600 leading-relaxed mt-4">
                       フロントエンドを<b>Flutter</b>で完全再構築し、<b>Grafana</b>による「表示」から
                       ダッシュボード上での「操作」へ進化させた。<br/>

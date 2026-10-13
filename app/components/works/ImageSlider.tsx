@@ -29,7 +29,8 @@ export default function ImageSlider({
 
   return (
     <>
-      <div className="relative w-full h-full max-h-[400px] aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
+      {/* モバイルは横長(16:10)にして、横長のスクリーンショットを大きく見せる */}
+      <div className="relative w-full h-full max-h-[400px] aspect-[16/10] md:aspect-[4/3] rounded-xl overflow-hidden shadow-sm bg-white border border-slate-200">
         <AnimatePresence mode="wait">
           <motion.div
             key={src}
