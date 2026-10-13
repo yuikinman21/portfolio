@@ -11,7 +11,8 @@ import { accentStyles } from '@/app/content/accents';
 const ACCENT = 'indigo' as const;
 const tag = accentStyles[ACCENT].techTag;
 
-const SITE_URL = 'https://find-sagisai.yuiki.dev';
+// 実サイト（https://find-sagisai.yuiki.dev）への導線は先方の意向で一旦外している。
+// 公開してよくなったら「サイトを見る」ボタンを戻す。
 
 /** 迷子・落とし物サイトの詳細。バージョン切替を持たない単一構成。 */
 export default function FindSagisaiDetail() {
@@ -60,18 +61,6 @@ export default function FindSagisaiDetail() {
                 <TechTag key={t} color={tag}>{t}</TechTag>
               ))}
             </div>
-          </div>
-
-          <div className="mt-auto pt-2">
-            <a
-              href={SITE_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-indigo-600 transition-colors text-sm shadow-md"
-            >
-              <span>サイトを見る</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </a>
           </div>
         </div>
       }
