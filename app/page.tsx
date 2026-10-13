@@ -19,10 +19,9 @@ import { cubicBezier, COLLAPSE_EASE, COLLAPSE_MS } from './lib/easing';
 
 /** 展開セクションの下に空ける余白(px)。root の space-y-10 と揃えている。 */
 const MORE_SECTION_GAP = 40;
-import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
+import { FaPython, FaReact, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiFlutter, SiGimp, SiGo, SiCloudflare, SiLinux, SiPostgresql, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
 
-import { VscVscode } from 'react-icons/vsc';
 
 type SkillType = {
   name: string;
@@ -99,33 +98,46 @@ export default function Home() {
 
   const [hoveredSkill, setHoveredSkill] = useState<any>(null);
 
-  // 上段用データ（LANGUAGE / FRAMEWORK）
-  const skillLanguages: SkillType[] = useMemo(() => [
-    { name: "Python", icon: <FaPython />, exp: "3年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
-    { name: "Go", icon: <SiGo />, exp: "1年未満", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
-    { name: "TypeScript", icon: <SiTypescript />, exp: "1年未満", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
-    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年未満", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
-    { name: "React", icon: <FaReact />, exp: "1年未満", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年未満", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+  // スキルは 1 本の配列を唯一の定義とし、表示する行はカテゴリから導出する。
+  // 以前は上段/下段で配列を分けており、GAS(TOOLS) が「上段用（LANGUAGE / FRAMEWORK）」に
+  // 入るなど、変数名・コメントと中身がずれていた。
+  const allSkills: SkillType[] = useMemo(() => [
+    // --- LANGUAGE ---
+    { name: "Python", icon: <FaPython />, exp: "4年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
     { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE", description: "CもC#も触ったことあります！", url: "https://cplusplus.com/" },
-    { name: "Java", icon: <FaJava />, exp: "2年", level: 1, color: "text-red-500", category: "LANGUAGE", description: "大学の授業で少しだけ触りました！", url: "https://dev.java/" },
-    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "高校でのゼミ活動から使っています！JavaScriptとほぼ一緒なので少し慣れてます！", url: "https://developers.google.com/apps-script" },
-    { name: "Dart", icon: <SiDart />, exp: "1年未満", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
-    { name: "Flutter", icon: <SiFlutter />, exp: "1年未満", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "今一番触っています！研究でも開発でも活躍中！", url: "https://flutter.dev/" },
+    { name: "Go", icon: <SiGo />, exp: "1年", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
+    { name: "TypeScript", icon: <SiTypescript />, exp: "1年", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
+    { name: "Dart", icon: <SiDart />, exp: "1年", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
+
+    // --- FRAMEWORK ---
+    { name: "Flutter", icon: <SiFlutter />, exp: "1年", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "クロスプラットフォーム最高！！", url: "https://flutter.dev/" },
+    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
+    { name: "React", icon: <FaReact />, exp: "1年", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+
+    // --- TOOLS ---
+    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "迷子・落とし物サイトなどで活躍中！高校から使い続けています！", url: "https://developers.google.com/apps-script" },
+    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
+    { name: "GitHub", icon: <FaGithub />, exp: "1年", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
+    { name: "Vercel", icon: <SiVercel />, exp: "1年", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
+    { name: "Cloudflare", icon: <SiCloudflare />, exp: "1年未満", level: 2, color: "text-orange-500", category: "TOOLS", description: "Workers / D1 / R2 で迷子・落とし物サイトを構築しています！", url: "https://www.cloudflare.com/" },
+    { name: "Linux", icon: <SiLinux />, exp: "1年", level: 2, color: "text-slate-800", category: "TOOLS", description: "Home OSのサーバー(Ubuntu)などで常用しています！", url: "https://www.kernel.org/" },
+    { name: "PostgreSQL", icon: <SiPostgresql />, exp: "1年未満", level: 2, color: "text-sky-700", category: "TOOLS", description: "バックエンド開発でデータベースとして使用しています！", url: "https://www.postgresql.org/" },
+
+    // --- CREATIVE ---
+    { name: "Blender", icon: <SiBlender />, exp: "4年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
+    { name: "GIMP", icon: <SiGimp />, exp: "3年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
   ], []);
 
-  // 下段用データ（TOOLS / CREATIVE）
-  const skillTools: SkillType[] = useMemo(() => [
-    { name: "Docker", icon: <FaDocker />, exp: "1年未満", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
-    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
-    { name: "GitHub", icon: <FaGithub />, exp: "1年未満", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
-    { name: "Vercel", icon: <SiVercel />, exp: "1年未満", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
-    { name: "VS Code", icon: <VscVscode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "Atomがサービス終了してからはこれを使ってます！", url: "https://code.visualstudio.com/" },
-    { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
-    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "2年", level: 2, color: "text-red-400", category: "CREATIVE", description: "映像編集をする時に使っています！", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
-  ], []);
-
-  const allSkills = useMemo(() => [...skillLanguages, ...skillTools], [skillLanguages, skillTools]);
+  // マーキーの行はカテゴリから導出する（上段: 書く技術 / 下段: 使う技術）
+  const topRowSkills = useMemo(
+    () => allSkills.filter((s) => s.category === 'LANGUAGE' || s.category === 'FRAMEWORK'),
+    [allSkills],
+  );
+  const bottomRowSkills = useMemo(
+    () => allSkills.filter((s) => s.category === 'TOOLS' || s.category === 'CREATIVE'),
+    [allSkills],
+  );
   const [selectedSkill, setSelectedSkill] = useState<SkillType | null>(null);
   const [lastInteraction, setLastInteraction] = useState<number>(0);
 
@@ -459,7 +471,7 @@ export default function Home() {
             {/* 上段：LANGUAGE & FRAMEWORKS */}
             <div className="w-full">
               <div className="animate-scroll-left flex gap-4 px-2">
-                {[...skillLanguages, ...skillLanguages, ...skillLanguages, ...skillLanguages].map((skill, idx) => (
+                {[...topRowSkills, ...topRowSkills, ...topRowSkills, ...topRowSkills].map((skill, idx) => (
                   <div
                     key={`lang-${idx}`}
                     onClick={() => handleSkillClick(skill)}
@@ -474,7 +486,7 @@ export default function Home() {
             {/* 下段：TOOLS & CREATIVE */}
             <div className="w-full">
               <div className="animate-scroll-right flex gap-4 px-2">
-                {[...skillTools, ...skillTools, ...skillTools, ...skillTools].map((skill, idx) => (
+                {[...bottomRowSkills, ...bottomRowSkills, ...bottomRowSkills, ...bottomRowSkills].map((skill, idx) => (
                   <div
                     key={`tool-${idx}`}
                     onClick={() => handleSkillClick(skill)}
