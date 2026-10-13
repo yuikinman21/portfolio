@@ -19,6 +19,18 @@ export type WorkCardVariant =
   | 'split'   // 左に説明 / 右に画像
   | 'text';   // 画像なし・テキスト主体
 
+/** 共同開発のチーム。`url` を持つ場合、モーダルのバッジが公式サイトへのリンクになる。 */
+export type WorkTeam = {
+  name: string;
+  url?: string;
+};
+
+/** Albus。複数の作品から参照するため定数にしている。 */
+export const ALBUS: WorkTeam = {
+  name: 'Albus',
+  url: 'https://albus-tech.org',
+};
+
 export type WorkStatus = {
   text: string;
   /** どの要素を明滅させるか（既存の見た目を維持するための指定） */
@@ -51,8 +63,8 @@ export type Work = {
   cardImage?: { src: string; alt: string; fit: 'contain' | 'cover'; bg: string };
   /** カード下部に出す技術スタック */
   cardTags: string[];
-  /** チーム開発の場合のチーム名。指定するとカード・モーダルにバッジが出る。 */
-  team?: string;
+  /** チーム開発の場合のチーム情報。指定するとカード・モーダルにバッジが出る。 */
+  team?: WorkTeam;
   /** 期間（モーダル側の表示は詳細コンポーネントが持つ。一覧・並び替え用） */
   period: string;
   /** 分類タグ。フィルタ UI は作品が増えるまで作らないが、定義だけ先に持つ。 */
@@ -113,7 +125,7 @@ export const works: Work[] = [
       bg: 'bg-pink-50',
     },
     cardTags: ['Next.js', 'Vercel'],
-    team: 'Albus',
+    team: ALBUS,
     period: '2025.11-Current',
     categories: ['Web'],
     featured: true,
@@ -147,18 +159,19 @@ export const works: Work[] = [
     title: '迷子・落とし物サイト',
     modalTitle: '迷子・落とし物サイト',
     summary: [
-      '大学祭の迷子・落とし物をWeb上で検索できるサービス',
+      '来場者も委員も使える、大学祭の迷子・落とし物の検索サービス',
       '立て看板を削減し、掲示物の経費を圧縮',
+      '今年の大学祭で実際に運用予定',
       'クリックして詳細を見ることができます。',
     ],
     cardImage: {
-      src: '/find-sagisai.png',
+      src: '/find-sagisai-1.png',
       alt: '迷子・落とし物サイト',
       fit: 'cover',
       bg: 'bg-indigo-50',
     },
     cardTags: ['Next.js', 'Cloudflare Workers', 'Cloudflare D1', 'Cloudflare R2'],
-    team: 'Albus',
+    team: ALBUS,
     period: '2026.08-Current',
     categories: ['Web'],
     // featured は付けない → 「もっと見る」で展開される
@@ -180,7 +193,11 @@ export const workImages: Record<string, Record<string, string[]>> = {
     ],
   },
   findsagisai: {
-    v1: ['/find-sagisai.png'],
+    v1: [
+      '/find-sagisai-1.png',
+      '/find-sagisai-2.png',
+      '/find-sagisai-3.png',
+    ],
   },
   shirasagisai: {
     v2: [

@@ -13,8 +13,12 @@ type Props = {
   /** マス割りは work.span を使う。上書きしたい場合のみ指定する。 */
   className?: string;
   delay?: number;
-  /** 「もっと見る」で後から現れるカードは layout アニメーションの対象にする */
-  animateLayout?: boolean;
+  /** 「もっと見る」で後から現れるカード。ばねで立ち上がり、閉じるときは畳まれる。 */
+  reveal?: boolean;
+  /** reveal 時のずらし順。0 から順に少しずつ遅れて出る。 */
+  index?: number;
+  /** 同時に出る枚数。閉じるときは逆順（下から）に畳むために使う。 */
+  total?: number;
 };
 
 const ExpandIcon = () => (
@@ -25,7 +29,7 @@ const ExpandIcon = () => (
  * 作品カード。メタデータ（Work）から描画し、情報量の差は `variant` で吸収する。
  * 作品が増えてもこのコンポーネントは変更せず、works.ts にエントリを足すだけでよい。
  */
-export default function WorkCard({ work, onOpen, className, delay = 0, animateLayout = false }: Props) {
+export default function WorkCard({ work, onOpen, className, delay = 0, reveal = false, index = 0, total = 1 }: Props) {
   const s = accentStyles[work.accent];
   const badgePulse = work.status.pulse === 'badge' ? ' animate-pulse' : '';
   const dotPulse = work.status.pulse === 'dot' ? ' animate-pulse' : '';
@@ -36,7 +40,7 @@ export default function WorkCard({ work, onOpen, className, delay = 0, animateLa
       <Label text={work.featured && work.number ? `${work.number}. ${work.label}` : work.label} color={s.label} />
       {/* 狭い幅ではバッジが折り返せるようにしておく */}
       <div className="flex flex-wrap items-center justify-end gap-1.5">
-        {work.team && <TeamBadge name={work.team} />}
+        {work.team && <TeamBadge name={work.team.name} />}
         <span className={`inline-flex items-center gap-1.5 ${s.statusBadge} px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide whitespace-nowrap${badgePulse}`}>
           <span className={`w-1.5 h-1.5 rounded-full ${s.statusDot}${dotPulse}`} />
           {work.status.text}
@@ -115,9 +119,19 @@ export default function WorkCard({ work, onOpen, className, delay = 0, animateLa
 
   return (
     <AnimatedBentoCard
-      delay={delay}
-      layout={animateLayout}
-      exit={animateLayout ? { opacity: 0, y: -12, scale: 0.97 } : undefined}
+      delay={reveal ? 0.05 + index * 0.08 : delay}
+      reveal={reveal}
+      // 閉じるときは逆順（下のカードから）に、高さが縮み切る前に素早く消す
+      exit={reveal ? {
+        opacity: 0,
+        y: -10,
+        scale: 0.97,
+        transition: {
+          duration: 0.16,
+          ease: 'easeIn',
+          delay: (total - 1 - index) * 0.035,
+        },
+      } : undefined}
       className={`p-8 flex flex-col justify-between group ${s.card} transition-colors cursor-pointer ${className ?? work.span}`}
       onClick={() => onOpen(work.slug)}
     >

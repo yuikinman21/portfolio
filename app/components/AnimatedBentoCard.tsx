@@ -4,7 +4,11 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { MouseEvent } from 'react';
 
 /** スポットライト付きの Bento カード。作品カード以外からも使うため独立させている。 */
-export default function AnimatedBentoCard({ children, className, delay = 0, href, ...props }: any) {
+/**
+ * `reveal` を渡すと、スクロール連動（whileInView）ではなくマウント時に
+ * ばねで立ち上がる。「もっと見る」で後から現れるカードはこちらを使う。
+ */
+export default function AnimatedBentoCard({ children, className, delay = 0, href, reveal = false, ...props }: any) {
   const Component = href ? motion.a : motion.div;
   
   // マウス座標の管理
@@ -19,10 +23,13 @@ export default function AnimatedBentoCard({ children, className, delay = 0, href
 
   return (
     <Component
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: delay, ease: "easeOut" }}
+      initial={reveal ? { opacity: 0, y: 32, scale: 0.94 } : { opacity: 0, y: 20 }}
+      {...(reveal
+        ? { animate: { opacity: 1, y: 0, scale: 1 } }
+        : { whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-50px" } })}
+      transition={reveal
+        ? { type: "spring", stiffness: 300, damping: 30, mass: 0.9, delay }
+        : { duration: 0.5, delay: delay, ease: "easeOut" }}
       className={`bento-card group relative overflow-hidden ${className}`}
       href={href}
       onMouseMove={handleMouseMove}

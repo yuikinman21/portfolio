@@ -9,7 +9,7 @@ import VersionTabs from './VersionTabs';
 import TeamBadge from './TeamBadge';
 import WorkModalLayout from './WorkModalLayout';
 import { useImageSlider } from '@/app/hooks/useImageSlider';
-import { workImages } from '@/app/content/works';
+import { workImages, ALBUS } from '@/app/content/works';
 import { accentStyles } from '@/app/content/accents';
 
 const ACCENT = 'pink' as const;
@@ -81,7 +81,7 @@ export default function ShirasagiDetail() {
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full tracking-wide">INITIAL RELEASE</span>
                       <span className="text-slate-400 text-xs font-mono">2025.11</span>
-                      <TeamBadge name="Albus" />
+                      <TeamBadge name={ALBUS.name} href={ALBUS.url} />
                     </div>
                     <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
                       白鷺祭用語集 <span className="text-lg font-bold text-slate-400">v1.0</span>
@@ -112,9 +112,9 @@ export default function ShirasagiDetail() {
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <span className="text-[10px] font-bold bg-pink-100 text-pink-600 px-2 py-0.5 rounded-full tracking-wide animate-pulse">MAJOR UPDATE</span>
                       <span className="text-slate-400 text-xs font-mono">2026.04-Current</span>
-                      <TeamBadge name="Albus" />
+                      <TeamBadge name={ALBUS.name} href={ALBUS.url} />
                     </div>
-                    <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
+                    <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
                       白鷺祭用語集 <span className="text-lg font-bold text-pink-400">v2.0</span>
                     </h2>
                     <p className="text-sm text-slate-600 leading-relaxed mt-4">

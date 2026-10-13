@@ -23,7 +23,7 @@ export default function IotDetail() {
               <span className="text-[10px] font-bold bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full tracking-wide">ACADEMIC RESEARCH</span>
               <span className="text-slate-400 text-xs font-mono">2025.09-2026.01</span>
             </div>
-            <h2 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
+            <h2 className="text-2xl font-bold text-slate-800 tracking-tight leading-tight">IoTマルウェアの通信分析と多値分類</h2>
           </div>
           <div>
             <h3 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2 border-b border-slate-100 pb-1">概要</h3>

@@ -15,10 +15,13 @@ import WorkCard from './components/works/WorkCard';
 import ShowMoreCard from './components/works/ShowMoreCard';
 import { works, featuredWorks, moreWorks } from './content/works';
 import { workDetails } from './components/works';
-import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
-import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
+import { cubicBezier, COLLAPSE_EASE, COLLAPSE_MS } from './lib/easing';
 
-import { VscVscode } from 'react-icons/vsc';
+/** 展開セクションの下に空ける余白(px)。root の space-y-10 と揃えている。 */
+const MORE_SECTION_GAP = 40;
+import { FaPython, FaReact, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
+import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiFlutter, SiGimp, SiGo, SiCloudflare, SiLinux, SiPostgresql, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
+
 
 type SkillType = {
   name: string;
@@ -95,33 +98,46 @@ export default function Home() {
 
   const [hoveredSkill, setHoveredSkill] = useState<any>(null);
 
-  // 上段用データ（LANGUAGE / FRAMEWORK）
-  const skillLanguages: SkillType[] = useMemo(() => [
-    { name: "Python", icon: <FaPython />, exp: "3年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
-    { name: "Go", icon: <SiGo />, exp: "1年未満", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
-    { name: "TypeScript", icon: <SiTypescript />, exp: "1年未満", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
-    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年未満", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
-    { name: "React", icon: <FaReact />, exp: "1年未満", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
-    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年未満", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+  // スキルは 1 本の配列を唯一の定義とし、表示する行はカテゴリから導出する。
+  // 以前は上段/下段で配列を分けており、GAS(TOOLS) が「上段用（LANGUAGE / FRAMEWORK）」に
+  // 入るなど、変数名・コメントと中身がずれていた。
+  const allSkills: SkillType[] = useMemo(() => [
+    // --- LANGUAGE ---
+    { name: "Python", icon: <FaPython />, exp: "4年", level: 3, color: "text-blue-500", category: "LANGUAGE", description: "データ解析や、機械学習など様々な用途で使用しています！", url: "https://www.python.org/" },
     { name: "C++", icon: <SiCplusplus />, exp: "2年", level: 3, color: "text-blue-700", category: "LANGUAGE", description: "CもC#も触ったことあります！", url: "https://cplusplus.com/" },
-    { name: "Java", icon: <FaJava />, exp: "2年", level: 1, color: "text-red-500", category: "LANGUAGE", description: "大学の授業で少しだけ触りました！", url: "https://dev.java/" },
-    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "高校でのゼミ活動から使っています！JavaScriptとほぼ一緒なので少し慣れてます！", url: "https://developers.google.com/apps-script" },
-    { name: "Dart", icon: <SiDart />, exp: "1年未満", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
-    { name: "Flutter", icon: <SiFlutter />, exp: "1年未満", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "今一番触っています！研究でも開発でも活躍中！", url: "https://flutter.dev/" },
+    { name: "Go", icon: <SiGo />, exp: "1年", level: 2, color: "text-cyan-600", category: "LANGUAGE", description: "バックエンド開発に使用しています！DBにも触れています！", url: "https://go.dev/" },
+    { name: "TypeScript", icon: <SiTypescript />, exp: "1年", level: 2, color: "text-blue-600", category: "LANGUAGE", description: "Next.jsでのサイト作成に使用しています！", url: "https://www.typescriptlang.org/" },
+    { name: "Dart", icon: <SiDart />, exp: "1年", level: 2, color: "text-blue-400", category: "LANGUAGE", description: "Flutterでのアプリ開発に使用しています！", url: "https://dart.dev/" },
+
+    // --- FRAMEWORK ---
+    { name: "Flutter", icon: <SiFlutter />, exp: "1年", level: 3, color: "text-cyan-400", category: "FRAMEWORK", description: "クロスプラットフォーム最高！！", url: "https://flutter.dev/" },
+    { name: "Next.js", icon: <SiNextdotjs />, exp: "1年", level: 2, color: "text-slate-800", category: "FRAMEWORK", description: "現在メインで使用しているフレームワークです！", url: "https://nextjs.org/" },
+    { name: "React", icon: <FaReact />, exp: "1年", level: 2, color: "text-cyan-400", category: "FRAMEWORK", description: "いろいろ勉強中です！このサイトでも活用しています！", url: "https://react.dev/" },
+    { name: "Tailwind CSS", icon: <SiTailwindcss />, exp: "1年", level: 2, color: "text-cyan-500", category: "FRAMEWORK", description: "CSSについては以前勉強したので結構分かります！", url: "https://tailwindcss.com/" },
+
+    // --- TOOLS ---
+    { name: "GAS", icon: <SiGoogleappsscript />, exp: "4年", level: 3, color: "text-green-600", category: "TOOLS", description: "迷子・落とし物サイトなどで活躍中！高校から使い続けています！", url: "https://developers.google.com/apps-script" },
+    { name: "Docker", icon: <FaDocker />, exp: "1年", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
+    { name: "GitHub", icon: <FaGithub />, exp: "1年", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
+    { name: "Vercel", icon: <SiVercel />, exp: "1年", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
+    { name: "Cloudflare", icon: <SiCloudflare />, exp: "1年未満", level: 2, color: "text-orange-500", category: "TOOLS", description: "Workers / D1 / R2 で迷子・落とし物サイトを構築しています！", url: "https://www.cloudflare.com/" },
+    { name: "Linux", icon: <SiLinux />, exp: "1年", level: 2, color: "text-slate-800", category: "TOOLS", description: "Home OSのサーバー(Ubuntu)などで常用しています！", url: "https://www.kernel.org/" },
+    { name: "PostgreSQL", icon: <SiPostgresql />, exp: "1年未満", level: 2, color: "text-sky-700", category: "TOOLS", description: "バックエンド開発でデータベースとして使用しています！", url: "https://www.postgresql.org/" },
+
+    // --- CREATIVE ---
+    { name: "Blender", icon: <SiBlender />, exp: "4年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
+    { name: "GIMP", icon: <SiGimp />, exp: "3年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
   ], []);
 
-  // 下段用データ（TOOLS / CREATIVE）
-  const skillTools: SkillType[] = useMemo(() => [
-    { name: "Docker", icon: <FaDocker />, exp: "1年未満", level: 3, color: "text-blue-500", category: "TOOLS", description: "Home OSの実験用に複数のコンテナを立ち上げてます！", url: "https://www.docker.com/" },
-    { name: "Blender", icon: <SiBlender />, exp: "3年", level: 3, color: "text-orange-500", category: "CREATIVE", description: "標準的なモデル作成のほか、バイト先で教えたりもしています。", url: "https://www.blender.org/" },
-    { name: "GitHub", icon: <FaGithub />, exp: "1年未満", level: 3, color: "text-slate-800", category: "TOOLS", description: "バージョン管理や、チーム開発で活用しています！", url: "https://github.com/" },
-    { name: "Vercel", icon: <SiVercel />, exp: "1年未満", level: 3, color: "text-slate-900", category: "TOOLS", description: "GitHubのレポジトリをデプロイするのに使用しています！", url: "https://vercel.com/" },
-    { name: "VS Code", icon: <VscVscode />, exp: "4年", level: 4, color: "text-blue-500", category: "TOOLS", description: "Atomがサービス終了してからはこれを使ってます！", url: "https://code.visualstudio.com/" },
-    { name: "GIMP", icon: <SiGimp />, exp: "2年", level: 2, color: "text-slate-700", category: "CREATIVE", description: "画像編集をするときに使っています！", url: "https://www.gimp.org/" },
-    { name: "DaVinci Resolve", icon: <SiDavinciresolve />, exp: "2年", level: 2, color: "text-red-400", category: "CREATIVE", description: "映像編集をする時に使っています！", url: "https://www.blackmagicdesign.com/products/davinciresolve" },
-  ], []);
-
-  const allSkills = useMemo(() => [...skillLanguages, ...skillTools], [skillLanguages, skillTools]);
+  // マーキーの行はカテゴリから導出する（上段: 書く技術 / 下段: 使う技術）
+  const topRowSkills = useMemo(
+    () => allSkills.filter((s) => s.category === 'LANGUAGE' || s.category === 'FRAMEWORK'),
+    [allSkills],
+  );
+  const bottomRowSkills = useMemo(
+    () => allSkills.filter((s) => s.category === 'TOOLS' || s.category === 'CREATIVE'),
+    [allSkills],
+  );
   const [selectedSkill, setSelectedSkill] = useState<SkillType | null>(null);
   const [lastInteraction, setLastInteraction] = useState<number>(0);
 
@@ -159,22 +175,59 @@ export default function Home() {
   // 「もっと見る」の展開状態。別ページへ遷移せず同じ画面で開くため、
   // スクロール位置もブラウザの戻る操作も壊れない。
   const [worksExpanded, setWorksExpanded] = useState(false);
+  // 高さアニメーション中だけ overflow を切る（終わったらカードの影を出す）
+  const [moreClipped, setMoreClipped] = useState(true);
+  const moreSectionRef = useRef<HTMLElement>(null);
+  const scrollRafRef = useRef<number | null>(null);
+  const collapseEase = useMemo(() => cubicBezier(...COLLAPSE_EASE), []);
+
+  /**
+   * ページ下部にいるときに閉じると、文書が短くなってブラウザがスクロール位置を
+   * 毎フレーム強制的に切り詰める（クランプ）。これが高さアニメーションと競合して
+   * カクつく原因なので、クランプが働く前に同じ曲線で自前にスクロールを動かす。
+   * 高さと同一の曲線・同一の時間を使うため、こちらの位置は常にクランプ上限以下に保たれる。
+   */
+  const smoothScrollUp = (distance: number) => {
+    if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    const start = window.scrollY;
+    const t0 = performance.now();
+    const step = () => {
+      const t = Math.min(1, (performance.now() - t0) / COLLAPSE_MS);
+      window.scrollTo(0, start - distance * collapseEase(t));
+      scrollRafRef.current = t < 1 ? requestAnimationFrame(step) : null;
+    };
+    scrollRafRef.current = requestAnimationFrame(step);
+  };
 
   const toggleWorks = () => {
-    const willCollapse = worksExpanded;
-    setWorksExpanded((prev) => !prev);
-    // 閉じたときにページ下部へ取り残されないよう、トグル自体を画面内に戻す
-    if (willCollapse) {
-      requestAnimationFrame(() => {
-        document.getElementById('works-toggle')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
+    // 高さが動き出す前に必ずクリップしておく。onAnimationStart に任せると
+    // 再描画が 1 フレーム遅れ、畳み始めに中身がはみ出して見える。
+    setMoreClipped(true);
+
+    if (worksExpanded) {
+      // 閉じると文書が section の高さぶん縮む。現在位置がその新しい下端を
+      // 超えている分だけ、クランプに先回りして自前でスクロールを上げる。
+      const section = moreSectionRef.current;
+      if (section) {
+        // space-y-10 は margin-bottom として効くため、余白ぶんも文書から消える
+        const cs = getComputedStyle(section);
+        const removed =
+          section.offsetHeight + parseFloat(cs.marginTop || '0') + parseFloat(cs.marginBottom || '0');
+        const overshoot =
+          window.scrollY + window.innerHeight - (document.documentElement.scrollHeight - removed);
+        if (overshoot > 0) smoothScrollUp(Math.min(overshoot, window.scrollY));
+      }
     }
+
+    setWorksExpanded((prev) => !prev);
   };
 
   return (
     <div className="min-h-screen p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto space-y-10">
       {/* --- Header Area --- */}
-      <header className="flex flex-col md:flex-row justify-between items-end gap-6 py-4">
+      {/* 横並びは lg から。md(768-1023px) では左のテキスト(max-w-lg)と
+          右のボタン列(313px)が収まらず、Contact が画面外へはみ出していた。 */}
+      <header className="flex flex-col lg:flex-row justify-between items-end gap-6 py-4">
         <div className="space-y-3">
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
@@ -207,7 +260,7 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="flex items-center gap-2"
+          className="flex flex-wrap items-center justify-end gap-2"
         >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" icon={<FaGithub />} />
           <SocialButton href="https://zenn.dev/yuikinman21" label="Zenn" icon={<SiZenn />} />
@@ -420,7 +473,7 @@ export default function Home() {
             {/* 上段：LANGUAGE & FRAMEWORKS */}
             <div className="w-full">
               <div className="animate-scroll-left flex gap-4 px-2">
-                {[...skillLanguages, ...skillLanguages, ...skillLanguages, ...skillLanguages].map((skill, idx) => (
+                {[...topRowSkills, ...topRowSkills, ...topRowSkills, ...topRowSkills].map((skill, idx) => (
                   <div
                     key={`lang-${idx}`}
                     onClick={() => handleSkillClick(skill)}
@@ -435,7 +488,7 @@ export default function Home() {
             {/* 下段：TOOLS & CREATIVE */}
             <div className="w-full">
               <div className="animate-scroll-right flex gap-4 px-2">
-                {[...skillTools, ...skillTools, ...skillTools, ...skillTools].map((skill, idx) => (
+                {[...bottomRowSkills, ...bottomRowSkills, ...bottomRowSkills, ...bottomRowSkills].map((skill, idx) => (
                   <div
                     key={`tool-${idx}`}
                     onClick={() => handleSkillClick(skill)}
@@ -478,26 +531,74 @@ export default function Home() {
         {/* 作品カード: works.ts のメタデータから描画する。追加は works.ts への 1 エントリで完結。
             featured の作品を常時表示し、残りは「もっと見る」で同じ画面に展開する。 */}
         {featuredWorks.map((work, i) => (
-          <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={0.6 + i * 0.1} animateLayout />
+          <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={0.6 + i * 0.1} />
         ))}
-
-        <AnimatePresence initial={false}>
-          {worksExpanded && moreWorks.map((work, i) => (
-            <WorkCard key={work.slug} work={work} onOpen={setSelectedProject} delay={i * 0.06} animateLayout />
-          ))}
-        </AnimatePresence>
 
       </main>
 
-      {/* 「もっと見る」トグル。Bento の最小行高(180px)を受けないよう、グリッドの外に置く。 */}
+      {/* トグルは展開セクションより「上」に置く。下に置くと、閉じたときに
+          セクションの高さぶんトグル自身が上へ飛び、スクロール補正と高さアニメが
+          競合して視点がずれる。上に置けばトグルは一切動かない。
+          Bento の最小行高(180px)を受けないよう、グリッドの外に出している。 */}
       {moreWorks.length > 0 && (
         <ShowMoreCard
           expanded={worksExpanded}
           hiddenCount={moreWorks.length}
           onToggle={toggleWorks}
+          delay={0.85}
           className="w-full"
         />
       )}
+
+      {/* 展開分は本体グリッドの外に独立したセクションとして置き、高さを補間する。
+          グリッド内に直接差し込むと、行が一瞬で増えて下のカードが飛ぶ・重なるため。 */}
+      <AnimatePresence initial={false}>
+        {worksExpanded && (
+          <motion.section
+            key="more-works"
+            ref={moreSectionRef}
+            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
+            // space-y-10 由来の margin も一緒に補間する。これをしないと
+            // unmount の瞬間に 40px が消えて最後だけ段差になる。
+            initial={{ height: 0, opacity: 0, marginBottom: 0 }}
+            animate={{
+              height: 'auto',
+              opacity: 1,
+              marginBottom: MORE_SECTION_GAP,
+              transition: {
+                height: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+                marginBottom: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+                opacity: { duration: 0.25 },
+              },
+            }}
+            // 閉じるときはばねの尾を引かせず、短いイージングで畳む
+            exit={{
+              height: 0,
+              opacity: 0,
+              marginBottom: 0,
+              transition: {
+                height: { duration: COLLAPSE_MS / 1000, ease: COLLAPSE_EASE },
+                marginBottom: { duration: COLLAPSE_MS / 1000, ease: COLLAPSE_EASE },
+                opacity: { duration: 0.18, ease: 'easeIn' },
+              },
+            }}
+            onAnimationComplete={() => setMoreClipped(false)}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)] pt-6 md:pt-10">
+              {moreWorks.map((work, i) => (
+                <WorkCard
+                  key={work.slug}
+                  work={work}
+                  onOpen={setSelectedProject}
+                  index={i}
+                  total={moreWorks.length}
+                  reveal
+                />
+              ))}
+            </div>
+          </motion.section>
+        )}
+      </AnimatePresence>
 
       <main className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)]">
         {/* 8. GitHub Link */}
