@@ -15,6 +15,10 @@ import WorkCard from './components/works/WorkCard';
 import ShowMoreCard from './components/works/ShowMoreCard';
 import { works, featuredWorks, moreWorks } from './content/works';
 import { workDetails } from './components/works';
+import { cubicBezier, COLLAPSE_EASE, COLLAPSE_MS } from './lib/easing';
+
+/** 展開セクションの下に空ける余白(px)。root の space-y-10 と揃えている。 */
+const MORE_SECTION_GAP = 40;
 import { FaPython, FaReact, FaJava, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiDavinciresolve, SiFlutter, SiGimp, SiGo, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
 
@@ -161,14 +165,49 @@ export default function Home() {
   const [worksExpanded, setWorksExpanded] = useState(false);
   // 高さアニメーション中だけ overflow を切る（終わったらカードの影を出す）
   const [moreClipped, setMoreClipped] = useState(true);
+  const moreSectionRef = useRef<HTMLElement>(null);
+  const scrollRafRef = useRef<number | null>(null);
+  const collapseEase = useMemo(() => cubicBezier(...COLLAPSE_EASE), []);
+
+  /**
+   * ページ下部にいるときに閉じると、文書が短くなってブラウザがスクロール位置を
+   * 毎フレーム強制的に切り詰める（クランプ）。これが高さアニメーションと競合して
+   * カクつく原因なので、クランプが働く前に同じ曲線で自前にスクロールを動かす。
+   * 高さと同一の曲線・同一の時間を使うため、こちらの位置は常にクランプ上限以下に保たれる。
+   */
+  const smoothScrollUp = (distance: number) => {
+    if (scrollRafRef.current !== null) cancelAnimationFrame(scrollRafRef.current);
+    const start = window.scrollY;
+    const t0 = performance.now();
+    const step = () => {
+      const t = Math.min(1, (performance.now() - t0) / COLLAPSE_MS);
+      window.scrollTo(0, start - distance * collapseEase(t));
+      scrollRafRef.current = t < 1 ? requestAnimationFrame(step) : null;
+    };
+    scrollRafRef.current = requestAnimationFrame(step);
+  };
 
   const toggleWorks = () => {
     // 高さが動き出す前に必ずクリップしておく。onAnimationStart に任せると
     // 再描画が 1 フレーム遅れ、畳み始めに中身がはみ出して見える。
     setMoreClipped(true);
+
+    if (worksExpanded) {
+      // 閉じると文書が section の高さぶん縮む。現在位置がその新しい下端を
+      // 超えている分だけ、クランプに先回りして自前でスクロールを上げる。
+      const section = moreSectionRef.current;
+      if (section) {
+        // space-y-10 は margin-bottom として効くため、余白ぶんも文書から消える
+        const cs = getComputedStyle(section);
+        const removed =
+          section.offsetHeight + parseFloat(cs.marginTop || '0') + parseFloat(cs.marginBottom || '0');
+        const overshoot =
+          window.scrollY + window.innerHeight - (document.documentElement.scrollHeight - removed);
+        if (overshoot > 0) smoothScrollUp(Math.min(overshoot, window.scrollY));
+      }
+    }
+
     setWorksExpanded((prev) => !prev);
-    // スクロール補正は入れない。トグルがセクションより上にあるため、
-    // 開閉してもトグルの画面上の位置は変わらない。
   };
 
   return (
@@ -502,12 +541,18 @@ export default function Home() {
         {worksExpanded && (
           <motion.section
             key="more-works"
-            initial={{ height: 0, opacity: 0 }}
+            ref={moreSectionRef}
+            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
+            // space-y-10 由来の margin も一緒に補間する。これをしないと
+            // unmount の瞬間に 40px が消えて最後だけ段差になる。
+            initial={{ height: 0, opacity: 0, marginBottom: 0 }}
             animate={{
               height: 'auto',
               opacity: 1,
+              marginBottom: MORE_SECTION_GAP,
               transition: {
                 height: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
+                marginBottom: { type: 'spring', stiffness: 190, damping: 30, mass: 0.9 },
                 opacity: { duration: 0.25 },
               },
             }}
@@ -515,16 +560,16 @@ export default function Home() {
             exit={{
               height: 0,
               opacity: 0,
+              marginBottom: 0,
               transition: {
-                height: { duration: 0.34, ease: [0.4, 0, 0.2, 1] },
+                height: { duration: COLLAPSE_MS / 1000, ease: COLLAPSE_EASE },
+                marginBottom: { duration: COLLAPSE_MS / 1000, ease: COLLAPSE_EASE },
                 opacity: { duration: 0.18, ease: 'easeIn' },
               },
             }}
             onAnimationComplete={() => setMoreClipped(false)}
-            // 高さを変えている間だけ切り取る。終わったらカードの影がはみ出せるよう解除する。
-            style={{ overflow: moreClipped ? 'hidden' : 'visible' }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)] pt-4 md:pt-6">
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-[minmax(180px,auto)] pt-6 md:pt-10">
               {moreWorks.map((work, i) => (
                 <WorkCard
                   key={work.slug}
