@@ -83,7 +83,7 @@ export default function ShirasagiDetail() {
                       <span className="text-slate-400 text-xs font-mono">2025.11</span>
                       <TeamBadge name={ALBUS.name} href={ALBUS.url} />
                     </div>
-                    <h2 className="text-3xl font-bold text-slate-800 tracking-tight leading-tight">
+                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight leading-tight">
                       白鷺祭用語集 <span className="text-lg font-bold text-slate-400">v1.0</span>
                     </h2>
                     <p className="text-sm text-slate-600 leading-relaxed mt-4">
@@ -114,7 +114,7 @@ export default function ShirasagiDetail() {
                       <span className="text-slate-400 text-xs font-mono">2026.04-Current</span>
                       <TeamBadge name={ALBUS.name} href={ALBUS.url} />
                     </div>
-                    <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
+                    <h2 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 tracking-tight">
                       白鷺祭用語集 <span className="text-lg font-bold text-pink-400">v2.0</span>
                     </h2>
                     <p className="text-sm text-slate-600 leading-relaxed mt-4">
