@@ -282,7 +282,7 @@ Bento の最小行高(180px)を受けないよう、グリッドの外に出し�
 - 大阪公立大学 工学部 情報工学科 B4 / 知的ネットワーキング研究グループ
 - 応用情報技術者 (AP), 基本情報技術者 (FE)
 - 関心領域: ネットワーク, IoTセキュリティ, スマートホーム, Web開発
-- [GitHub](https://github.com/yuikinman21) / [Qiita](https://qiita.com/yuikinman21) / [Note](https://note.com/yuikinman21)
+- [GitHub](https://github.com/yuikinman21) / [X](https://x.com/yuikinman21) / [Qiita](https://qiita.com/yuikinman21) / [Note](https://note.com/yuikinman21)
 
 ## License
 
