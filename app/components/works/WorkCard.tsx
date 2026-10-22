@@ -134,6 +134,17 @@ export default function WorkCard({ work, onOpen, className, delay = 0, reveal = 
       } : undefined}
       className={`p-8 flex flex-col justify-between group ${s.card} transition-colors cursor-pointer ${className ?? work.span}`}
       onClick={() => onOpen(work.slug)}
+      // カードは div なので、キーボードでもフォーカスして開けるようにボタンとして振る舞わせる
+      role="button"
+      tabIndex={0}
+      aria-haspopup="dialog"
+      aria-label={`${work.title} の詳細を開く`}
+      onKeyDown={(e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpen(work.slug);
+        }
+      }}
     >
       {body}
     </AnimatedBentoCard>
