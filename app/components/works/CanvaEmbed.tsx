@@ -14,7 +14,7 @@ export default function CanvaEmbed({ embedSrc, viewHref, accent }: {
   return (
     <>
       <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-white border border-slate-200">
-        <iframe loading="lazy" className="w-full h-full border-none" src={embedSrc} allowFullScreen allow="fullscreen" />
+        <iframe title="Canva スライド" loading="lazy" className="w-full h-full border-none" src={embedSrc} allowFullScreen allow="fullscreen" />
       </div>
       <a
         href={viewHref}

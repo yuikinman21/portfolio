@@ -21,6 +21,16 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
         return () => { document.body.style.overflow = 'unset'; };
     }, [isOpen]);
 
+    // Esc キーでも閉じられるようにする（キーボード操作だけで抜け出せるように）
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, onClose]);
+
     return (
         <AnimatePresence>
             {isOpen && (
