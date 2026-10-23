@@ -47,6 +47,16 @@ R3F の `state.pointer` はマウント時点の親要素矩形に依存する�
 `useState(text)` で実テキストを初期値にしているため、SSR 時のHTMLには正しい文字列が出力されます。
 スクランブルはハイドレーション後にのみ動作し、クローラや JS 無効環境では素のテキストが読まれます。
 
+### GitHub Contributions グラフ — `app/api/contributions/route.ts`
+
+外部の画像 API（github-contributions-api.deno.dev）は Deno Deploy Classic の終了で 404 になったため、
+API ルートで GitHub から日別の件数を取得し、`ContributionGraph` が SVG で描画しています。
+環境変数 `GITHUB_TOKEN` があれば公式 GraphQL API を、なければプロフィールのカレンダー HTML を読みます。
+結果は 1 時間キャッシュします。
+
+取得対象は `yuikinman21` に固定しています。任意のユーザー名を受け付けると、第三者がこの API 経由で
+GitHub に問い合わせられ、トークンのレート制限や関数の実行枠を消費されるためです。
+
 ### 技術スタックカードの自動巡回
 
 4秒ごとに選択スキルが自動で切り替わり、ユーザーが操作した場合は 10 秒間自動巡回を停止します
@@ -76,7 +86,7 @@ v2.0 のスライダー最終ページにはシステム構成図 (`Home_OS_2.0_
 
 | 技術 | バージョン | 用途 |
 |---|---|---|
-| [Next.js](https://nextjs.org/) | ^16.1.6 | App Router / Metadata API / Image 最適化 |
+| [Next.js](https://nextjs.org/) | ^16.4.2 | App Router / Metadata API / Image 最適化 |
 | [React](https://react.dev/) | 19.2.1 | UI |
 | [TypeScript](https://www.typescriptlang.org/) | ^5 | 型安全性 |
 
@@ -103,6 +113,8 @@ v2.0 のスライダー最終ページにはシステム構成図 (`Home_OS_2.0_
 
 ## セットアップ
 
+Node.js 20.9 以上が必要です（Next.js 16 の要件）。本番の Vercel は Node.js 24.x で動かしています。
+
 ```bash
 git clone https://github.com/yuikinman21/portfolio.git
 cd portfolio
@@ -114,6 +126,10 @@ npm run dev
 ```
 
 [http://localhost:3000](http://localhost:3000) で確認できます。
+
+Contributions グラフを GraphQL API で取得したい場合は、`.env.local` に `GITHUB_TOKEN` を設定します
+（公開情報の読み取りだけなので、権限を何も付けない fine-grained token で十分です）。
+未設定でも HTML からの取得にフォールバックして表示されます。
 
 | コマンド | 内容 |
 |---|---|
@@ -127,6 +143,8 @@ npm run dev
 ```text
 .
 ├── app/
+│   ├── api/
+│   │   └── contributions/route.ts  # GitHub Contributions の取得 API
 │   ├── content/
 │   │   ├── works.ts             # 作品のメタデータ定義（作品追加はここに1エントリ）
 │   │   └── accents.ts           # アクセントカラーのクラス名テーブル
@@ -243,7 +261,15 @@ Bento の最小行高(180px)を受けないよう、グリッドの外に出し�
   | `X-Frame-Options` | `DENY` |
   | `X-Content-Type-Options` | `nosniff` |
   | `Referrer-Policy` | `strict-origin-when-cross-origin` |
+  | `Permissions-Policy` | カメラ・マイク・位置情報などを無効化 |
   | `Content-Security-Policy` | `default-src 'self'` を基点に個別許可 |
+
+  CSP の `script-src` は本番では `'unsafe-eval'` を付けず、3D モデルの圧縮データを展開する
+  MeshoptDecoder（WebAssembly）のために `'wasm-unsafe-eval'` だけを許可しています。
+  `'unsafe-eval'` は `next dev` のときだけ付きます。`connect-src` の `https:` は、drei の
+  `<Environment preset="city">` が HDR を raw.githack.com から取得するために必要です。
+- **API の入力制限**: `/api/contributions` は自分のユーザー名以外を 400 で拒否
+- **依存関係**: `npm audit --omit=dev`（本番依存）で既知の脆弱性 0 件を確認済み（2026-10-22 時点）
 
 ## デプロイ
 
@@ -256,7 +282,7 @@ Bento の最小行高(180px)を受けないよう、グリッドの外に出し�
 - 大阪公立大学 工学部 情報工学科 B4 / 知的ネットワーキング研究グループ
 - 応用情報技術者 (AP), 基本情報技術者 (FE)
 - 関心領域: ネットワーク, IoTセキュリティ, スマートホーム, Web開発
-- [GitHub](https://github.com/yuikinman21) / [Qiita](https://qiita.com/yuikinman21) / [Note](https://note.com/yuikinman21)
+- [GitHub](https://github.com/yuikinman21) / [X](https://x.com/yuikinman21) / [Qiita](https://qiita.com/yuikinman21) / [Note](https://note.com/yuikinman21)
 
 ## License
 

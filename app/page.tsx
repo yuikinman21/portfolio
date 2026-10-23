@@ -20,6 +20,7 @@ import { cubicBezier, COLLAPSE_EASE, COLLAPSE_MS } from './lib/easing';
 /** 展開セクションの下に空ける余白(px)。root の space-y-10 と揃えている。 */
 const MORE_SECTION_GAP = 40;
 import { FaPython, FaReact, FaDocker, FaGithub, FaNetworkWired, FaShieldAlt, FaEnvelope } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { SiTypescript, SiNextdotjs, SiTailwindcss, SiCplusplus, SiBlender, SiVercel, SiGoogleappsscript, SiDart, SiFlutter, SiGimp, SiGo, SiCloudflare, SiLinux, SiPostgresql, SiZenn, SiQiita, SiNote, } from 'react-icons/si';
 
 
@@ -263,6 +264,7 @@ export default function Home() {
           className="flex flex-wrap items-center justify-end gap-2"
         >
           <SocialButton href="https://github.com/yuikinman21" label="GitHub" icon={<FaGithub />} />
+          <SocialButton href="https://x.com/yuikinman21" label="X" icon={<FaXTwitter />} />
           <SocialButton href="https://zenn.dev/yuikinman21" label="Zenn" icon={<SiZenn />} />
           <SocialButton href="https://qiita.com/yuikinman21" label="Qiita" icon={<SiQiita />} />
           <SocialButton href="https://note.com/yuikinman21" label="Note" icon={<SiNote />} />

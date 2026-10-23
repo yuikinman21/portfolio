@@ -8,7 +8,9 @@ import { NextResponse } from "next/server";
 export const revalidate = 3600;
 
 const DEFAULT_USER = "yuikinman21";
-const USERNAME_PATTERN = /^[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?$/;
+// 任意のユーザーを受け付けると、第三者がこのAPIを経由してGitHubに問い合わせられ、
+// GITHUB_TOKEN のレート制限や関数の実行枠を消費されてしまう。表示するのは自分だけなので固定する。
+const ALLOWED_USERS = new Set([DEFAULT_USER]);
 
 export type ContributionDay = {
   date: string;
@@ -166,8 +168,8 @@ export async function GET(request: Request) {
   const requested =
     new URL(request.url).searchParams.get("user") ?? DEFAULT_USER;
 
-  if (!USERNAME_PATTERN.test(requested)) {
-    return NextResponse.json({ error: "invalid username" }, { status: 400 });
+  if (!ALLOWED_USERS.has(requested)) {
+    return NextResponse.json({ error: "unsupported username" }, { status: 400 });
   }
 
   const token = process.env.GITHUB_TOKEN;

@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
  
 export default function sitemap(): MetadataRoute.Sitemap {
-  // ※実際のデプロイ先URLに変更してください
   const baseUrl = 'https://yuiki.dev'
 
   return [
