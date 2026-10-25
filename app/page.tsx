@@ -253,7 +253,12 @@ export default function Home() {
             className="text-slate-500 font-medium max-w-lg text-lg"
           >
             IoTに興味がある大学生<br/>
-            <span className="text-indigo-600">ネットワーク</span>と<span className="text-purple-600">セキュリティ</span>を研究しながら、Web開発やスマートホーム化に挑戦中。
+            {/* 文節単位で inline-block にし、単語の途中で改行されないようにする */}
+            <span className="inline-block"><span className="text-indigo-600">ネットワーク</span>と<span className="text-purple-600">セキュリティ</span>を</span>
+            <wbr /><span className="inline-block">研究しながら、</span>
+            <wbr /><span className="inline-block">Web開発や</span>
+            <wbr /><span className="inline-block">スマートホーム化に</span>
+            <wbr /><span className="inline-block">挑戦中。</span>
           </motion.p>
         </div>
         
