@@ -250,7 +250,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-slate-500 font-medium max-w-lg text-lg"
+            className="text-slate-500 font-medium max-w-lg xl:max-w-none text-lg"
           >
             IoTに興味がある大学生<br/>
             {/* 文節単位で inline-block にし、単語の途中で改行されないようにする */}
